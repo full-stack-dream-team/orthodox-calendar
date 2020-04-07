@@ -5,10 +5,10 @@
   "description": "Simple node react boilerplate",
   "prettier": {},
   "scripts": {
-    "server": "nodemon index.js",
+    "server": "nodemon start.js",
     "client": "yarn --cwd client start",
     "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
-    "start": "node index.js",
+    "start": "node start.js",
     "heroku-postbuild": "YARN_PRODUCTION=false yarn --cwd client && yarn --cwd client build"
   },
   "dependencies": {
