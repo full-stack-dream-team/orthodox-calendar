@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const path = require("path");
 const routes = require("./routes");
+const errorHandlers = require("./handlers/errorHandlers");
 
 // create the Express app
 const app = express();
@@ -13,6 +14,18 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Import Routes
 app.use("/", routes);
+
+//-- ERROR HANDLERS --//
+// 404 Error Handler
+app.use(errorHandlers.notFound);
+
+// Development Error Handler prints stacktrace
+if (process.env.NODE_ENV === "development") {
+  app.use(errorHandlers.developmentErrors);
+}
+
+// Production Error Handler
+app.use(errorHandlers.productionErrors);
 
 // PRODUCTION: serve up static files from the build folder
 if (process.env.NODE_ENV == "production") {
