@@ -1,0 +1,9 @@
+// Import all SASS (.scss) files into this directory
+
+// -- CORE -- //
+@import "core/base";
+@import "core/variables";
+
+// -- PARTIALS -- //
+@import "partials/layout";
+@import "partials/card";
