@@ -8,9 +8,9 @@ mongoose.connect(process.env.DATABASE, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
-mongoose.connection.on("error", err => {
-  console.error(`${err.message}`);
-});
+// mongoose.connection.on("error", err => {
+//   console.error(`${err.message}`);
+// });
 
 // Import Models
 require("./models");
