@@ -2,21 +2,19 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const path = require("path");
+const routes = require("./routes");
 
-require("dotenv").config();
-require("./models/Product");
-
+// create the Express app
 const app = express();
 
-mongoose.connect(process.env.DATABASE, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
-
+// Take the raw requests and turn them into usable properties on req.body
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-require("./routes/productRoutes")(app);
+// Import Routes
+app.use("/", routes);
 
+// PRODUCTION: serve up static files from the build folder
 if (process.env.NODE_ENV == "production") {
   app.use(express.static("client/build"));
 
@@ -25,7 +23,4 @@ if (process.env.NODE_ENV == "production") {
   });
 }
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`express is running on port ${PORT}`);
-});
+module.exports = app;

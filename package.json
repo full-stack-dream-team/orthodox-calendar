@@ -1,7 +1,7 @@
 {
   "name": "simple-app",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "start.js",
   "description": "Simple node react boilerplate",
   "prettier": {},
   "scripts": {
