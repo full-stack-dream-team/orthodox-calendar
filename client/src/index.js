@@ -1,24 +1,28 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { Provider } from "react-redux";
 import "./sass/index.scss";
 import App from "./pages/App";
+import Register from "./pages/Register";
+import Login from "./pages/Login";
 import Error from "./pages/Error";
+import store from "store";
 import * as serviceWorker from "./serviceWorker";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <Switch>
-        <Route exact path="/">
-          <App />
-        </Route>
-        <Route>
-          <Error />
-        </Route>
-      </Switch>
-    </BrowserRouter>
-  </React.StrictMode>,
+  <Provider store={store}>
+    <React.StrictMode>
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/" component={App} />
+          <Route exact path="/register" component={Register} />
+          <Route exact path="/login" component={Login} />
+          <Route component={Error} />
+        </Switch>
+      </BrowserRouter>
+    </React.StrictMode>
+  </Provider>,
   document.getElementById("root")
 );
 
