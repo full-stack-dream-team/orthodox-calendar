@@ -1,5 +1,10 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import classnames from "classnames";
+import { registerUser } from "../redux/actions/index/auth";
+import isEmpty from "is-empty";
 
 class Register extends Component {
   state = {
@@ -7,25 +12,33 @@ class Register extends Component {
     email: "",
     password: "",
     password2: "",
-    errors: {}
+    errors: {},
   };
 
-  handleChange = e => {
+  handleChange = (e) => {
     this.setState({ [e.target.id]: e.target.value });
   };
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
 
+    const { name, email, password, password2 } = this.state;
+
     const newUser = {
-      name: this.state.name,
-      email: this.state.email,
-      password: this.state.password,
-      password2: this.state.password2
+      name,
+      email,
+      password,
+      password2,
     };
 
-    console.log(newUser);
+    this.props.registerUser(newUser, this.props.history);
   };
+
+  componentDidUpdate(prevProps) {
+    if (isEmpty(prevProps.errors) && !isEmpty(this.props.errors)) {
+      this.setState({ errors: this.props.errors });
+    }
+  }
 
   render() {
     const { errors } = this.state;
@@ -49,8 +62,14 @@ class Register extends Component {
               error={errors.name}
               id="name"
               type="text"
+              className={classnames("", {
+                invalid: errors.name,
+              })}
             />
             <label htmlFor="name">Name</label>
+            <span style={{ color: "white", backgroundColor: "red" }}>
+              {errors.name}
+            </span>
           </div>
           <div>
             <input
@@ -59,8 +78,14 @@ class Register extends Component {
               error={errors.email}
               id="email"
               type="email"
+              className={classnames("", {
+                invalid: errors.email,
+              })}
             />
             <label htmlFor="email">Email</label>
+            <span style={{ color: "white", backgroundColor: "red" }}>
+              {errors.email}
+            </span>
           </div>
           <div>
             <input
@@ -69,8 +94,14 @@ class Register extends Component {
               error={errors.password}
               id="password"
               type="password"
+              className={classnames("", {
+                invalid: errors.password,
+              })}
             />
             <label htmlFor="password">Password</label>
+            <span style={{ color: "white", backgroundColor: "red" }}>
+              {errors.password}
+            </span>
           </div>
           <div>
             <input
@@ -79,8 +110,14 @@ class Register extends Component {
               error={errors.password2}
               id="password2"
               type="password"
+              className={classnames("", {
+                invalid: errors.password2,
+              })}
             />
             <label htmlFor="password2">Confirm Password</label>
+            <span style={{ color: "white", backgroundColor: "red" }}>
+              {errors.password2}
+            </span>
           </div>
           <div style={{ paddingLeft: "11.250px" }}>
             <button
@@ -88,7 +125,7 @@ class Register extends Component {
                 width: "150px",
                 borderRadius: "3px",
                 letterSpacing: "1.5px",
-                marginTop: "1rem"
+                marginTop: "1rem",
               }}
               type="submit"
             >
@@ -101,4 +138,15 @@ class Register extends Component {
   }
 }
 
-export default Register;
+Register.propTypes = {
+  registerUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+  errors: state.errors,
+});
+
+export default connect(mapStateToProps, { registerUser })(withRouter(Register));

@@ -1,26 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import Router from "./Router";
 import { Provider } from "react-redux";
 import "./sass/index.scss";
-import App from "./pages/App";
-import Register from "./pages/Register";
-import Login from "./pages/Login";
-import Error from "./pages/Error";
-import store from "store";
+import store from "./redux/store/index";
 import * as serviceWorker from "./serviceWorker";
 
 ReactDOM.render(
   <Provider store={store}>
     <React.StrictMode>
-      <BrowserRouter>
-        <Switch>
-          <Route exact path="/" component={App} />
-          <Route exact path="/register" component={Register} />
-          <Route exact path="/login" component={Login} />
-          <Route component={Error} />
-        </Switch>
-      </BrowserRouter>
+      <Router />
     </React.StrictMode>
   </Provider>,
   document.getElementById("root")
