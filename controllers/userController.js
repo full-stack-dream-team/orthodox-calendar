@@ -9,6 +9,7 @@ const sendEmail = require("../mailer");
 const validateRegisterInput = require("../validation/register");
 const validateLoginInput = require("../validation/login");
 const validateForgotInput = require("../validation/forgot");
+const validateResetInput = require("../validation/reset");
 
 exports.registerUser = (req, res) => {
   // Form validation
@@ -47,8 +48,10 @@ exports.registerUser = (req, res) => {
             name: newUser.name,
             text: "Welcome to my website!",
             html: `
-              <h1>Welcome ${newUser.name}</h1>
-              <p>I hope you have a good time here!</p>
+              <div>
+                <h1>Welcome ${newUser.name}</h1>
+                <p>I hope you have a good time here!</p>
+              </div>
             `,
           });
         });
@@ -120,7 +123,9 @@ exports.forgotPassword = (req, res) => {
 
   User.findOne({ email: req.body.email }).then((user) => {
     if (!user) {
-      return res.status(400).json("No user exists for that email");
+      return res
+        .status(404)
+        .json({ emailnotfound: "No user exists for that email" });
     }
 
     user.passwordResetToken = {
@@ -132,18 +137,51 @@ exports.forgotPassword = (req, res) => {
       .then(() => {
         const resetUrl = `http://${
           req.hostname + (req.hostname === "localhost" ? ":3000" : "")
-        }/passwordreset/${user.passwordResetToken.token}`;
+        }/resetpassword/${user.passwordResetToken.token}`;
         sendEmail({
           to: user.email,
           name: user.name,
           text: `You have been sent this password reset link: ${resetUrl}`,
           html: `
-            <h1>Reset Password</h1>
-            <p>Greetings from far off! You have been sent this password reset link. ᕕ( ᐛ )ᕗ</p>
-            <a href="${resetUrl}"></a>
+            <div>
+              <h1>Reset Password</h1>
+              <p>Greetings from far off! You have been sent this password reset link. ᕕ( ᐛ )ᕗ</p>
+              <a href="${resetUrl}">Reset Password</a>
+            </div>
           `,
         });
+
+        return res.json(user);
       })
       .catch((err) => console.log(err));
+  });
+};
+
+exports.resetPassword = (req, res) => {
+  const { errors, isValid } = validateResetInput(req.body);
+
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
+  User.findOne({ "passwordResetToken.token": req.body.token }).then((user) => {
+    if (!user || user.passwordResetToken.expires < Date.now()) {
+      return res.status(404).json({ token: "invalid" });
+    }
+
+    user.passwordResetToken.expires = 0;
+
+    // Hash password before saving in database
+    bcrypt.genSalt(10, (err, salt) => {
+      bcrypt.hash(req.body.password, salt, (err, hash) => {
+        if (err) throw err;
+
+        user.password = hash;
+        user
+          .save()
+          .then((user) => res.json(user))
+          .catch((err) => console.log(err));
+      });
+    });
   });
 };

@@ -3,12 +3,10 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import classnames from "classnames";
-import { registerUser } from "../redux/actions/authActions";
+import { resetUserPassword } from "../redux/actions/authActions";
 
-class Register extends React.Component {
+class ResetPassword extends React.Component {
   state = {
-    name: "",
-    email: "",
     password: "",
     password2: "",
     errors: {},
@@ -21,20 +19,22 @@ class Register extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
 
-    const { name, email, password, password2 } = this.state;
+    const { password, password2 } = this.state;
 
-    const newUser = {
-      name,
-      email,
+    const data = {
       password,
       password2,
+      token: this.props.match.params.token,
     };
 
-    this.props.registerUser(newUser, this.props.history);
+    this.props.resetUserPassword(data, this.props.history);
   };
 
   componentDidUpdate(prevProps) {
     if (prevProps.errors !== this.props.errors) {
+      if (this.props.errors.token === "invalid") {
+        this.props.history.push("/oops");
+      }
       this.setState({ errors: this.props.errors });
     }
   }
@@ -46,44 +46,9 @@ class Register extends React.Component {
       <>
         <Link to="/">← Back to home</Link>
         <div style={{ paddingLeft: "11.250px" }}>
-          <h4>Register below</h4>
-          <p>
-            Already have an account? <Link to="/login">Log in</Link>
-          </p>
+          <h4>Type new password below</h4>
         </div>
         <form noValidate onSubmit={this.handleSubmit}>
-          <div>
-            <input
-              onChange={this.handleChange}
-              value={this.state.name}
-              error={errors.name}
-              id="name"
-              type="text"
-              className={classnames("", {
-                invalid: errors.name,
-              })}
-            />
-            <label htmlFor="name">Name</label>
-            <span style={{ color: "white", backgroundColor: "red" }}>
-              {errors.name}
-            </span>
-          </div>
-          <div>
-            <input
-              onChange={this.handleChange}
-              value={this.state.email}
-              error={errors.email}
-              id="email"
-              type="email"
-              className={classnames("", {
-                invalid: errors.email,
-              })}
-            />
-            <label htmlFor="email">Email</label>
-            <span style={{ color: "white", backgroundColor: "red" }}>
-              {errors.email}
-            </span>
-          </div>
           <div>
             <input
               onChange={this.handleChange}
@@ -92,12 +57,13 @@ class Register extends React.Component {
               id="password"
               type="password"
               className={classnames("", {
-                invalid: errors.password,
+                invalid: errors.password || errors.passwordincorrect,
               })}
             />
             <label htmlFor="password">Password</label>
             <span style={{ color: "white", backgroundColor: "red" }}>
               {errors.password}
+              {errors.passwordincorrect}
             </span>
           </div>
           <div>
@@ -126,7 +92,7 @@ class Register extends React.Component {
               }}
               type="submit"
             >
-              Sign up
+              Reset Password
             </button>
           </div>
         </form>
@@ -135,8 +101,8 @@ class Register extends React.Component {
   }
 }
 
-Register.propTypes = {
-  registerUser: PropTypes.func.isRequired,
+ResetPassword.propTypes = {
+  resetUserPassword: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
 };
@@ -146,4 +112,4 @@ const mapStateToProps = (state) => ({
   errors: state.errors,
 });
 
-export default connect(mapStateToProps, { registerUser })(Register);
+export default connect(mapStateToProps, { resetUserPassword })(ResetPassword);

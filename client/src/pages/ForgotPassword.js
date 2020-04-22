@@ -3,12 +3,11 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import classnames from "classnames";
-import { loginUser } from "../redux/actions/authActions";
+import { sendForgotEmail } from "../redux/actions/authActions";
 
-class Login extends React.Component {
+class ForgotPassword extends React.Component {
   state = {
     email: "",
-    password: "",
     errors: {},
   };
 
@@ -21,10 +20,9 @@ class Login extends React.Component {
 
     const userData = {
       email: this.state.email,
-      password: this.state.password,
     };
 
-    this.props.loginUser(userData, this.props.history);
+    this.props.sendForgotEmail(userData, this.props.history);
   };
 
   componentDidUpdate(prevProps) {
@@ -40,10 +38,7 @@ class Login extends React.Component {
       <>
         <Link to="/">← Back to home</Link>
         <div style={{ paddingLeft: "11.250px" }}>
-          <h4>Login below</h4>
-          <p>
-            Don't have an account? <Link to="/register">Register</Link>
-          </p>
+          <h4>Forgot Password</h4>
         </div>
         <form noValidate onSubmit={this.onSubmit}>
           <div>
@@ -63,23 +58,6 @@ class Login extends React.Component {
               {errors.emailnotfound}
             </span>
           </div>
-          <div>
-            <input
-              onChange={this.onChange}
-              value={this.state.password}
-              error={errors.password}
-              id="password"
-              type="password"
-              className={classnames("", {
-                invalid: errors.password || errors.passwordincorrect,
-              })}
-            />
-            <label htmlFor="password">Password</label>
-            <span style={{ color: "white", backgroundColor: "red" }}>
-              {errors.password}
-              {errors.passwordincorrect}
-            </span>
-          </div>
           <div style={{ paddingLeft: "11.250px" }}>
             <button
               style={{
@@ -90,20 +68,17 @@ class Login extends React.Component {
               }}
               type="submit"
             >
-              Login
+              Send Email
             </button>
           </div>
         </form>
-        <p>
-          Forgot your password? <Link to="/forgotpassword">Reset It</Link>
-        </p>
       </>
     );
   }
 }
 
-Login.propTypes = {
-  loginUser: PropTypes.func.isRequired,
+ForgotPassword.propTypes = {
+  sendForgotEmail: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
 };
@@ -113,4 +88,4 @@ const mapStateToProps = (state) => ({
   errors: state.errors,
 });
 
-export default connect(mapStateToProps, { loginUser })(Login);
+export default connect(mapStateToProps, { sendForgotEmail })(ForgotPassword);
