@@ -1,8 +1,5 @@
 import isEmpty from "is-empty";
-import {
-  SET_CURRENT_USER,
-  USER_LOADING,
-} from "../../constants/actionTypes/index";
+import { SET_CURRENT_USER, USER_LOADING } from "../actions/types";
 
 const initialState = {
   isAuthenticated: false,

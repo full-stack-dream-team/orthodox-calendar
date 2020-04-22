@@ -2,10 +2,13 @@ const mongoose = require("mongoose");
 const User = mongoose.model("User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const crypto = require("crypto");
+const sendEmail = require("../mailer");
 
 // Load input validation
 const validateRegisterInput = require("../validation/register");
 const validateLoginInput = require("../validation/login");
+const validateForgotInput = require("../validation/forgot");
 
 exports.registerUser = (req, res) => {
   // Form validation
@@ -16,9 +19,11 @@ exports.registerUser = (req, res) => {
     return res.status(400).json(errors);
   }
 
-  User.findOne({ email: req.body.email }).then((user) => {
+  User.findOne({
+    $or: [{ email: req.body.email }, { name: req.body.name }],
+  }).then((user) => {
     if (user) {
-      return res.status(400).json({ email: "Email already exists" });
+      return res.status(400).json({ name: "Name or Email already exists" });
     } else {
       const newUser = new User({
         name: req.body.name,
@@ -36,6 +41,16 @@ exports.registerUser = (req, res) => {
             .save()
             .then((user) => res.json(user))
             .catch((err) => console.log(err));
+
+          sendEmail({
+            to: newUser.email,
+            name: newUser.name,
+            text: "Welcome to my website!",
+            html: `
+              <h1>Welcome ${newUser.name}</h1>
+              <p>I hope you have a good time here!</p>
+            `,
+          });
         });
       });
     }
@@ -51,46 +66,84 @@ exports.loginUser = (req, res) => {
     return res.status(400).json(errors);
   }
 
-  const email = req.body.email;
-  const password = req.body.password;
+  const { email, password } = req.body;
 
   // Find user by email
-  User.findOne({ email }).then((user) => {
-    // Check if user exists
+  User.findOne({ email })
+    .then((user) => {
+      // Check if user exists
+      if (!user) {
+        return res.status(404).json({ emailnotfound: "Email not found" });
+      }
+
+      // Check password
+      bcrypt.compare(password, user.password).then((isMatch) => {
+        if (isMatch) {
+          // User matched
+
+          // Create JWT Payload
+          const payload = {
+            id: user.id,
+            name: user.name,
+          };
+
+          // Sign token
+          jwt.sign(
+            payload,
+            process.env.SECRET,
+            {
+              expiresIn: 31556926, // 1 year in seconds
+            },
+            (err, token) => {
+              res.json({
+                success: true,
+                token: "Bearer " + token,
+              });
+            }
+          );
+        } else {
+          return res
+            .status(400)
+            .json({ passwordincorrect: "Password incorrect" });
+        }
+      });
+    })
+    .catch((err) => console.log(err));
+};
+
+exports.forgotPassword = (req, res) => {
+  const { errors, isValid } = validateForgotInput(req.body);
+
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
+  User.findOne({ email: req.body.email }).then((user) => {
     if (!user) {
-      return res.status(404).json({ emailnotfound: "Email not found" });
+      return res.status(400).json("No user exists for that email");
     }
 
-    // Check password
-    bcrypt.compare(password, user.password).then((isMatch) => {
-      if (isMatch) {
-        // User matched
-
-        // Create JWT Payload
-        const payload = {
-          id: user.id,
+    user.passwordResetToken = {
+      token: crypto.randomBytes(20).toString("hex"),
+      expires: Date.now() + 1000 * 60 * 60 * 2,
+    };
+    user
+      .save()
+      .then(() => {
+        const resetUrl = `http://${
+          req.hostname + (req.hostname === "localhost" ? ":3000" : "")
+        }/passwordreset/${user.passwordResetToken.token}`;
+        sendEmail({
+          to: user.email,
           name: user.name,
-        };
-
-        // Sign token
-        jwt.sign(
-          payload,
-          process.env.SECRET,
-          {
-            expiresIn: 31556926, // 1 year in seconds
-          },
-          (err, token) => {
-            res.json({
-              success: true,
-              token: "Bearer " + token,
-            });
-          }
-        );
-      } else {
-        return res
-          .status(400)
-          .json({ passwordincorrect: "Password incorrect" });
-      }
-    });
+          text: `You have been sent this password reset link: ${resetUrl}`,
+          html: `
+            <h1>Reset Password</h1>
+            <p>Greetings from far off! You have been sent this password reset link. ᕕ( ᐛ )ᕗ</p>
+            <a href="${resetUrl}"></a>
+          `,
+        });
+      })
+      .catch((err) => console.log(err));
   });
 };

@@ -1,11 +1,7 @@
 import axios from "axios";
 import jwt_decode from "jwt-decode";
-import setAuthToken from "../../../helpers/setAuthToken";
-import {
-  GET_ERRORS,
-  SET_CURRENT_USER,
-  USER_LOADING,
-} from "../../constants/actionTypes/index";
+import setAuthToken from "../../helpers/setAuthToken";
+import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING } from "./types";
 
 export const getErrors = (err) => ({
   type: GET_ERRORS,
@@ -25,15 +21,17 @@ export const setUserLoading = () => ({ type: USER_LOADING });
 export const registerUser = (userData, history) => (dispatch) => {
   axios
     .post("/api/users/register", userData)
-    .then((res) => history.push("/login"))
-    .catch((err) => {
-      // console.log(err.response.data);
-      dispatch(getErrors(err));
-    });
+    .then((res) =>
+      loginUser(
+        { email: userData.email, password: userData.password },
+        history
+      )(dispatch)
+    )
+    .catch((err) => dispatch(getErrors(err)));
 };
 
 // Login - get user token
-export const loginUser = (userData) => (dispatch) => {
+export const loginUser = (userData, history) => (dispatch) => {
   axios
     .post("/api/users/login", userData)
     .then((res) => {
@@ -50,6 +48,7 @@ export const loginUser = (userData) => (dispatch) => {
       // Set current user
       dispatch(setCurrentUser(decoded));
     })
+    .then((res) => history.push("/"))
     .catch((err) => dispatch(getErrors(err)));
 };
 
@@ -63,4 +62,11 @@ export const logoutUser = () => (dispatch) => {
 
   // Set current user to empty object which will set isAuthenticated to false
   dispatch(setCurrentUser({}));
+};
+
+export const forgotPassword = (userData, history) => (dispatch) => {
+  axios
+    .post("/api/users/forgot", userData)
+    .then((res) => history.push("/"))
+    .catch((err) => getErrors(err));
 };

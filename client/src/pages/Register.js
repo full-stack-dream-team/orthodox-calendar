@@ -3,8 +3,8 @@ import { Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import classnames from "classnames";
-import { registerUser } from "../redux/actions/index/auth";
 import isEmpty from "is-empty";
+import { registerUser } from "../redux/actions/authActions";
 
 class Register extends Component {
   state = {
@@ -45,11 +45,9 @@ class Register extends Component {
 
     return (
       <>
-        <Link to="/">{"<--"} Back to home</Link>
+        <Link to="/">← Back to home</Link>
         <div style={{ paddingLeft: "11.250px" }}>
-          <h4>
-            <b>Register</b> below
-          </h4>
+          <h4>Register below</h4>
           <p>
             Already have an account? <Link to="/login">Log in</Link>
           </p>
