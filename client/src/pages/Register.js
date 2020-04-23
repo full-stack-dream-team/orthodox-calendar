@@ -44,7 +44,7 @@ class Register extends React.Component {
 
     return (
       <>
-        <Link to="/">← Back to home</Link>
+        <Link to="/landing">← Back to home</Link>
         <div style={{ paddingLeft: "11.250px" }}>
           <h4>Register below</h4>
           <p>

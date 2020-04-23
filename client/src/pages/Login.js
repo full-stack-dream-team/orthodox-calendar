@@ -38,7 +38,7 @@ class Login extends React.Component {
 
     return (
       <>
-        <Link to="/">← Back to home</Link>
+        <Link to="/landing">← Back to home</Link>
         <div style={{ paddingLeft: "11.250px" }}>
           <h4>Login below</h4>
           <p>

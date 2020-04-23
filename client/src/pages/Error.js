@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Error = () => (
   <div className="main">
@@ -9,6 +10,7 @@ const Error = () => (
           😞
         </span>
       </h2>
+      <Link to="/">← Back to home ヽ(´▽`)/</Link>
     </div>
   </div>
 );

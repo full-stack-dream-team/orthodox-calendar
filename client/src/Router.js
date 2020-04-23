@@ -1,6 +1,8 @@
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
+import PrivateRoute from "./components/PrivateRoute";
+import NotPrivateRoute from "./components/NotPrivateRoute";
 import App from "./pages/App";
 import Landing from "./pages/Landing";
 import Register from "./pages/Register";
@@ -11,29 +13,26 @@ import Oops from "./pages/Oops";
 import Error from "./pages/Error";
 
 class Router extends React.Component {
-  protComp = (needsAuth, fallback) =>
+  protectedComponent = (needsAuth, fallback) =>
     this.props.auth.isAuthenticated ? needsAuth : fallback;
 
   render() {
     return (
       <BrowserRouter>
         <Switch>
-          <Route exact path="/" component={this.protComp(App, Landing)} />
-          <Route
-            exact
-            path="/register"
-            component={this.protComp(Error, Register)}
-          />
-          <Route exact path="/login" component={this.protComp(Error, Login)} />
-          <Route
+          <PrivateRoute exact path="/" component={App} />
+          <NotPrivateRoute exact path="/landing" component={Landing} />
+          <NotPrivateRoute exact path="/register" component={Register} />
+          <NotPrivateRoute exact path="/login" component={Login} />
+          <NotPrivateRoute
             exact
             path="/forgotpassword"
-            component={this.protComp(Error, ForgotPassword)}
+            component={ForgotPassword}
           />
-          <Route
+          <NotPrivateRoute
             exact
             path="/resetpassword/:token"
-            component={this.protComp(Error, ResetPassword)}
+            component={ResetPassword}
           />
           <Route exact path="/oops" component={Oops} />
           <Route component={Error} />
