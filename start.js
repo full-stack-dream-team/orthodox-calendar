@@ -8,6 +8,7 @@ mongoose.connect(process.env.DATABASE, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
+
 // mongoose.connection.on("error", err => {
 //   console.error(`${err.message}`);
 // });
