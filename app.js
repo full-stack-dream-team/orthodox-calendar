@@ -4,7 +4,6 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const routes = require("./routes");
 const passport = require("passport");
-const users = require("./routes/userRoutes");
 // const errorHandlers = require("./handlers/errorHandlers");
 
 // create the Express app
@@ -22,9 +21,6 @@ app.use(passport.initialize());
 
 // Passport config
 require("./config/passport")(passport);
-
-// Routes
-app.use("/api/users", users);
 
 //-- ERROR HANDLERS --//
 // 404 Error Handler
