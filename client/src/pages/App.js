@@ -2,28 +2,25 @@ import React from "react";
 import axios from "axios";
 import { connect } from "react-redux";
 import { logoutUser } from "../redux/actions/authActions";
+import { fetchDay } from "../redux/actions/calendarActions";
 
 class App extends React.Component {
   state = {
-    products: [],
+    day: {},
   };
 
   unmounted = false;
 
-  getAll = async () => {
-    let res = await axios.get(`/api/product`);
-    return res.data || [];
-  };
-
-  getProducts = async () => {
-    let res = await this.getAll();
-    if (!this.unmounted) {
-      this.setState({ products: res });
-    }
+  getDay = () => {
+    const res = this.props.fetchDay().then((res) => {
+      if (!this.unmounted) {
+        this.setState({ day: res.payload || {} });
+      }
+    });
   };
 
   componentDidMount() {
-    this.getProducts();
+    this.getDay();
   }
 
   componentWillUnmount() {
@@ -31,28 +28,20 @@ class App extends React.Component {
   }
 
   render() {
-    const { products } = this.state;
+    const { day } = this.state;
+
+    console.log(day);
 
     return (
       <div className="App main">
-        <button onClick={this.props.logoutUser}>Log Out</button>
-        <div className="card">
-          <ul>
-            {products && products.length > 0 ? (
-              products.map((product) => (
-                <li key={product._id}>
-                  <h3>{product.name}</h3>
-                  <p>{product.description}</p>
-                </li>
-              ))
-            ) : (
-              <p>No products found</p>
-            )}
-          </ul>
-        </div>
+        {/*<button onClick={this.props.logoutUser}>Log Out</button>*/}
+        <h2>Feasts Today</h2>
+        {day.feasts
+          ? day.feasts.map((feast) => <p key={feast}>{feast}</p>)
+          : null}
       </div>
     );
   }
 }
 
-export default connect(undefined, { logoutUser })(App);
+export default connect(undefined, { fetchDay })(App);
