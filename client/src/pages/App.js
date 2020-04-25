@@ -1,7 +1,6 @@
 import React from "react";
-import axios from "axios";
 import { connect } from "react-redux";
-import { logoutUser } from "../redux/actions/authActions";
+// import { logoutUser } from "../redux/actions/authActions";
 import { fetchDay } from "../redux/actions/calendarActions";
 
 class App extends React.Component {
@@ -12,15 +11,22 @@ class App extends React.Component {
   unmounted = false;
 
   getDay = () => {
-    const res = this.props.fetchDay().then((res) => {
-      if (!this.unmounted) {
-        this.setState({ day: res.payload || {} });
-      }
-    });
+    this.props.fetchDay();
+    // .then((res) => {
+    //   if (!this.unmounted) {
+    //     this.setState({ day: res || {} });
+    //   }
+    // });
   };
 
   componentDidMount() {
-    this.getDay();
+    this.props.fetchDay();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.day !== this.props.day) {
+      this.setState({ day: this.props.day });
+    }
   }
 
   componentWillUnmount() {
@@ -35,13 +41,29 @@ class App extends React.Component {
     return (
       <div className="App main">
         {/*<button onClick={this.props.logoutUser}>Log Out</button>*/}
-        <h2>Feasts Today</h2>
-        {day.feasts
-          ? day.feasts.map((feast) => <p key={feast}>{feast}</p>)
-          : null}
+        <h3>Date {`${day.year}/${day.month}/${day.day}`}</h3>
+        <h2>Readings:</h2>
+        <ul>
+          {day.readings
+            ? day.readings.map((reading) => (
+                <li key={reading.display}>
+                  <div>
+                    <h3>{reading.short_display}</h3>
+                    {reading.passage.map((verse) => (
+                      <p key={verse.content}>{verse.content}</p>
+                    ))}
+                  </div>
+                </li>
+              ))
+            : null}
+        </ul>
       </div>
     );
   }
 }
 
-export default connect(undefined, { fetchDay })(App);
+const mapStateToProps = (state) => ({
+  day: state.calendar.day,
+});
+
+export default connect(mapStateToProps, { fetchDay })(App);
