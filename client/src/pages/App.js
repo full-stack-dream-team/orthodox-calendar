@@ -2,26 +2,17 @@ import React from "react";
 import { connect } from "react-redux";
 import Moment from "react-moment";
 // import { logoutUser } from "../redux/actions/authActions";
-import { fetchDay } from "../redux/actions/calendarActions";
+import { getDate } from "../redux/actions/calendarActions";
 
 class App extends React.Component {
   state = {
-    day: {}
+    day: {},
   };
 
   unmounted = false;
 
-  getDay = () => {
-    this.props.fetchDay();
-    // .then((res) => {
-    //   if (!this.unmounted) {
-    //     this.setState({ day: res || {} });
-    //   }
-    // });
-  };
-
   componentDidMount() {
-    this.props.fetchDay();
+    this.props.getDate();
   }
 
   componentDidUpdate(prevProps) {
@@ -109,14 +100,18 @@ class App extends React.Component {
                   <div className="col s12 m6">
                     <ul>
                       {day.feasts
-                        ? day.feasts.map(feast => <li key={feast}>{feast}</li>)
+                        ? day.feasts.map((feast) => (
+                            <li key={feast}>{feast}</li>
+                          ))
                         : null}
                     </ul>
                   </div>
                   <div className="col s12 m6">
                     <ul>
                       {day.saints
-                        ? day.saints.map(saint => <li key={saint}>{saint}</li>)
+                        ? day.saints.map((saint) => (
+                            <li key={saint}>{saint}</li>
+                          ))
                         : null}
                     </ul>
                   </div>
@@ -128,11 +123,11 @@ class App extends React.Component {
           <h2>Readings:</h2>
           <ul>
             {day.readings
-              ? day.readings.map(reading => (
+              ? day.readings.map((reading) => (
                   <li key={reading.display}>
                     <div>
                       <h3>{reading.short_display}</h3>
-                      {reading.passage.map(verse => (
+                      {reading.passage.map((verse) => (
                         <p key={verse.content}>{verse.content}</p>
                       ))}
                     </div>
@@ -146,11 +141,8 @@ class App extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  day: state.calendar.day
+const mapStateToProps = (state) => ({
+  day: state.calendar.date,
 });
 
-export default connect(
-  mapStateToProps,
-  { fetchDay }
-)(App);
+export default connect(mapStateToProps, { getDate })(App);

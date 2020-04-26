@@ -1,20 +1,16 @@
-import { SET_JURISDICTION, SET_DAY } from "../actions/types";
-
-const today = new Date();
+import { SET_JURISDICTION, GET_DATE } from "../actions/types";
 
 export const initialState = {
   isFetching: false,
-  date: today,
   jurisdiction: "oca",
-  day: {
-    // titles: [],
-    // feasts: [],
-    // fast_level: 0,
-    // fast_level_desc: "",
-    // fast_exception_desc: "",
-    // readings: [],
-  },
+  date: null,
 };
+// titles: [],
+// feasts: [],
+// fast_level: 0,
+// fast_level_desc: "",
+// fast_exception_desc: "",
+// readings: [],
 
 const calendarReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -23,10 +19,10 @@ const calendarReducer = (state = initialState, action) => {
         ...state,
         jurisdiction: action.payload,
       };
-    case SET_DAY:
+    case GET_DATE:
       return {
         ...state,
-        day: action.payload,
+        date: action.payload,
       };
     default:
       return state;
