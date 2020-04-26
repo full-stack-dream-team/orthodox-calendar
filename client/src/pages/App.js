@@ -44,7 +44,7 @@ class App extends React.Component {
         <div className="container">
           <div className="row">
             <div className="col s12 m6">
-              <div className="card-panel light-blue lighten-5">
+              <div className="card-panel">
                 {/*<button onClick={this.props.logoutUser}>Log Out</button>*/}
                 <h5>
                   <i
@@ -60,21 +60,25 @@ class App extends React.Component {
                     <Moment
                       date={day}
                       format={"dddd, MMMM Do, YYYY"}
-                      subtract={{ days: 13 }}
+                      subtract={{ months: 1, days: 13 }}
                     />
                   </strong>
                 </p>
                 <p>
                   Gregorian (New Calendar):{" "}
                   <strong>
-                    <Moment date={day} format={"dddd, MMMM Do, YYYY"} />
+                    <Moment
+                      date={day}
+                      format={"dddd, MMMM Do, YYYY"}
+                      subtract={{ months: 1 }}
+                    />
                   </strong>
                 </p>
               </div>
             </div>
 
             <div className="col s12 m6">
-              <div className="card-panel light-blue lighten-5">
+              <div className="card-panel">
                 <h5>
                   <i
                     className="iconify"
@@ -86,6 +90,37 @@ class App extends React.Component {
                 <p>
                   <strong>{day.fast_exception_desc}</strong>
                 </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col s12">
+              <div className="card-panel">
+                <h5>
+                  <i
+                    className="iconify"
+                    data-icon="maki:monument-11"
+                    data-inline="false"
+                  ></i>{" "}
+                  Commemorations
+                </h5>
+                <div className="row">
+                  <div className="col s12 m6">
+                    <ul>
+                      {day.feasts
+                        ? day.feasts.map(feast => <li key={feast}>{feast}</li>)
+                        : null}
+                    </ul>
+                  </div>
+                  <div className="col s12 m6">
+                    <ul>
+                      {day.saints
+                        ? day.saints.map(saint => <li key={saint}>{saint}</li>)
+                        : null}
+                    </ul>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
