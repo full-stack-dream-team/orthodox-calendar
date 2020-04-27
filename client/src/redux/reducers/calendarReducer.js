@@ -1,8 +1,9 @@
-import { SET_JURISDICTION, GET_DATE } from "../actions/types";
+import { SET_JURISDICTION, GET_DATE, SET_DATE_QUERY } from "../actions/types";
 
 export const initialState = {
   isFetching: false,
   jurisdiction: "oca",
+  dateQuery: {},
   date: null,
 };
 // titles: [],
@@ -18,6 +19,17 @@ const calendarReducer = (state = initialState, action) => {
       return {
         ...state,
         jurisdiction: action.payload,
+      };
+    case SET_DATE_QUERY:
+      return {
+        ...state,
+        dateQuery: action.payload
+          ? {
+              year: action.payload.year,
+              month: action.payload.month,
+              day: action.payload.day,
+            }
+          : {},
       };
     case GET_DATE:
       return {

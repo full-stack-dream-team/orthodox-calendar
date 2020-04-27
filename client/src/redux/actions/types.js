@@ -5,4 +5,5 @@ export const SET_CURRENT_USER = "SET_CURRENT_USER";
 
 // Calendar Types
 export const SET_JURISDICTION = "SET_JURISDICTION";
+export const SET_DATE_QUERY = "SET_DATE_QUERY";
 export const GET_DATE = "GET_DATE";

@@ -1,7 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import Moment from "react-moment";
-import { getDate } from "../redux/actions/calendarActions";
+import { Link } from "react-router-dom";
+import { getDate, setDateQuery } from "../redux/actions/calendarActions";
 
 const now = new Date();
 
@@ -12,7 +13,7 @@ class Calendar extends React.Component {
 
   formatMonth = (date) => {
     const month = [...date];
-    for (let i = 0; i < Math.abs(date[0].weekday - 7); i++) {
+    for (let i = 0; i < Math.abs(date[0].weekday + 7) - 7; i++) {
       month.unshift({ empty: true });
     }
     for (let i = 0; i < 7 - date[date.length - 1].weekday; i++) {
@@ -32,8 +33,34 @@ class Calendar extends React.Component {
     return weeks;
   };
 
+  changeMonth = (change) => {
+    const { dateQuery } = { ...this.props };
+
+    dateQuery.month += change;
+
+    if (dateQuery.month < 1) {
+      dateQuery.year -= 1;
+      dateQuery.month = 12;
+    } else if (dateQuery.month > 12) {
+      dateQuery.year += 1;
+      dateQuery.month = 1;
+    }
+
+    this.setDate(dateQuery);
+  };
+
+  setDate = (dateQuery) => {
+    this.props.setDateQuery(
+      dateQuery || {
+        year: now.getFullYear(),
+        month: now.getMonth() + 1,
+      }
+    );
+    this.props.getDate();
+  };
+
   componentDidMount() {
-    this.props.getDate(`${now.getFullYear()}/${now.getMonth() + 1}/`);
+    this.setDate();
   }
 
   render() {
@@ -41,7 +68,7 @@ class Calendar extends React.Component {
       ? this.formatMonth(this.props.date)
       : [];
 
-    console.log(date);
+    // console.log(date);
 
     return (
       <div className="container">
@@ -60,11 +87,31 @@ class Calendar extends React.Component {
         </button>
 
         <h1>Calendar</h1>
+
+        <div>
+          <button onClick={() => this.changeMonth(-1)}>←</button>
+          <button onClick={() => this.setDate()}>Today</button>
+          <button onClick={() => this.changeMonth(1)}>→</button>
+        </div>
+
         {this.props.date.length ? (
           <h5>
-            <Moment date={this.props.date[0]} format="MMMM, YYYY" />
+            <Moment
+              date={{
+                ...this.props.date[0],
+                month: this.props.date[0].month - 1,
+              }}
+              format="MMMM, YYYY"
+            />
           </h5>
         ) : null}
+        <div className="row">
+          {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
+            <div key={day} className="col s1 m1">
+              <h6>{day}</h6>
+            </div>
+          ))}
+        </div>
         {date.map((week, i) => (
           <div key={i} className="row">
             {week.map((day, j) =>
@@ -74,10 +121,20 @@ class Calendar extends React.Component {
                 <div
                   key={j}
                   className={`col s1 m1 ${this.state.colorScheme} ${
-                    day.day === now.getDate() ? "lighten-3" : "lighten-4"
+                    day.day === now.getDate() &&
+                    day.month === now.getMonth() + 1 &&
+                    day.year === now.getFullYear()
+                      ? "lighten-3"
+                      : "lighten-4"
                   }`}
                 >
-                  <h5>{day.day}</h5>
+                  <h5>
+                    <Link
+                      to={`/?year=${day.year}&month=${day.month}&day=${day.day}`}
+                    >
+                      {day.day}
+                    </Link>
+                  </h5>
                 </div>
               )
             )}
@@ -88,8 +145,9 @@ class Calendar extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  date: state.calendar.date || [],
+const mapStateToProps = ({ calendar: state }) => ({
+  date: state.date || [],
+  dateQuery: state.dateQuery || {},
 });
 
-export default connect(mapStateToProps, { getDate })(Calendar);
+export default connect(mapStateToProps, { getDate, setDateQuery })(Calendar);

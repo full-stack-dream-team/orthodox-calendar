@@ -1,5 +1,5 @@
 import axios from "axios";
-import { SET_JURISDICTION, GET_DATE } from "./types";
+import { SET_JURISDICTION, GET_DATE, SET_DATE_QUERY } from "./types";
 
 const apiURL = "https://orthocal.info";
 
@@ -8,12 +8,27 @@ export const setJurisdiction = (jurisdiction) => ({
   payload: jurisdiction,
 });
 
-export const getDate = (dateQuery) => (dispatch, getState) => {
+export const setDateQuery = (query) => (dispatch) => {
+  dispatch({
+    type: SET_DATE_QUERY,
+    payload: query,
+  });
+};
+
+export const getDate = () => (dispatch, getState) => {
   const { calendar: state } = getState();
 
   // Fetch the day data
   const url = `${apiURL}/api/${state.jurisdiction}/${
-    dateQuery ? dateQuery : ""
+    state.dateQuery.year
+      ? `${state.dateQuery.year}/${
+          state.dateQuery.month
+            ? `${state.dateQuery.month}/${
+                state.dateQuery.day ? `${state.dateQuery.day}/` : ""
+              }`
+            : ""
+        }`
+      : ""
   }`;
   axios
     .get(url)

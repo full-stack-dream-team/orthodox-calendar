@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import "../sass/index.scss";
 // import { logoutUser } from "../redux/actions/authActions";
-import { getDate } from "../redux/actions/calendarActions";
+import { getDate, setDateQuery } from "../redux/actions/calendarActions";
 import DayNav from "../components/DayNav";
 import DateCard from "../components/DateCard";
 import FastingCard from "../components/FastingCard";
@@ -17,14 +17,28 @@ class App extends React.Component {
 
   unmounted = false;
 
-  componentDidMount() {
-    this.props.getDate();
-  }
+  setDateToQuery = () => {
+    const urlParams = new URLSearchParams(window.location.search);
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.day !== this.props.day) {
-      this.setState({ day: this.props.day });
+    const queries = [];
+    for (let value of urlParams.values()) {
+      queries.push(value);
     }
+
+    this.props.setDateQuery(
+      queries.length === 3
+        ? {
+            year: queries[0],
+            month: queries[1],
+            day: queries[2],
+          }
+        : null
+    );
+    this.props.getDate();
+  };
+
+  componentDidMount() {
+    this.setDateToQuery();
   }
 
   componentWillUnmount() {
@@ -32,9 +46,9 @@ class App extends React.Component {
   }
 
   render() {
-    const { day } = this.state;
+    const { day } = this.props;
 
-    console.log(day);
+    // console.log(day);
 
     return (
       <div className="App">
@@ -65,4 +79,4 @@ const mapStateToProps = (state) => ({
   day: state.calendar.date || {},
 });
 
-export default connect(mapStateToProps, { getDate })(App);
+export default connect(mapStateToProps, { getDate, setDateQuery })(App);
