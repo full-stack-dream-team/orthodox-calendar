@@ -2,9 +2,18 @@ import React, { Component } from "react";
 import M from "materialize-css";
 
 class Readings extends Component {
-  componentDidMount() {
-    const options = {};
-    M.Collapsible.init(this.Collapsible, options);
+  modals = [];
+  modalsInitialized = false;
+
+  componentDidUpdate() {
+    if (!this.modalsInitialized && this.modals.length) {
+      const options = {};
+      this.modals.forEach((Modal, i) => {
+        M.Modal.init(Modal, options);
+      });
+
+      this.modalsInitialized = true;
+    }
   }
 
   render() {
@@ -22,35 +31,55 @@ class Readings extends Component {
             SCRIPTURE READINGS (KJV)
           </h5>
 
-          <ul
-            className="collapsible"
-            ref={Collapsible => {
-              this.Collapsible = Collapsible;
-            }}
-          >
-            {day.readings
-              ? day.readings.map(reading => (
-                  <li key={reading.display}>
-                    <div className="collapsible-header">
-                      <h5>{reading.display}</h5>
-                    </div>
-                    <div className="collapsible-body">
+          {day.readings
+            ? day.readings.map((reading, i) => (
+                <div key={i}>
+                  <div
+                    style={{ cursor: "pointer" }}
+                    data-target={"reading" + i}
+                    className="modal-trigger teal-text"
+                  >
+                    <h5>{reading.display}</h5>
+                  </div>
+
+                  <div
+                    id={"reading" + i}
+                    className="modal"
+                    ref={Modal => {
+                      this.modals.push(Modal);
+                    }}
+                  >
+                    <div className="modal-content">
+                      <div className="right-align modal-close">
+                        <i
+                          className="iconify"
+                          data-icon="fa-solid:times"
+                          data-inline="false"
+                        ></i>
+                      </div>
+
+                      <h5 className="center-align">
+                        <i
+                          className="iconify"
+                          data-icon="bx:bxs-bible"
+                          data-inline="false"
+                        ></i>{" "}
+                        {reading.display}
+                      </h5>
+
                       {reading.passage.map(verse => (
                         <p style={{ margin: "0" }} key={verse.content}>
-                          <span
-                            className="blue-text text-lighten-2"
-                            key={verse.verse}
-                          >
+                          <span className="blue-text text-lighten-2">
                             {verse.verse}{" "}
                           </span>
                           {verse.content}
                         </p>
                       ))}
                     </div>
-                  </li>
-                ))
-              : null}
-          </ul>
+                  </div>
+                </div>
+              ))
+            : null}
         </div>
       </>
     );

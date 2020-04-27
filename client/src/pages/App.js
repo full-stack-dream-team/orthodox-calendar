@@ -2,7 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import "../sass/index.scss";
 // import { logoutUser } from "../redux/actions/authActions";
-import { getDate } from "../redux/actions/calendarActions";
+import { getDate, setJurisdiction } from "../redux/actions/calendarActions";
+
 import DayNav from "../components/DayNav";
 import DateCard from "../components/DateCard";
 import FastingCard from "../components/FastingCard";
@@ -30,7 +31,6 @@ class App extends React.Component {
   componentWillUnmount() {
     this.unmounted = true;
   }
-
   render() {
     const { day } = this.state;
 
@@ -41,7 +41,13 @@ class App extends React.Component {
         <div className="container">
           <h1 className="center-align">Daily Readings</h1>
           <DayNav />
-          <JurisdictionsSelector />
+
+          <JurisdictionsSelector
+            setJurisdiction={jurisdiction => {
+              this.props.setJurisdiction(jurisdiction);
+              this.props.getDate();
+            }}
+          />
 
           <div className="row">
             <DateCard day={day} />
@@ -67,5 +73,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getDate }
+  { getDate, setJurisdiction }
 )(App);

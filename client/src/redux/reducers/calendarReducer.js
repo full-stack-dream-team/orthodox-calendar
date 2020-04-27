@@ -2,8 +2,8 @@ import { SET_JURISDICTION, GET_DATE } from "../actions/types";
 
 export const initialState = {
   isFetching: false,
-  jurisdiction: "oca",
-  date: null,
+  jurisdiction: "rocor",
+  date: null
 };
 // titles: [],
 // feasts: [],
@@ -17,12 +17,12 @@ const calendarReducer = (state = initialState, action) => {
     case SET_JURISDICTION:
       return {
         ...state,
-        jurisdiction: action.payload,
+        jurisdiction: action.payload
       };
     case GET_DATE:
       return {
         ...state,
-        date: action.payload,
+        date: action.payload
       };
     default:
       return state;

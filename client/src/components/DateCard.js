@@ -24,18 +24,8 @@ class DateCard extends Component {
             </div>
           </div>
           <div className="row">
-            <div className="col m12 l6">
-              Julian (Old Calendar):{" "}
-              <strong>
-                <Moment
-                  date={day}
-                  format={"dddd, MMMM Do, YYYY"}
-                  subtract={{ months: 1, days: 13 }}
-                />
-              </strong>
-            </div>
-            <div className="col m12 l6">
-              Gregorian (New Calendar):{" "}
+            <div className="col m12">
+              Calendar Date:{" "}
               <strong>
                 <Moment
                   date={day}

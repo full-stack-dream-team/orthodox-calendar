@@ -16,15 +16,12 @@ class FeastDayCard extends Component {
             SAINTS AND FEASTS
           </h5>
           <div className="row">
-            <div className="col s12 m6">
+            <div className="col s12">
               <ul>
                 {day.feasts
                   ? day.feasts.map(feast => <li key={feast}>{feast}</li>)
                   : null}
-              </ul>
-            </div>
-            <div className="col s12 m6">
-              <ul>
+
                 {day.saints
                   ? day.saints.map(saint => <li key={saint}>{saint}</li>)
                   : null}
