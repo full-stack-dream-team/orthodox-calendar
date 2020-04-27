@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-class FastCard extends Component {
+class FastingCard extends Component {
   render() {
     const { day } = this.props;
 
@@ -13,7 +13,7 @@ class FastCard extends Component {
               data-icon="mdi:bolnisi-cross"
               data-inline="false"
             ></i>{" "}
-            FAST
+            FASTING
           </h5>
           <p>
             <strong>
@@ -26,4 +26,4 @@ class FastCard extends Component {
   }
 }
 
-export default FastCard;
+export default FastingCard;
