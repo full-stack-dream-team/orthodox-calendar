@@ -22,17 +22,11 @@ class App extends React.Component {
     this.props.getDate();
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.day !== this.props.day) {
-      this.setState({ day: this.props.day });
-    }
-  }
-
   componentWillUnmount() {
     this.unmounted = true;
   }
   render() {
-    const { day } = this.state;
+    const { day, jurisdiction } = this.props;
 
     console.log(day);
 
@@ -50,7 +44,7 @@ class App extends React.Component {
           />
 
           <div className="row">
-            <DateCard day={day} />
+            <DateCard day={day} jurisdiction={jurisdiction} />
           </div>
 
           <div className="row">
@@ -67,8 +61,9 @@ class App extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  day: state.calendar.date || {}
+const mapStateToProps = ({ calendar }) => ({
+  day: calendar.date || {},
+  jurisdiction: calendar.jurisdiction
 });
 
 export default connect(

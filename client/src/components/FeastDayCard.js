@@ -17,11 +17,27 @@ class FeastDayCard extends Component {
           </h5>
           <div className="row">
             <div className="col s12">
+              {day.feasts ? (
+                <p>
+                  <strong>FEASTS</strong>
+                </p>
+              ) : (
+                ""
+              )}
               <ul>
                 {day.feasts
                   ? day.feasts.map(feast => <li key={feast}>{feast}</li>)
                   : null}
+              </ul>
 
+              {day.saints ? (
+                <p>
+                  <strong>SAINTS</strong>
+                </p>
+              ) : (
+                ""
+              )}
+              <ul>
                 {day.saints
                   ? day.saints.map(saint => <li key={saint}>{saint}</li>)
                   : null}
