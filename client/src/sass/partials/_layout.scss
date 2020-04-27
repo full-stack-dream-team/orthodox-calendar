@@ -1,7 +1,9 @@
-.main {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: repeat(5, 1fr);
-  grid-column-gap: 0px;
-  grid-row-gap: 0px;
+.container {
+  margin-top: 2rem;
+}
+
+#day-nav .today {
+  margin-left: 1rem;
+  margin-right: 1rem;
+  font-weight: bold;
 }

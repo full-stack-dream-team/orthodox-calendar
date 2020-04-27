@@ -5,15 +5,15 @@ class FeastDayCard extends Component {
     const { day } = this.props;
 
     return (
-      <div className="col s12">
+      <div className="col s12 m6">
         <div className="card-panel">
           <h5>
             <i
               className="iconify"
-              data-icon="maki:monument-11"
+              data-icon="emojione-monotone:candle"
               data-inline="false"
             ></i>{" "}
-            Commemorations
+            SAINTS AND FEASTS
           </h5>
           <div className="row">
             <div className="col s12 m6">
