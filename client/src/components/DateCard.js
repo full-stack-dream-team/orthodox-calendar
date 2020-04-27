@@ -3,8 +3,7 @@ import Moment from "react-moment";
 
 class DateCard extends Component {
   render() {
-    const { day } = this.props;
-    console.log(day);
+    const { day, jurisdiction } = this.props;
 
     return (
       <div className="col s12">
@@ -24,18 +23,9 @@ class DateCard extends Component {
             </div>
           </div>
           <div className="row">
-            <div className="col m12 l6">
-              Julian (Old Calendar):{" "}
-              <strong>
-                <Moment
-                  date={day}
-                  format={"dddd, MMMM Do, YYYY"}
-                  subtract={{ months: 1, days: 13 }}
-                />
-              </strong>
-            </div>
-            <div className="col m12 l6">
-              Gregorian (New Calendar):{" "}
+            <div className="col m12 center-align">
+              {jurisdiction === "rocor" ? "Julian " : "Gregorian "}
+              Calendar Date:{" "}
               <strong>
                 <Moment
                   date={day}

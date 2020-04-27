@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import DatePicker from "../components/DatePicker";
 
 class DayNav extends Component {
   render() {
@@ -6,6 +7,7 @@ class DayNav extends Component {
       <div id="day-nav">
         <div className="row">
           <div className="col s12 center-align">
+            <DatePicker />
             <button className="waves-effect waves-light btn">
               Previous Day
             </button>

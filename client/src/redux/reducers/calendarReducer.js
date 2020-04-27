@@ -2,7 +2,7 @@ import { SET_JURISDICTION, GET_DATE, SET_DATE_QUERY } from "../actions/types";
 
 export const initialState = {
   isFetching: false,
-  jurisdiction: "oca",
+  jurisdiction: "rocor",
   dateQuery: {},
   date: null,
 };
