@@ -55,7 +55,7 @@ class App extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  day: state.calendar.date,
+  day: state.calendar.date || {},
 });
 
 export default connect(mapStateToProps, { getDate })(App);
