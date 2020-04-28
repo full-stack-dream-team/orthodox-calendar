@@ -2,16 +2,22 @@ import React from "react";
 import { connect } from "react-redux";
 import Moment from "react-moment";
 import { Link } from "react-router-dom";
-import { getDate, setDateQuery } from "../redux/actions/calendarActions";
+import {
+  getDate,
+  setDateQuery,
+  setJurisdiction
+} from "../redux/actions/calendarActions";
 
 const now = new Date();
 
 class Calendar extends React.Component {
   state = {
-    colorScheme: "red",
+    colorScheme: "red"
   };
 
-  formatMonth = (date) => {
+  formatMonth = date => {
+    console.log(date[0]);
+
     const month = [...date];
     for (let i = 0; i < Math.abs(date[0].weekday + 7) - 7; i++) {
       month.unshift({ empty: true });
@@ -33,7 +39,7 @@ class Calendar extends React.Component {
     return weeks;
   };
 
-  changeMonth = (change) => {
+  changeMonth = change => {
     const { dateQuery } = { ...this.props };
 
     dateQuery.month += change;
@@ -49,17 +55,18 @@ class Calendar extends React.Component {
     this.setDate(dateQuery);
   };
 
-  setDate = (dateQuery) => {
+  setDate = dateQuery => {
     this.props.setDateQuery(
       dateQuery || {
         year: now.getFullYear(),
-        month: now.getMonth() + 1,
+        month: now.getMonth() + 1
       }
     );
     this.props.getDate();
   };
 
   componentDidMount() {
+    this.props.setJurisdiction("oca");
     this.setDate();
   }
 
@@ -99,14 +106,14 @@ class Calendar extends React.Component {
             <Moment
               date={{
                 ...this.props.date[0],
-                month: this.props.date[0].month - 1,
+                month: this.props.date[0].month - 1
               }}
               format="MMMM, YYYY"
             />
           </h5>
         ) : null}
         <div className="row">
-          {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
+          {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map(day => (
             <div key={day} className="col s1 m1">
               <h6>{day}</h6>
             </div>
@@ -147,7 +154,10 @@ class Calendar extends React.Component {
 
 const mapStateToProps = ({ calendar: state }) => ({
   date: state.date || [],
-  dateQuery: state.dateQuery || {},
+  dateQuery: state.dateQuery || {}
 });
 
-export default connect(mapStateToProps, { getDate, setDateQuery })(Calendar);
+export default connect(
+  mapStateToProps,
+  { getDate, setDateQuery, setJurisdiction }
+)(Calendar);

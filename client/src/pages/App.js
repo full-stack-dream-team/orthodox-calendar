@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import "../sass/index.scss";
 // import { logoutUser } from "../redux/actions/authActions";
 import {
@@ -18,25 +19,35 @@ import JurisdictionsSelector from "../components/JurisdictionsSelector";
 class App extends React.Component {
   state = {
     day: {},
+    currentUrlParams: {},
   };
 
   unmounted = false;
 
+  setUrlParamsState = () => {
+    const urlParams = new URLSearchParams(window.location.search);
+
+    const queries = {};
+    for (let [key, value] of urlParams) {
+      queries[key] = parseInt(value);
+    }
+
+    this.setState({ currentUrlParams: queries });
+  };
+
   setDateToQuery = () => {
     const urlParams = new URLSearchParams(window.location.search);
 
-    const queries = [];
-    for (let value of urlParams.values()) {
-      queries.push(value);
+    const queries = {};
+    for (let [key, value] of urlParams) {
+      queries[key] = value;
     }
 
+    const { year, month, day } = queries;
+
     this.props.setDateQuery(
-      queries.length === 3
-        ? {
-            year: queries[0],
-            month: queries[1],
-            day: queries[2],
-          }
+      (year || year === 0) && (month || month === 0) && (day || day === 0)
+        ? { year, month, day }
         : null
     );
     this.props.getDate();
@@ -44,6 +55,12 @@ class App extends React.Component {
 
   componentDidMount() {
     this.setDateToQuery();
+    this.setUrlParamsState();
+
+    this.props.history.listen(() => {
+      this.setDateToQuery();
+      this.setUrlParamsState();
+    });
   }
 
   componentWillUnmount() {
@@ -57,12 +74,19 @@ class App extends React.Component {
     return (
       <div className="App">
         <div className="container">
-          <h1 className="center-align">Daily Readings</h1>
-          <DayNav />
+          <div className="row">
+            <div className="col s12" style={{ marginTop: "2rem" }}>
+              <Link to="/calendar">← Back To Calendar</Link>
+            </div>
+          </div>
+          <h2 className="center-align" style={{ marginTop: "0" }}>
+            Daily Readings
+          </h2>
+          <DayNav {...this.state.currentUrlParams} />
 
           <JurisdictionsSelector
-            setJurisdiction={(jurisdiction) => {
-              this.props.setJurisdiction(jurisdiction);
+            setJurisdiction={(nextJurisdiction) => {
+              this.props.setJurisdiction(nextJurisdiction);
               this.props.getDate();
             }}
           />

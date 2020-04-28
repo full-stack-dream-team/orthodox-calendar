@@ -3,10 +3,12 @@ import { SET_JURISDICTION, GET_DATE, SET_DATE_QUERY } from "./types";
 
 const apiURL = "https://orthocal.info";
 
-export const setJurisdiction = (jurisdiction) => ({
-  type: SET_JURISDICTION,
-  payload: jurisdiction,
-});
+export const setJurisdiction = (jurisdiction) => (dispatch) => {
+  dispatch({
+    type: SET_JURISDICTION,
+    payload: jurisdiction,
+  });
+};
 
 export const setDateQuery = (query) => (dispatch) => {
   dispatch({

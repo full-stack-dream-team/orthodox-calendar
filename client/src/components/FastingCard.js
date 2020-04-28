@@ -17,7 +17,7 @@ class FastingCard extends Component {
           </h5>
           <p>
             <strong>
-              {day.fast_exception_desc ? day.fast_exception_desc : "Fast Free"}
+              {day.fast_exception_desc ? day.fast_exception_desc : ""}
             </strong>
           </p>
         </div>
