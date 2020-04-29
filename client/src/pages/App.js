@@ -7,6 +7,7 @@ import {
   getDate,
   setDateQuery,
   setJurisdiction,
+  getRussianFast,
 } from "../redux/actions/calendarActions";
 
 import DayNav from "../components/DayNav";
@@ -61,6 +62,7 @@ class App extends React.Component {
   };
 
   componentDidMount() {
+    this.props.getRussianFast();
     this.setDateToQuery();
     this.setUrlParamsState();
 
@@ -78,11 +80,12 @@ class App extends React.Component {
   render() {
     const { day, jurisdiction } = this.props;
 
-    // console.log(jurisdiction);
+    console.log(this.props.russianFast);
 
     return (
       <div className="App">
         <div className="container">
+          <h4>{this.props.russianFast}</h4>
           <div className="row">
             <div className="col s12" style={{ marginTop: "2rem" }}>
               <Link to="/calendar" onClick={this.unlisten}>
@@ -123,10 +126,12 @@ class App extends React.Component {
 const mapStateToProps = ({ calendar }) => ({
   day: calendar.date || {},
   jurisdiction: calendar.jurisdiction,
+  russianFast: calendar.russianFast,
 });
 
 export default connect(mapStateToProps, {
   getDate,
   setDateQuery,
   setJurisdiction,
+  getRussianFast,
 })(App);
