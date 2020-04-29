@@ -141,7 +141,9 @@ class Calendar extends React.Component {
                 >
                   <h5>
                     <Link
-                      to={`/?year=${day.year}&month=${day.month}&day=${day.day}`}
+                      to={`/?year=${day.year}&month=${day.month + 1}&day=${
+                        day.day
+                      }`}
                     >
                       {day.day}
                     </Link>
