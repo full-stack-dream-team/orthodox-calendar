@@ -45,7 +45,7 @@ class Readings extends Component {
                   <div
                     id={"reading" + i}
                     className="modal"
-                    ref={Modal => {
+                    ref={(Modal) => {
                       this.modals.push(Modal);
                     }}
                   >
@@ -67,8 +67,8 @@ class Readings extends Component {
                         {reading.display}
                       </h5>
 
-                      {reading.passage.map(verse => (
-                        <p style={{ margin: "0" }} key={verse.content}>
+                      {reading.passage.map((verse, i) => (
+                        <p style={{ margin: "0" }} key={i}>
                           <span className="blue-text text-lighten-2">
                             {verse.verse}{" "}
                           </span>

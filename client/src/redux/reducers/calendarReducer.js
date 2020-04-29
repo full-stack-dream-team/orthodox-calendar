@@ -2,16 +2,10 @@ import { SET_JURISDICTION, GET_DATE, SET_DATE_QUERY } from "../actions/types";
 
 export const initialState = {
   isFetching: false,
-  jurisdiction: "rocor",
+  jurisdiction: "oca",
   dateQuery: {},
   date: null,
 };
-// titles: [],
-// feasts: [],
-// fast_level: 0,
-// fast_level_desc: "",
-// fast_exception_desc: "",
-// readings: [],
 
 const calendarReducer = (state = initialState, action) => {
   switch (action.type) {

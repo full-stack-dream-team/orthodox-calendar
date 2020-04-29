@@ -22,6 +22,8 @@ class App extends React.Component {
     currentUrlParams: {},
   };
 
+  today = new Date();
+
   unmounted = false;
 
   setUrlParamsState = () => {
@@ -32,7 +34,9 @@ class App extends React.Component {
       queries[key] = parseInt(value);
     }
 
-    this.setState({ currentUrlParams: queries });
+    if (!this.unmounted) {
+      this.setState({ currentUrlParams: queries });
+    }
   };
 
   setDateToQuery = () => {
@@ -45,19 +49,22 @@ class App extends React.Component {
 
     const { year, month, day } = queries;
 
-    this.props.setDateQuery(
-      (year || year === 0) && (month || month === 0) && (day || day === 0)
-        ? { year, month, day }
-        : null
-    );
-    this.props.getDate();
+    if (!this.unmounted) {
+      this.props.setDateQuery(
+        (year || year === 0) && (month || month === 0) && (day || day === 0)
+          ? { year, month, day }
+          : null
+      );
+
+      this.props.getDate();
+    }
   };
 
   componentDidMount() {
     this.setDateToQuery();
     this.setUrlParamsState();
 
-    this.props.history.listen(() => {
+    this.unlisten = this.props.history.listen(() => {
       this.setDateToQuery();
       this.setUrlParamsState();
     });
@@ -65,18 +72,22 @@ class App extends React.Component {
 
   componentWillUnmount() {
     this.unmounted = true;
+    this.unlisten();
   }
+
   render() {
     const { day, jurisdiction } = this.props;
 
-    // console.log(day);
+    // console.log(jurisdiction);
 
     return (
       <div className="App">
         <div className="container">
           <div className="row">
             <div className="col s12" style={{ marginTop: "2rem" }}>
-              <Link to="/calendar">← Back To Calendar</Link>
+              <Link to="/calendar" onClick={this.unlisten}>
+                ← Back To Calendar
+              </Link>
             </div>
           </div>
           <h2 className="center-align" style={{ marginTop: "0" }}>
