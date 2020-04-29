@@ -14,25 +14,25 @@ class JurisdictionsSelector extends Component {
           <div className="col s12">
             <ul
               className="tabs"
-              ref={Tabs => {
+              ref={(Tabs) => {
                 this.Tabs = Tabs;
               }}
             >
               <li className="tab col s2">
                 <a
-                  onClick={() => this.props.setJurisdiction("rocor")}
+                  onClick={() => this.props.setJurisdiction("oca")}
                   className="active"
-                  href="#rocor"
+                  href="#oca"
                 >
-                  ROCOR
+                  OCA
                 </a>
               </li>
               <li className="tab col s2">
                 <a
-                  onClick={() => this.props.setJurisdiction("oca")}
-                  href="#oca"
+                  onClick={() => this.props.setJurisdiction("rocor")}
+                  href="#rocor"
                 >
-                  OCA
+                  ROCOR
                 </a>
               </li>
             </ul>

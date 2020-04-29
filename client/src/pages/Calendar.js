@@ -5,19 +5,19 @@ import { Link } from "react-router-dom";
 import {
   getDate,
   setDateQuery,
-  setJurisdiction
+  setJurisdiction,
 } from "../redux/actions/calendarActions";
-
-const now = new Date();
 
 class Calendar extends React.Component {
   state = {
-    colorScheme: "red"
+    colorScheme: "red",
   };
 
-  formatMonth = date => {
-    console.log(date[0]);
+  unmounted = false;
 
+  today = new Date();
+
+  formatMonth = (date) => {
     const month = [...date];
     for (let i = 0; i < Math.abs(date[0].weekday + 7) - 7; i++) {
       month.unshift({ empty: true });
@@ -39,7 +39,7 @@ class Calendar extends React.Component {
     return weeks;
   };
 
-  changeMonth = change => {
+  changeMonth = (change) => {
     const { dateQuery } = { ...this.props };
 
     dateQuery.month += change;
@@ -55,11 +55,11 @@ class Calendar extends React.Component {
     this.setDate(dateQuery);
   };
 
-  setDate = dateQuery => {
+  setDate = (dateQuery) => {
     this.props.setDateQuery(
       dateQuery || {
-        year: now.getFullYear(),
-        month: now.getMonth() + 1
+        year: this.today.getFullYear(),
+        month: this.today.getMonth() + 1,
       }
     );
     this.props.getDate();
@@ -70,12 +70,16 @@ class Calendar extends React.Component {
     this.setDate();
   }
 
+  componentWillUnmount() {
+    this.unmounted = true;
+  }
+
   render() {
     const date = this.props.date.length
       ? this.formatMonth(this.props.date)
       : [];
 
-    // console.log(date);
+    console.log(this.props.date);
 
     return (
       <div className="container">
@@ -106,14 +110,14 @@ class Calendar extends React.Component {
             <Moment
               date={{
                 ...this.props.date[0],
-                month: this.props.date[0].month - 1
+                month: this.props.date[0].month - 1,
               }}
               format="MMMM, YYYY"
             />
           </h5>
         ) : null}
         <div className="row">
-          {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map(day => (
+          {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
             <div key={day} className="col s1 m1">
               <h6>{day}</h6>
             </div>
@@ -128,16 +132,18 @@ class Calendar extends React.Component {
                 <div
                   key={j}
                   className={`col s1 m1 ${this.state.colorScheme} ${
-                    day.day === now.getDate() &&
-                    day.month === now.getMonth() + 1 &&
-                    day.year === now.getFullYear()
+                    day.day === this.today.getDate() &&
+                    day.month === this.today.getMonth() + 1 &&
+                    day.year === this.today.getFullYear()
                       ? "lighten-3"
                       : "lighten-4"
                   }`}
                 >
                   <h5>
                     <Link
-                      to={`/?year=${day.year}&month=${day.month}&day=${day.day}`}
+                      to={`/?year=${day.year}&month=${day.month + 1}&day=${
+                        day.day
+                      }`}
                     >
                       {day.day}
                     </Link>
@@ -154,10 +160,11 @@ class Calendar extends React.Component {
 
 const mapStateToProps = ({ calendar: state }) => ({
   date: state.date || [],
-  dateQuery: state.dateQuery || {}
+  dateQuery: state.dateQuery || {},
 });
 
-export default connect(
-  mapStateToProps,
-  { getDate, setDateQuery, setJurisdiction }
-)(Calendar);
+export default connect(mapStateToProps, {
+  getDate,
+  setDateQuery,
+  setJurisdiction,
+})(Calendar);

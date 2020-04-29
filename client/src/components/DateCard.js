@@ -28,7 +28,7 @@ class DateCard extends Component {
               Calendar Date:{" "}
               <strong>
                 <Moment
-                  date={day}
+                  date={{ day: day.day, month: day.month - 1, year: day.year }}
                   format={"dddd, MMMM Do, YYYY"}
                   subtract={{ months: 1 }}
                 />

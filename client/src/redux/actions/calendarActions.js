@@ -1,5 +1,10 @@
 import axios from "axios";
-import { SET_JURISDICTION, GET_DATE, SET_DATE_QUERY } from "./types";
+import {
+  SET_JURISDICTION,
+  GET_DATE,
+  SET_DATE_QUERY,
+  GET_RUSSIAN_FAST,
+} from "./types";
 
 const apiURL = "https://orthocal.info";
 
@@ -37,3 +42,13 @@ export const getDate = () => (dispatch, getState) => {
     .then((res) => dispatch({ type: GET_DATE, payload: res.data }))
     .catch((err) => console.log(err));
 };
+
+export const getRussianFast = () => (dispatch) => {
+  axios
+    .get(
+      "https://www.holytrinityorthodox.com/calendar/calendar.php?dt=0&lives=0&trp=0&scripture=0"
+    )
+    .then((res) => dispatch({ type: GET_RUSSIAN_FAST, payload: res.data }));
+};
+
+window.axios = axios;

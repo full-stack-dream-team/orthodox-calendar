@@ -1,17 +1,17 @@
-import { SET_JURISDICTION, GET_DATE, SET_DATE_QUERY } from "../actions/types";
+import {
+  SET_JURISDICTION,
+  GET_DATE,
+  SET_DATE_QUERY,
+  GET_RUSSIAN_FAST,
+} from "../actions/types";
 
 export const initialState = {
   isFetching: false,
-  jurisdiction: "rocor",
+  jurisdiction: "oca",
   dateQuery: {},
   date: null,
+  russianFast: "",
 };
-// titles: [],
-// feasts: [],
-// fast_level: 0,
-// fast_level_desc: "",
-// fast_exception_desc: "",
-// readings: [],
 
 const calendarReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -35,6 +35,12 @@ const calendarReducer = (state = initialState, action) => {
       return {
         ...state,
         date: action.payload,
+      };
+    case GET_RUSSIAN_FAST:
+      console.log(action.payload);
+      return {
+        ...state,
+        russianFast: action.payload,
       };
     default:
       return state;
