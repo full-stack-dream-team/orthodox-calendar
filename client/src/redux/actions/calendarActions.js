@@ -4,9 +4,8 @@ import {
   GET_DATE,
   SET_DATE_QUERY,
   GET_RUSSIAN_FAST,
+  SET_OCA_FAST,
 } from "./types";
-
-const apiURL = "https://orthocal.info";
 
 export const setJurisdiction = (jurisdiction) => (dispatch) => {
   dispatch({
@@ -26,6 +25,7 @@ export const getDate = () => (dispatch, getState) => {
   const { calendar: state } = getState();
 
   // Fetch the day data
+  const apiURL = "https://orthocal.info";
   const url = `${apiURL}/api/${state.jurisdiction}/${
     state.dateQuery.year
       ? `${state.dateQuery.year}/${
@@ -49,6 +49,13 @@ export const getRussianFast = () => (dispatch) => {
       "https://www.holytrinityorthodox.com/calendar/calendar.php?dt=0&lives=0&trp=0&scripture=0"
     )
     .then((res) => dispatch({ type: GET_RUSSIAN_FAST, payload: res.data }));
+};
+
+export const setOCAFast = (ocaFast) => (dispatch) => {
+  dispatch({
+    type: SET_OCA_FAST,
+    payload: ocaFast,
+  });
 };
 
 window.axios = axios;

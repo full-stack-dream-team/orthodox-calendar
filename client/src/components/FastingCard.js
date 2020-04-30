@@ -57,9 +57,7 @@ class FastingCard extends Component {
           </h5>
 
           <p style={{ textTransform: "uppercase" }}>
-            <strong>
-              {day.fast_level_desc ? day.fast_level_desc : "No Fast"}
-            </strong>
+            <strong>{day.fast_level_desc ? day.fast_level_desc : ""}</strong>
           </p>
 
           <p>

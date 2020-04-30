@@ -8,3 +8,4 @@ export const SET_JURISDICTION = "SET_JURISDICTION";
 export const SET_DATE_QUERY = "SET_DATE_QUERY";
 export const GET_DATE = "GET_DATE";
 export const GET_RUSSIAN_FAST = "GET_RUSSIAN_FAST";
+export const SET_OCA_FAST = "SET_OCA_FAST";

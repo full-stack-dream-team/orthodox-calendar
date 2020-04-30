@@ -3,6 +3,7 @@ import {
   GET_DATE,
   SET_DATE_QUERY,
   GET_RUSSIAN_FAST,
+  SET_OCA_FAST,
 } from "../actions/types";
 
 export const initialState = {
