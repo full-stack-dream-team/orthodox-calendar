@@ -39,7 +39,31 @@ export const getDate = () => (dispatch, getState) => {
   }`;
   axios
     .get(url)
-    .then((res) => dispatch({ type: GET_DATE, payload: res.data }))
+    .then((res) => {
+      const result =
+        typeof res.data === "object" && typeof res.data.length !== "number"
+          ? { ...res.data }
+          : [...res.data];
+
+      if (
+        typeof result.length !== "number" &&
+        typeof result.fast_level === "number"
+      ) {
+        if (result.fast_level === 0) {
+          result.fast_exception_desc = "Fast Free";
+        } else if (result.fast_level > 0) {
+          if (result.fast_exception_desc.replace(" ", "")) {
+            result.fast_exception_desc = "Strict Fast";
+          } else if (
+            result.fast_exception_desc.toLowerCase() === "no overrides"
+          ) {
+            result.fast_exception_desc = "Strict Fast";
+          }
+        }
+      }
+
+      dispatch({ type: GET_DATE, payload: result });
+    })
     .catch((err) => console.log(err));
 };
 
@@ -56,7 +80,8 @@ export const getRussianFast = () => (dispatch, getState) => {
           : ""
       }`
     )
-    .then((res) => dispatch({ type: GET_RUSSIAN_FAST, payload: res.data }));
+    .then((res) => dispatch({ type: GET_RUSSIAN_FAST, payload: res.data }))
+    .catch((err) => console.log(err));
 };
 
 export const setOCAFast = (ocaFast) => (dispatch) => {

@@ -34,7 +34,6 @@ class DateCard extends Component {
                       year: day.year,
                     }}
                     format={"dddd, MMMM Do, YYYY"}
-                    subtract={{ months: 1 }}
                   />
                 </strong>
               </h6>
@@ -48,7 +47,7 @@ class DateCard extends Component {
                       year: day.year,
                     }}
                     format={"dddd, MMMM Do, YYYY"}
-                    subtract={{ months: 1, days: 13 }}
+                    subtract={{ days: 13 }}
                   />
                 </strong>
               </h6>
