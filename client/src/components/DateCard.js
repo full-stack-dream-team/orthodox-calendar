@@ -3,7 +3,7 @@ import Moment from "react-moment";
 
 class DateCard extends Component {
   render() {
-    const { titles, currentUrlParams: day, jurisdiction } = this.props;
+    const { titles, currentUrlParams: day } = this.props;
 
     return (
       <div className="col s12">
