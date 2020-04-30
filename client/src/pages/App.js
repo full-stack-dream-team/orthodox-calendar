@@ -62,13 +62,14 @@ class App extends React.Component {
   };
 
   componentDidMount() {
-    this.props.getRussianFast();
     this.setDateToQuery();
     this.setUrlParamsState();
+    this.props.getRussianFast();
 
     this.unlisten = this.props.history.listen(() => {
       this.setDateToQuery();
       this.setUrlParamsState();
+      this.props.getRussianFast();
     });
   }
 
@@ -80,12 +81,16 @@ class App extends React.Component {
   render() {
     const { day, jurisdiction } = this.props;
 
-    console.log(this.props.russianFast);
+    let russianFast = this.props.russianFast.split(
+      '<span class="headerfast">'
+    )[1];
+    if (russianFast) {
+      russianFast = russianFast.replace(/<[^>]+>/g, "");
+    }
 
     return (
       <div className="App">
         <div className="container">
-          <h4>{this.props.russianFast}</h4>
           <div className="row">
             <div className="col s12" style={{ marginTop: "2rem" }}>
               <Link to="/calendar" onClick={this.unlisten}>
@@ -110,7 +115,11 @@ class App extends React.Component {
           </div>
 
           <div className="row">
-            <FastingCard day={day} />
+            <FastingCard
+              day={day}
+              jurisdiction={jurisdiction}
+              russianFast={russianFast}
+            />
             <FeastDayCard day={day} />
           </div>
 

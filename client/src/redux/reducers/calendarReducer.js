@@ -38,7 +38,6 @@ const calendarReducer = (state = initialState, action) => {
         date: action.payload,
       };
     case GET_RUSSIAN_FAST:
-      console.log(action.payload);
       return {
         ...state,
         russianFast: action.payload,
