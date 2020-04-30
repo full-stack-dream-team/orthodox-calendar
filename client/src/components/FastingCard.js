@@ -55,11 +55,6 @@ class FastingCard extends Component {
             ></i>{" "}
             FASTING
           </h5>
-
-          <p style={{ textTransform: "uppercase" }}>
-            <strong>{day.fast_level_desc ? day.fast_level_desc : ""}</strong>
-          </p>
-
           <p>
             <strong>
               {day.fast_exception_desc && jurisdiction === "oca"

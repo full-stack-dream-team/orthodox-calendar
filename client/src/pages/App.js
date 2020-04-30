@@ -111,7 +111,11 @@ class App extends React.Component {
           />
 
           <div className="row">
-            <DateCard day={day} jurisdiction={jurisdiction} />
+            <DateCard
+              titles={day.titles}
+              jurisdiction={jurisdiction}
+              currentUrlParams={this.state.currentUrlParams}
+            />
           </div>
 
           <div className="row">
