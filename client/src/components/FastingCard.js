@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 class FastingCard extends Component {
   render() {
-    const { day } = this.props;
+    const { day, jurisdiction, russianFast } = this.props;
 
     return (
       <div className="col s12 m6">
@@ -17,7 +17,13 @@ class FastingCard extends Component {
           </h5>
           <p>
             <strong>
-              {day.fast_exception_desc ? day.fast_exception_desc : ""}
+              {day.fast_exception_desc && jurisdiction === "oca"
+                ? day.fast_exception_desc
+                : russianFast &&
+                  russianFast.replace(" ", "") &&
+                  jurisdiction === "rocor"
+                ? russianFast
+                : "Fast free"}
             </strong>
           </p>
         </div>

@@ -43,10 +43,18 @@ export const getDate = () => (dispatch, getState) => {
     .catch((err) => console.log(err));
 };
 
-export const getRussianFast = () => (dispatch) => {
+export const getRussianFast = () => (dispatch, getState) => {
+  const { calendar: state } = getState();
+
   axios
     .get(
-      "https://www.holytrinityorthodox.com/calendar/calendar.php?dt=0&lives=0&trp=0&scripture=0"
+      `https://www.holytrinityorthodox.com/calendar/calendar.php?dt=0&lives=0&trp=0&scripture=0${
+        state.dateQuery.year && state.dateQuery.month && state.dateQuery.day
+          ? `&year=${state.dateQuery.year}&month=${
+              state.dateQuery.month + 1
+            }&today=${state.dateQuery.day}`
+          : ""
+      }`
     )
     .then((res) => dispatch({ type: GET_RUSSIAN_FAST, payload: res.data }));
 };
