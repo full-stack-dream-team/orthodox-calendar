@@ -79,8 +79,6 @@ class Calendar extends React.Component {
       ? this.formatMonth(this.props.date)
       : [];
 
-    console.log(this.props.date);
-
     return (
       <div className="container">
         <h6>Color Scheme</h6>
@@ -141,9 +139,7 @@ class Calendar extends React.Component {
                 >
                   <h5>
                     <Link
-                      to={`/?year=${day.year}&month=${day.month + 1}&day=${
-                        day.day
-                      }`}
+                      to={`/?year=${day.year}&month=${day.month}&day=${day.day}`}
                     >
                       {day.day}
                     </Link>
