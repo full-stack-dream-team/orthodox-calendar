@@ -45,7 +45,7 @@ class FastingCard extends Component {
       <div className="col s12 m6">
         <div className="card-panel cyan lighten-4">
           <span></span>
-          <FastingLegend />
+          <FastingLegend day={day} jurisdiction={jurisdiction} />
           <h5 style={{ marginTop: "0" }}>FASTING</h5>
           <p>
             <strong>
