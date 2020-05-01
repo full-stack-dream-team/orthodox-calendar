@@ -40,14 +40,10 @@ export const getDate = () => (dispatch, getState) => {
   axios
     .get(url)
     .then((res) => {
-      console.log(res.data);
-
       const result =
         typeof res.data === "object" && typeof res.data.length !== "number"
           ? { ...res.data }
           : [...res.data];
-
-      console.log(result);
 
       if (
         typeof result.length !== "number" &&
@@ -56,7 +52,7 @@ export const getDate = () => (dispatch, getState) => {
         if (result.fast_level === 0) {
           result.fast_exception_desc = "Fast Free";
         } else if (result.fast_level > 0) {
-          if (result.fast_exception_desc.replace(" ", "")) {
+          if (!result.fast_exception_desc.replace(" ", "")) {
             result.fast_exception_desc = "Strict Fast";
           } else if (
             result.fast_exception_desc.toLowerCase() === "no overrides"

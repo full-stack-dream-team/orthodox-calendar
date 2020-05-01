@@ -3,11 +3,17 @@ import FastingDescription from "./FastingDescription";
 import FastingLegend from "./FastingLegend";
 
 class FastingCard extends Component {
-  render() {
-    const { day, jurisdiction, russianFast } = this.props;
+  state = {
+    icon: "",
+    switched: false,
+  };
 
+  componentDidUpdate() {
     let icon;
-    switch (day.fast_exception_desc) {
+    switch (this.props.day.fast_exception_desc) {
+      case "Wine is Allowed":
+        icon = "noto:grapes";
+        break;
       case "Wine and Oil are Allowed":
         icon = "noto:grapes";
         break;
@@ -26,6 +32,14 @@ class FastingCard extends Component {
       default:
         icon = "";
     }
+    if (icon !== this.state.icon) {
+      this.setState({ icon, switched: !this.state.switched });
+    }
+  }
+
+  render() {
+    const { day, jurisdiction, russianFast } = this.props;
+    const { icon, switched } = this.state;
 
     return (
       <div className="col s12 m6">
@@ -42,7 +56,16 @@ class FastingCard extends Component {
           </p>
           <h5>
             <strong>
-              {icon ? (
+              {icon && !switched ? (
+                <span style={{ marginRight: "0.5em" }}>
+                  <i
+                    className="iconify"
+                    data-icon={icon}
+                    data-inline="false"
+                  ></i>
+                </span>
+              ) : null}
+              {icon && switched ? (
                 <span style={{ marginRight: "0.5em" }}>
                   <i
                     className="iconify"
