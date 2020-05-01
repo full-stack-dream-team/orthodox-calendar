@@ -30,7 +30,7 @@ class DayNav extends Component {
               to={`/?year=${prevDate.getFullYear()}&month=${
                 prevDate.getMonth() + 1
               }&day=${prevDate.getDate()}`}
-              className="waves-effect waves-light btn"
+              className="waves-effect waves-light btn grey darken-4"
             >
               Previous Day
             </Link>
@@ -38,7 +38,7 @@ class DayNav extends Component {
               to={`/?year=${this.today.getFullYear()}&month=${
                 this.today.getMonth() + 1
               }&day=${this.today.getDate()}`}
-              className="today btn waves-effect waves-teal teal lighten-5 black-text"
+              className="today btn waves-green grey lighten-5 black-text"
             >
               TODAY
             </Link>{" "}
@@ -46,7 +46,7 @@ class DayNav extends Component {
               to={`/?year=${nextDate.getFullYear()}&month=${
                 nextDate.getMonth() + 1
               }&day=${nextDate.getDate()}`}
-              className="waves-effect waves-light btn"
+              className="waves-effect waves-light waves-ripple btn grey darken-4"
             >
               Next Day
             </Link>

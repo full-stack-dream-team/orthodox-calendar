@@ -99,6 +99,11 @@ class App extends React.Component {
             </div>
           </div>
           <h2 className="center-align" style={{ marginTop: "0" }}>
+            <i
+              className="iconify"
+              data-icon="emojione-monotone:orthodox-cross"
+              data-inline="false"
+            ></i>{" "}
             Daily Readings
           </h2>
           <DayNav {...this.state.currentUrlParams} />

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import FastingDescription from "./FastingDescription";
+import FastingLegend from "./FastingLegend";
 
 class FastingCard extends Component {
   render() {
@@ -28,22 +29,10 @@ class FastingCard extends Component {
 
     return (
       <div className="col s12 m6">
-        <div className="card-panel">
-          <h5>
-            <i
-              className="iconify"
-              data-icon="mdi:bolnisi-cross"
-              data-inline="false"
-            ></i>{" "}
-            FASTING
-          </h5>
-
-          {icon ? (
-            <span>
-              <i className="iconify" data-icon={icon} data-inline="false"></i>
-            </span>
-          ) : null}
-
+        <div className="card-panel cyan lighten-4">
+          <span></span>
+          <FastingLegend />
+          <h5 style={{ marginTop: "0" }}>FASTING</h5>
           <p>
             <strong>
               {day.fast_level_desc && jurisdiction === "oca"
@@ -51,8 +40,17 @@ class FastingCard extends Component {
                 : null}
             </strong>
           </p>
-          <p>
+          <h5>
             <strong>
+              {icon ? (
+                <span style={{ marginRight: "0.5em" }}>
+                  <i
+                    className="iconify"
+                    data-icon={icon}
+                    data-inline="false"
+                  ></i>
+                </span>
+              ) : null}
               {day.fast_exception_desc && jurisdiction === "oca"
                 ? day.fast_exception_desc
                 : russianFast &&
@@ -61,8 +59,8 @@ class FastingCard extends Component {
                 ? russianFast
                 : "Fast free"}
             </strong>
-          </p>
-          <FastingDescription />
+          </h5>
+          <FastingDescription day={day} />
         </div>
       </div>
     );

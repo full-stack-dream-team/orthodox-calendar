@@ -7,19 +7,12 @@ class DateCard extends Component {
 
     return (
       <div className="col s12">
-        <div className="card-panel">
+        <div className="card-panel cyan lighten-5">
           {/*<button onClick={this.props.logoutUser}>Log Out</button>*/}
 
           <div className="row">
             <div className="col s12 center-align">
-              <h5>
-                <i
-                  className="iconify"
-                  data-icon="emojione-monotone:orthodox-cross"
-                  data-inline="false"
-                ></i>{" "}
-                {titles}
-              </h5>
+              <h5>{titles}</h5>
             </div>
           </div>
           <div className="row">

@@ -40,10 +40,14 @@ export const getDate = () => (dispatch, getState) => {
   axios
     .get(url)
     .then((res) => {
+      console.log(res.data);
+
       const result =
         typeof res.data === "object" && typeof res.data.length !== "number"
           ? { ...res.data }
           : [...res.data];
+
+      console.log(result);
 
       if (
         typeof result.length !== "number" &&

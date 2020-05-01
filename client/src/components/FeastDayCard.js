@@ -6,7 +6,7 @@ class FeastDayCard extends Component {
 
     return (
       <div className="col s12 m6">
-        <div className="card-panel">
+        <div className="card-panel cyan lighten-4">
           <h5>
             <i
               className="iconify"
@@ -26,7 +26,7 @@ class FeastDayCard extends Component {
               )}
               <ul>
                 {day.feasts
-                  ? day.feasts.map(feast => <li key={feast}>{feast}</li>)
+                  ? day.feasts.map((feast) => <li key={feast}>{feast}</li>)
                   : null}
               </ul>
 
@@ -39,7 +39,7 @@ class FeastDayCard extends Component {
               )}
               <ul>
                 {day.saints
-                  ? day.saints.map(saint => <li key={saint}>{saint}</li>)
+                  ? day.saints.map((saint) => <li key={saint}>{saint}</li>)
                   : null}
               </ul>
             </div>
