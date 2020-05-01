@@ -38,7 +38,7 @@ class DayNav extends Component {
               to={`/?year=${this.today.getFullYear()}&month=${
                 this.today.getMonth() + 1
               }&day=${this.today.getDate()}`}
-              className="today btn waves-green grey lighten-5 black-text"
+              className="today btn waves-effect waves-cyan grey lighten-5 black-text"
             >
               TODAY
             </Link>{" "}
