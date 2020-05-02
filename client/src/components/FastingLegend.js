@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import M from "materialize-css";
 import OCALegend from "./OCALegend";
+import ROCORLegend from "./ROCORLegend";
 
 class FastingLegend extends Component {
   componentDidUpdate() {
@@ -10,8 +11,12 @@ class FastingLegend extends Component {
   render() {
     const { jurisdiction } = this.props;
 
-    const renderLegend = () => {
-      return <OCALegend />;
+    const renderLegend = (jurisdiction) => {
+      if (jurisdiction === "oca") {
+        return <OCALegend />;
+      } else {
+        return <ROCORLegend />;
+      }
     };
 
     return (
@@ -42,7 +47,7 @@ class FastingLegend extends Component {
               {jurisdiction.toUpperCase()} Fasting Legend
             </h5>
             <div className="row">
-              <div className="col s12">{renderLegend()}</div>
+              <div className="col s12">{renderLegend(jurisdiction)}</div>
             </div>
           </div>
         </div>

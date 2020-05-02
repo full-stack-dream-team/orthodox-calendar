@@ -46,13 +46,7 @@ class Readings extends Component {
                   <li key={i} className={i === 0 ? " active" : ""}>
                     <div className="collapsible-header hoverable">
                       <h5 className="center-align">
-                        {i + 1}.{" "}
-                        <i
-                          className="iconify"
-                          data-icon="bx:bxs-bible"
-                          data-inline="false"
-                        ></i>{" "}
-                        {reading.display}
+                        {i + 1}. {reading.display.replace(".", ":")}
                       </h5>
                     </div>
                     <div className="collapsible-body">

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-class FastingDescription extends Component {
+class OCAFastingDescription extends Component {
   render() {
     const { day } = this.props;
 
@@ -9,20 +9,19 @@ class FastingDescription extends Component {
 
     switch (day.fast_exception_desc) {
       case "Wine and Oil are Allowed":
-        allowed = "All of the strict fast items, wine and oil";
+        allowed = "All of STRICT FAST, wine and oil";
         disallowed = "Meat, fish, dairy and eggs";
         break;
       case "Fish, Wine and Oil are Allowed":
-        allowed = "All of the strict fast items, wine, oil, caviar and fish";
+        allowed = "All of STRICT FAST, wine, oil, caviar and fish";
         disallowed = "Meat, dairy and eggs";
         break;
       case "Meat Fast":
-        allowed =
-          "All of the strict fast items, wine, oil, fish, eggs and dairy";
+        allowed = "All of STRICT FAST, wine, oil, fish, eggs and dairy";
         disallowed = "Meat";
         break;
       case "Wine, Oil and Caviar are Allowed":
-        allowed = "All of the strict fast items, wine, oil and caviar";
+        allowed = "All of STRICT FAST, wine, oil and caviar";
         disallowed = "Meat, fish, dairy and eggs";
         break;
       case "Strict Fast":
@@ -38,12 +37,10 @@ class FastingDescription extends Component {
       <>
         <div className="row">
           <div className="col s12">
-            <strong>Allowed: </strong>
-            {allowed}
+            {allowed ? <strong>Allowed: {allowed}</strong> : null}
           </div>
           <div className="col s12">
-            <strong>Refrain from: </strong>
-            {disallowed}
+            {disallowed ? <strong>Refrain from: {disallowed}</strong> : null}
           </div>
         </div>
       </>
@@ -51,4 +48,4 @@ class FastingDescription extends Component {
   }
 }
 
-export default FastingDescription;
+export default OCAFastingDescription;

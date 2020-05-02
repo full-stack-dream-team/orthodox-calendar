@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import FastingDescription from "./FastingDescription";
+import OCAFastingDescription from "./OCAFastingDescription";
+import ROCORFastingDescription from "./ROCORFastingDescription";
 import FastingLegend from "./FastingLegend";
 
 class FastingCard extends Component {
@@ -40,6 +41,7 @@ class FastingCard extends Component {
   render() {
     const { day, jurisdiction, russianFast } = this.props;
     const { icon, switched } = this.state;
+    console.log(russianFast);
 
     return (
       <div className="col s12 m6">
@@ -83,7 +85,11 @@ class FastingCard extends Component {
                 : "Fast free"}
             </strong>
           </h5>
-          <FastingDescription day={day} />
+          {jurisdiction === "oca" ? (
+            <OCAFastingDescription day={day} />
+          ) : (
+            <ROCORFastingDescription russianFast={russianFast} />
+          )}
         </div>
       </div>
     );
