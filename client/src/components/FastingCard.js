@@ -41,7 +41,6 @@ class FastingCard extends Component {
   render() {
     const { day, jurisdiction, russianFast } = this.props;
     const { icon, switched } = this.state;
-    console.log(russianFast);
 
     return (
       <div className="col s12 m6">
