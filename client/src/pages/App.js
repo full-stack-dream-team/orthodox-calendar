@@ -93,7 +93,11 @@ class App extends React.Component {
         <div className="container">
           <div className="row">
             <div className="col s12" style={{ marginTop: "2rem" }}>
-              <Link to="/calendar" onClick={this.unlisten}>
+              <Link
+                to="/calendar"
+                onClick={this.unlisten}
+                className="waves-effect waves-light btn"
+              >
                 ← Back To Calendar
               </Link>
             </div>
