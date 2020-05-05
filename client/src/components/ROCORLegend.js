@@ -5,12 +5,8 @@ function ROCORLegend() {
     <>
       <div>
         <h5>
-          <i
-            className="iconify"
-            data-icon="emojione-v1:cross-mark"
-            data-inline="false"
-          ></i>{" "}
-          FULL ABSTENTION FROM FOOD
+          <i className="iconify" data-icon="octicon:x" data-inline="false"></i>{" "}
+          ABSTENTION FROM FOOD
         </h5>
         <p className="mt-0">
           <strong>Refrain from: </strong> All food
