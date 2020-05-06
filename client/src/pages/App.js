@@ -92,17 +92,23 @@ class App extends React.Component {
       <div className="App">
         <div className="container">
           <div className="row">
-            <div className="col s12" style={{ marginTop: "2rem" }}>
+            <div className="col s12 mt-2">
               <Link
+                id="calendar-link"
                 to="/calendar"
                 onClick={this.unlisten}
                 className="waves-effect waves-light btn"
               >
-                ← Back To Calendar
+                <i
+                  className="iconify"
+                  data-icon="dashicons:calendar-alt"
+                  data-inline="false"
+                ></i>{" "}
+                Calendar
               </Link>
             </div>
           </div>
-          <h2 className="center-align" style={{ marginTop: "0" }}>
+          <h2 className="center-align mt-0">
             <i
               className="iconify"
               data-icon="emojione-monotone:orthodox-cross"

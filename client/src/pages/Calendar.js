@@ -80,75 +80,107 @@ class Calendar extends React.Component {
       : [];
 
     return (
-      <div className="container">
-        <h6>Color Scheme</h6>
-        <button
-          className="red lighten-5"
-          onClick={() => this.setState({ colorScheme: "red" })}
-        >
-          Warm
-        </button>
-        <button
-          className="blue lighten-5"
-          onClick={() => this.setState({ colorScheme: "blue" })}
-        >
-          Cool
-        </button>
+      <div className="Calendar">
+        <div className="container">
+          <div className="row">
+            <div className="col s12 mt-2 right-align">
+              <h6>Color Scheme</h6>
+              <button
+                className="red lighten-5"
+                onClick={() => this.setState({ colorScheme: "red" })}
+              >
+                Warm
+              </button>
+              <button
+                className="blue lighten-5"
+                onClick={() => this.setState({ colorScheme: "blue" })}
+              >
+                Cool
+              </button>
+            </div>
+          </div>
 
-        <h1>Calendar</h1>
+          <h2 className="center-align mt-0">
+            <i
+              className="iconify"
+              data-icon="emojione-monotone:orthodox-cross"
+              data-inline="false"
+            ></i>{" "}
+            Calendar
+          </h2>
 
-        <div>
-          <button onClick={() => this.changeMonth(-1)}>←</button>
-          <button onClick={() => this.setDate()}>Today</button>
-          <button onClick={() => this.changeMonth(1)}>→</button>
-        </div>
+          <div id="month-nav">
+            <div className="row">
+              <div className="col s12 center-align">
+                <button
+                  className="waves-effect waves-cyan btn grey darken-4"
+                  onClick={() => this.changeMonth(-1)}
+                >
+                  Previous Month
+                </button>
+                <button
+                  className="today btn waves-effect waves-cyan grey lighten-5 black-text mx-1"
+                  onClick={() => this.setDate()}
+                >
+                  Today
+                </button>
+                <button
+                  className="waves-effect waves-cyan btn grey darken-4"
+                  onClick={() => this.changeMonth(1)}
+                >
+                  Next Month
+                </button>
+              </div>
+            </div>
+          </div>
 
-        {this.props.date.length ? (
-          <h5>
-            <Moment
-              date={{
-                ...this.props.date[0],
-                month: this.props.date[0].month - 1,
-              }}
-              format="MMMM, YYYY"
-            />
-          </h5>
-        ) : null}
-        <div className="row">
-          {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
-            <div key={day} className="col s1 m1">
-              <h6>{day}</h6>
+          {this.props.date.length ? (
+            <h5>
+              <Moment
+                date={{
+                  ...this.props.date[0],
+                  month: this.props.date[0].month - 1,
+                }}
+                format="MMMM, YYYY"
+              />
+            </h5>
+          ) : null}
+          <div className="row">
+            {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
+              <div key={day} className="col s1 m1">
+                <h6>{day}</h6>
+              </div>
+            ))}
+          </div>
+          {date.map((week, i) => (
+            <div key={i} className="row">
+              {week.map((day, j) =>
+                day.empty ? (
+                  <div key={j} className="col s1 m1"></div>
+                ) : (
+                  <div
+                    key={j}
+                    className={`col s1 m1 ${this.state.colorScheme} ${
+                      day.day === this.today.getDate() &&
+                      day.month === this.today.getMonth() + 1 &&
+                      day.year === this.today.getFullYear()
+                        ? "lighten-3"
+                        : "lighten-4"
+                    }`}
+                  >
+                    <h5>
+                      <Link
+                        to={`/?year=${day.year}&month=${day.month}&day=${day.day}`}
+                      >
+                        {day.day}
+                      </Link>
+                    </h5>
+                  </div>
+                )
+              )}
             </div>
           ))}
         </div>
-        {date.map((week, i) => (
-          <div key={i} className="row">
-            {week.map((day, j) =>
-              day.empty ? (
-                <div key={j} className="col s1 m1"></div>
-              ) : (
-                <div
-                  key={j}
-                  className={`col s1 m1 ${this.state.colorScheme} ${
-                    day.day === this.today.getDate() &&
-                    day.month === this.today.getMonth() + 1 &&
-                    day.year === this.today.getFullYear()
-                      ? "lighten-3"
-                      : "lighten-4"
-                  }`}
-                >
-                  <h5>
-                    <Link
-                      to={`/?year=${day.year}&month=${day.month}&day=${day.day}`}
-                    >
-                      {day.day}
-                    </Link>
-                  </h5>
-                </div>
-              )
-            )}
-          </div>
-        ))}
       </div>
     );
   }
