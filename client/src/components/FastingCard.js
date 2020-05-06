@@ -89,7 +89,20 @@ class FastingCard extends Component {
                 : russianFast.fastDesc &&
                   russianFast.fastDesc.replace(" ", "") &&
                   jurisdiction === "rocor"
-                ? russianFast.fastDesc
+                ? russianFast.fastDesc.split(". ").map((fastDesc, i) =>
+                    fastDesc.trim() ? (
+                      i === russianFast.fastDesc.split(". ").length - 2 ? (
+                        <span key={fastDesc}>
+                          {fastDesc.trim()}.
+                          <br />
+                        </span>
+                      ) : (
+                        <span key={fastDesc}>{fastDesc.trim()}. </span>
+                      )
+                    ) : (
+                      "Fast free"
+                    )
+                  )
                 : "Fast free"}
             </strong>
           </h5>

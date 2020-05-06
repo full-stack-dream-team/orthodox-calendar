@@ -19,11 +19,12 @@ class Router extends React.Component {
 
   render() {
     return (
-      <BrowserRouter>
-        <Switch>
-          <Route exact path="/" component={App} />
-          <Route exact path="/calendar" component={Calendar} />
-          {/*<NotPrivateRoute exact path="/landing" component={Landing} />
+      <div className="total-container">
+        <BrowserRouter>
+          <Switch>
+            <Route exact path="/" component={App} />
+            <Route exact path="/calendar" component={Calendar} />
+            {/*<NotPrivateRoute exact path="/landing" component={Landing} />
           <NotPrivateRoute exact path="/register" component={Register} />
           <NotPrivateRoute exact path="/login" component={Login} />
           <NotPrivateRoute
@@ -36,10 +37,11 @@ class Router extends React.Component {
             path="/resetpassword/:token"
             component={ResetPassword}
           />*/}
-          <Route exact path="/oops" component={Oops} />
-          <Route component={Error} />
-        </Switch>
-      </BrowserRouter>
+            <Route exact path="/oops" component={Oops} />
+            <Route component={Error} />
+          </Switch>
+        </BrowserRouter>
+      </div>
     );
   }
 }
