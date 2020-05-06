@@ -2,7 +2,9 @@ import React, { Component } from "react";
 
 class ROCORFastingDescription extends Component {
   render() {
-    const { allowed, disallowed } = this.props;
+    const {
+      russianFast: { allowed, disallowed },
+    } = this.props;
 
     return (
       <>

@@ -5,42 +5,51 @@ import FastingLegend from "./FastingLegend";
 
 class FastingCard extends Component {
   state = {
-    icon: "",
+    symbol: "",
     switched: false,
   };
 
   componentDidUpdate() {
-    let icon;
-    switch (this.props.day.fast_exception_desc) {
-      case "Wine is Allowed":
-        icon = "noto:grapes";
-        break;
-      case "Wine and Oil are Allowed":
-        icon = "noto:grapes";
-        break;
-      case "Fish, Wine and Oil are Allowed":
-        icon = "noto:fish";
-        break;
-      case "Meat Fast":
-        icon = "noto:cheese-wedge";
-        break;
-      case "Wine, Oil and Caviar are Allowed":
-        icon = "emojione:letter-c";
-        break;
-      case "Strict Fast":
-        icon = "mdi:bolnisi-cross";
-        break;
-      default:
-        icon = "";
+    let symbol = "";
+
+    if (this.props.jurisdiction === "oca") {
+      switch (this.props.day.fast_exception_desc) {
+        case "Wine is Allowed":
+          symbol = "noto:grapes";
+          break;
+        case "Wine and Oil are Allowed":
+          symbol = "noto:grapes";
+          break;
+        case "Fish, Wine and Oil are Allowed":
+          symbol = "noto:fish";
+          break;
+        case "Meat Fast":
+          symbol = "noto:cheese-wedge";
+          break;
+        case "Wine, Oil and Caviar are Allowed":
+          symbol = "emojione:letter-c";
+          break;
+        case "Strict Fast":
+          symbol = "mdi:bolnisi-cross";
+          break;
+        default:
+          symbol = "";
+      }
+    } else if (
+      this.props.jurisdiction === "rocor" &&
+      this.props.russianFast.symbol
+    ) {
+      symbol = this.props.russianFast.symbol;
     }
-    if (icon !== this.state.icon) {
-      this.setState({ icon, switched: !this.state.switched });
+
+    if (symbol !== this.state.symbol) {
+      this.setState({ symbol, switched: !this.state.switched });
     }
   }
 
   render() {
     const { day, jurisdiction, russianFast } = this.props;
-    const { icon, switched } = this.state;
+    const { symbol, switched } = this.state;
 
     return (
       <div className="col s12 m6">
@@ -57,30 +66,30 @@ class FastingCard extends Component {
           </p>
           <h5>
             <strong>
-              {icon && !switched ? (
+              {symbol && !switched ? (
                 <span style={{ marginRight: "0.5em" }}>
                   <i
                     className="iconify"
-                    data-icon={icon}
+                    data-icon={symbol}
                     data-inline="false"
                   ></i>
                 </span>
               ) : null}
-              {icon && switched ? (
+              {symbol && switched ? (
                 <span style={{ marginRight: "0.5em" }}>
                   <i
                     className="iconify"
-                    data-icon={icon}
+                    data-icon={symbol}
                     data-inline="false"
                   ></i>
                 </span>
               ) : null}
               {day.fast_exception_desc && jurisdiction === "oca"
                 ? day.fast_exception_desc
-                : russianFast &&
-                  russianFast.replace(" ", "") &&
+                : russianFast.fastDesc &&
+                  russianFast.fastDesc.replace(" ", "") &&
                   jurisdiction === "rocor"
-                ? russianFast
+                ? russianFast.fastDesc
                 : "Fast free"}
             </strong>
           </h5>

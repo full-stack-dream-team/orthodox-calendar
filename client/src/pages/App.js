@@ -79,14 +79,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { day, jurisdiction } = this.props;
-
-    let russianFast = this.props.russianFast.fastDesc
-      ? this.props.russianFast.fastDesc.split('<span class="headerfast">')[1]
-      : "";
-    if (russianFast) {
-      russianFast = russianFast.replace(/<[^>]+>/g, "");
-    }
+    const { day, jurisdiction, russianFast } = this.props;
 
     return (
       <div className="App">
