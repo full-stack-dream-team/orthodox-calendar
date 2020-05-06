@@ -49,7 +49,7 @@ class Readings extends Component {
                         {i + 1}. {reading.display.replace(".", ":")}
                       </h5>
                     </div>
-                    <div className="collapsible-body">
+                    <div className="collapsible-body grey lighten-5">
                       {reading.passage.map((verse, i) => (
                         <p style={{ margin: "0" }} key={i}>
                           <span className="blue-text text-lighten-2">

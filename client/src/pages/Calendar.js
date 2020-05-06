@@ -7,6 +7,7 @@ import {
   setDateQuery,
   setJurisdiction,
 } from "../redux/actions/calendarActions";
+import JurisdictionsSelector from "../components/JurisdictionsSelector";
 
 class Calendar extends React.Component {
   state = {
@@ -78,6 +79,8 @@ class Calendar extends React.Component {
       ? this.formatMonth(this.props.date)
       : [];
 
+    const { jurisdiction } = this.props;
+
     return (
       <div className="Calendar">
         <div className="container">
@@ -95,30 +98,6 @@ class Calendar extends React.Component {
                 onClick={() => this.setState({ colorScheme: "blue" })}
               >
                 Cool
-              </button>
-            </div>
-          </div>
-
-          <div className="row">
-            <div className="col s12 mt-2 right-align">
-              <h6>Jurisdiction</h6>
-              <button
-                className="white lighten-5"
-                onClick={() => {
-                  this.props.setJurisdiction("oca");
-                  this.props.getDate();
-                }}
-              >
-                OCA
-              </button>
-              <button
-                className="blue lighten-5"
-                onClick={() => {
-                  this.props.setJurisdiction("rocor");
-                  this.props.getDate();
-                }}
-              >
-                ROCOR
               </button>
             </div>
           </div>
@@ -157,6 +136,14 @@ class Calendar extends React.Component {
             </div>
           </div>
 
+          <JurisdictionsSelector
+            setJurisdiction={(nextJurisdiction) => {
+              this.props.setJurisdiction(nextJurisdiction);
+              this.props.getDate();
+            }}
+            jurisdiction={jurisdiction}
+          />
+
           <div className="row">
             <div className="col s12 center-align">
               {this.props.date.length ? (
@@ -172,6 +159,7 @@ class Calendar extends React.Component {
               ) : null}
             </div>
           </div>
+
           <div className="row">
             <div id="calendar" className="col s12">
               <div className="row mb-0">
