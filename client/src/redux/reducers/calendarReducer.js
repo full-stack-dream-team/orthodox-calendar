@@ -11,7 +11,11 @@ export const initialState = {
   jurisdiction: "oca",
   dateQuery: {},
   date: null,
-  russianFast: "",
+  russianFast: {
+    fastDesc: "",
+    allowed: "",
+    disallowed: "",
+  },
 };
 
 const calendarReducer = (state = initialState, action) => {

@@ -35,7 +35,13 @@ class FastingCard extends Component {
         default:
           symbol = "";
       }
+    } else if (
+      this.props.jurisdiction === "rocor" &&
+      this.props.russianFast.symbol
+    ) {
+      symbol = this.props.russianFast.symbol;
     }
+
     if (symbol !== this.state.symbol) {
       this.setState({ symbol, switched: !this.state.switched });
     }
@@ -80,10 +86,10 @@ class FastingCard extends Component {
               ) : null}
               {day.fast_exception_desc && jurisdiction === "oca"
                 ? day.fast_exception_desc
-                : russianFast &&
-                  russianFast.replace(" ", "") &&
+                : russianFast.fastDesc &&
+                  russianFast.fastDesc.replace(" ", "") &&
                   jurisdiction === "rocor"
-                ? russianFast
+                ? russianFast.fastDesc
                 : "Fast free"}
             </strong>
           </h5>
