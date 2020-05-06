@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import M from "materialize-css";
 import "../sass/index.scss";
 // import { logoutUser } from "../redux/actions/authActions";
 import {
@@ -25,6 +26,7 @@ class App extends React.Component {
 
   today = new Date();
 
+  datepickerInitialized = false;
   unmounted = false;
 
   setUrlParamsState = () => {
@@ -61,6 +63,35 @@ class App extends React.Component {
     }
   };
 
+  initializeDatepicker = () => {
+    const {
+      currentUrlParams: { year, month, day },
+    } = this.state;
+
+    const currentDate = new Date();
+    if (year && month && day) {
+      currentDate.setFullYear(year);
+      currentDate.setMonth(month - 1);
+      currentDate.setDate(day);
+    }
+
+    if (!this.datepickerInitialized) {
+      const options = {
+        autoClose: true,
+        setDefaultDate: true,
+        defaultDate: currentDate,
+      };
+      M.Datepicker.init(this.CalPicker, options);
+
+      this.datepickerInitialized = true;
+    } else {
+      const calPickerInst = M.Datepicker.getInstance(this.CalPicker);
+      console.log(calPickerInst.date);
+      calPickerInst.setDate(currentDate);
+      console.log(calPickerInst.date);
+    }
+  };
+
   componentDidMount() {
     this.setDateToQuery();
     this.setUrlParamsState();
@@ -71,6 +102,10 @@ class App extends React.Component {
       this.setUrlParamsState();
       this.props.getRussianFast();
     });
+  }
+
+  componentDidUpdate() {
+    this.initializeDatepicker();
   }
 
   componentWillUnmount() {
@@ -86,19 +121,23 @@ class App extends React.Component {
         <div className="container">
           <div className="row">
             <div className="col s12 mt-2">
-              <Link
-                id="calendar-link"
-                to="/calendar"
-                onClick={this.unlisten}
+              <input
+                type="text"
+                id="calendar-picker"
+                ref={(CalPicker) => {
+                  this.CalPicker = CalPicker;
+                }}
+                // onClick={this.unlisten}
                 className="btn waves-effect waves-cyan red lighten-5 black-text "
-              >
+              />
+              <label htmlFor="calendar-picker">
                 <i
                   className="iconify"
                   data-icon="dashicons:calendar-alt"
                   data-inline="false"
                 ></i>{" "}
                 Calendar
-              </Link>
+              </label>
             </div>
           </div>
           <h2 className="center-align mt-0">

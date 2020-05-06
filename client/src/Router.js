@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 // import PrivateRoute from "./components/PrivateRoute";
 // import NotPrivateRoute from "./components/NotPrivateRoute";
 import App from "./pages/App";
-import Calendar from "./pages/Calendar";
+// import Calendar from "./pages/Calendar";
 // import Landing from "./pages/Landing";
 // import Register from "./pages/Register";
 // import Login from "./pages/Login";
@@ -23,7 +23,7 @@ class Router extends React.Component {
         <BrowserRouter>
           <Switch>
             <Route exact path="/" component={App} />
-            <Route exact path="/calendar" component={Calendar} />
+            {/*<Route exact path="/calendar" component={Calendar} />*/}
             {/*<NotPrivateRoute exact path="/landing" component={Landing} />
           <NotPrivateRoute exact path="/register" component={Register} />
           <NotPrivateRoute exact path="/login" component={Login} />
