@@ -90,7 +90,7 @@ class App extends React.Component {
                 id="calendar-link"
                 to="/calendar"
                 onClick={this.unlisten}
-                className="waves-effect waves-light btn"
+                className="btn waves-effect waves-cyan red lighten-5 black-text "
               >
                 <i
                   className="iconify"

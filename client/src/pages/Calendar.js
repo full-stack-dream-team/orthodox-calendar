@@ -10,7 +10,7 @@ import {
 
 class Calendar extends React.Component {
   state = {
-    colorScheme: "red",
+    colorScheme: "white",
   };
 
   unmounted = false;
@@ -86,8 +86,8 @@ class Calendar extends React.Component {
             <div className="col s12 mt-2 right-align">
               <h6>Color Scheme</h6>
               <button
-                className="red lighten-5"
-                onClick={() => this.setState({ colorScheme: "red" })}
+                className="white lighten-5"
+                onClick={() => this.setState({ colorScheme: "white" })}
               >
                 Warm
               </button>
@@ -106,7 +106,7 @@ class Calendar extends React.Component {
               data-icon="emojione-monotone:orthodox-cross"
               data-inline="false"
             ></i>{" "}
-            Calendar
+            Gregorian Calendar
           </h2>
 
           <div id="month-nav">
@@ -134,52 +134,70 @@ class Calendar extends React.Component {
             </div>
           </div>
 
-          {this.props.date.length ? (
-            <h5>
-              <Moment
-                date={{
-                  ...this.props.date[0],
-                  month: this.props.date[0].month - 1,
-                }}
-                format="MMMM, YYYY"
-              />
-            </h5>
-          ) : null}
           <div className="row">
-            {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
-              <div key={day} className="col s1 m1">
-                <h6>{day}</h6>
-              </div>
-            ))}
+            <div className="col s12 center-align">
+              {this.props.date.length ? (
+                <h5>
+                  <Moment
+                    date={{
+                      ...this.props.date[0],
+                      month: this.props.date[0].month - 1,
+                    }}
+                    format="MMMM, YYYY"
+                  />
+                </h5>
+              ) : null}
+            </div>
           </div>
-          {date.map((week, i) => (
-            <div key={i} className="row">
-              {week.map((day, j) =>
-                day.empty ? (
-                  <div key={j} className="col s1 m1"></div>
-                ) : (
-                  <div
-                    key={j}
-                    className={`col s1 m1 ${this.state.colorScheme} ${
-                      day.day === this.today.getDate() &&
-                      day.month === this.today.getMonth() + 1 &&
-                      day.year === this.today.getFullYear()
-                        ? "lighten-3"
-                        : "lighten-4"
-                    }`}
-                  >
-                    <h5>
+          <div className="row">
+            <div id="calendar" className="col s12">
+              <div className="row mb-0">
+                {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map(
+                  (day) => (
+                    <div
+                      key={day}
+                      className="col s1 m1 w-12 border cyan lighten-5"
+                    >
+                      <h6>{day}</h6>
+                    </div>
+                  )
+                )}
+              </div>
+              {date.map((week, i) => (
+                <div key={i} className="row mb-0">
+                  {week.map((day, j) =>
+                    day.empty ? (
+                      <div
+                        key={j}
+                        className="col s1 m1 w-12 mh-100 border grey lighten-2"
+                      ></div>
+                    ) : (
                       <Link
                         to={`/?year=${day.year}&month=${day.month}&day=${day.day}`}
                       >
-                        {day.day}
+                        <div
+                          key={j}
+                          className={`col s1 m1 w-12 mh-100 border ${
+                            this.state.colorScheme
+                          } ${
+                            day.day === this.today.getDate() &&
+                            day.month === this.today.getMonth() + 1 &&
+                            day.year === this.today.getFullYear()
+                              ? ""
+                              : "lighten-4"
+                          }`}
+                        >
+                          <p className="black-text">
+                            <b>{day.day}</b>
+                          </p>
+                        </div>
                       </Link>
-                    </h5>
-                  </div>
-                )
-              )}
+                    )
+                  )}
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
         </div>
       </div>
     );
