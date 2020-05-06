@@ -116,6 +116,7 @@ class App extends React.Component {
               this.props.setJurisdiction(nextJurisdiction);
               this.props.getDate();
             }}
+            jurisdiction={jurisdiction}
           />
 
           <div className="row">

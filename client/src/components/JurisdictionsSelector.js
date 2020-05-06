@@ -8,6 +8,8 @@ class JurisdictionsSelector extends Component {
   }
 
   render() {
+    const { jurisdiction } = this.props;
+
     return (
       <div id="jurisdictions">
         <div className="row">
@@ -21,7 +23,7 @@ class JurisdictionsSelector extends Component {
               <li className="tab col s2">
                 <a
                   onClick={() => this.props.setJurisdiction("oca")}
-                  className="active"
+                  className={jurisdiction === "oca" ? "active" : ""}
                   href="#oca"
                 >
                   OCA
@@ -30,6 +32,7 @@ class JurisdictionsSelector extends Component {
               <li className="tab col s2">
                 <a
                   onClick={() => this.props.setJurisdiction("rocor")}
+                  className={jurisdiction === "rocor" ? "active" : ""}
                   href="#rocor"
                 >
                   ROCOR

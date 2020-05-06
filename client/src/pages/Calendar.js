@@ -66,7 +66,6 @@ class Calendar extends React.Component {
   };
 
   componentDidMount() {
-    this.props.setJurisdiction("oca");
     this.setDate();
   }
 
@@ -96,6 +95,30 @@ class Calendar extends React.Component {
                 onClick={() => this.setState({ colorScheme: "blue" })}
               >
                 Cool
+              </button>
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col s12 mt-2 right-align">
+              <h6>Jurisdiction</h6>
+              <button
+                className="white lighten-5"
+                onClick={() => {
+                  this.props.setJurisdiction("oca");
+                  this.props.getDate();
+                }}
+              >
+                OCA
+              </button>
+              <button
+                className="blue lighten-5"
+                onClick={() => {
+                  this.props.setJurisdiction("rocor");
+                  this.props.getDate();
+                }}
+              >
+                ROCOR
               </button>
             </div>
           </div>
@@ -173,6 +196,7 @@ class Calendar extends React.Component {
                       ></div>
                     ) : (
                       <Link
+                        key={j}
                         to={`/?year=${day.year}&month=${day.month}&day=${day.day}`}
                       >
                         <div
@@ -207,6 +231,7 @@ class Calendar extends React.Component {
 const mapStateToProps = ({ calendar: state }) => ({
   date: state.date || [],
   dateQuery: state.dateQuery || {},
+  jurisdiction: state.jurisdiction,
 });
 
 export default connect(mapStateToProps, {
