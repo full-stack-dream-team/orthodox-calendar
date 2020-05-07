@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-class ROCORSymbols extends Component {
+class ROCSymbols extends Component {
   render() {
     const { russianFast } = this.props;
     let symbol;
@@ -27,4 +27,4 @@ class ROCORSymbols extends Component {
   }
 }
 
-export default ROCORSymbols;
+export default ROCSymbols;

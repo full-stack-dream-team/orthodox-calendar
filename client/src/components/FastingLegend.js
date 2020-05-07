@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import M from "materialize-css";
 import OCALegend from "./OCALegend";
-import ROCORLegend from "./ROCORLegend";
+import ROCLegend from "./ROCLegend";
 
 class FastingLegend extends Component {
   componentDidUpdate() {
@@ -15,7 +15,7 @@ class FastingLegend extends Component {
       if (jurisdiction === "oca") {
         return <OCALegend />;
       } else {
-        return <ROCORLegend />;
+        return <ROCLegend />;
       }
     };
 

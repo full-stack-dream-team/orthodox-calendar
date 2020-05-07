@@ -35,7 +35,7 @@ class JurisdictionsSelector extends Component {
                   className={jurisdiction === "rocor" ? "active" : ""}
                   href="#rocor"
                 >
-                  ROCOR
+                  ROC
                 </a>
               </li>
             </ul>

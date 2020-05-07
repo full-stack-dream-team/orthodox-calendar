@@ -1,6 +1,6 @@
 import React from "react";
 
-function ROCORLegend() {
+function ROCLegend() {
   return (
     <>
       <div>
@@ -110,4 +110,4 @@ function ROCORLegend() {
   );
 }
 
-export default ROCORLegend;
+export default ROCLegend;

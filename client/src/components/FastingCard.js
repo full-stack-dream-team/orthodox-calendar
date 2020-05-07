@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import OCAFastingDescription from "./OCAFastingDescription";
-import ROCORFastingDescription from "./ROCORFastingDescription";
+import ROCFastingDescription from "./ROCFastingDescription";
 import FastingLegend from "./FastingLegend";
 
 class FastingCard extends Component {
@@ -56,14 +56,15 @@ class FastingCard extends Component {
         <div className="card-panel cyan lighten-4">
           <span></span>
           <FastingLegend day={day} jurisdiction={jurisdiction} />
-          <h5 style={{ marginTop: "0" }}>FASTING</h5>
-          <p>
+          <h5>
             <strong>
               {day.fast_level_desc && jurisdiction === "oca"
-                ? day.fast_level_desc
+                ? day.fast_level_desc === "No Fast"
+                  ? ""
+                  : day.fast_level_desc
                 : null}
             </strong>
-          </p>
+          </h5>
           <h5>
             <strong>
               {symbol && !switched ? (
@@ -109,7 +110,7 @@ class FastingCard extends Component {
           {jurisdiction === "oca" ? (
             <OCAFastingDescription day={day} />
           ) : (
-            <ROCORFastingDescription russianFast={russianFast} />
+            <ROCFastingDescription russianFast={russianFast} />
           )}
         </div>
       </div>
