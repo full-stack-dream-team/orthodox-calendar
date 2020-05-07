@@ -5,6 +5,7 @@ import {
   SET_DATE_QUERY,
   GET_RUSSIAN_FAST,
   SET_OCA_FAST,
+  GET_RUSSIAN_SAINT_LIVES,
 } from "./types";
 
 export const setJurisdiction = (jurisdiction) => (dispatch) => {
@@ -61,7 +62,7 @@ export const getDate = () => (dispatch, getState) => {
 
       dispatch({ type: GET_DATE, payload: result });
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.error(err));
 };
 
 export const getRussianFast = () => (dispatch, getState) => {
@@ -136,7 +137,26 @@ export const getRussianFast = () => (dispatch, getState) => {
 
       dispatch({ type: GET_RUSSIAN_FAST, payload: result });
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.error(err));
+};
+
+export const getRussianSaintLives = () => (dispatch, getState) => {
+  const {
+    calendar: {
+      dateQuery: { year, month, day },
+    },
+  } = getState();
+
+  const url = `https://www.holytrinityorthodox.com/calendar/calendar.php?header=0&dt=0&scripture=0&lives=3${
+    year && month && day ? `&year=${year}&month=${month}&today=${day}` : ""
+  }`;
+
+  axios
+    .get(url)
+    .then((res) =>
+      dispatch({ type: GET_RUSSIAN_SAINT_LIVES, payload: res.data })
+    )
+    .catch((err) => console.error(err));
 };
 
 export const setOCAFast = (ocaFast) => (dispatch) => {
