@@ -28,5 +28,32 @@
     -->
     <!-- iconify icons -->
     <script src="https://code.iconify.design/1/1.0.6/iconify.min.js"></script>
+    <script type="text/javascript">
+      function popup(mylink, windowname) {
+        if (!window.focus) return true;
+
+        let href;
+        if (typeof mylink === "string") {
+          href = mylink;
+        } else {
+          href = mylink.href;
+        }
+
+        if (window.getRussianInfo) {
+          window.getRussianInfo(href);
+        } else {
+          return true;
+        }
+
+        // const showWin = window.open(
+        //   href,
+        //   windowname,
+        //   "width=600,height=500,resizable=yes,dependent=yes,scrollbars=yes"
+        // );
+        // showWin.focus();
+
+        return false;
+      }
+    </script>
   </body>
 </html>

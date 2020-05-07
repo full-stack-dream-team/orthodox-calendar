@@ -6,6 +6,7 @@ import {
   GET_RUSSIAN_FAST,
   SET_OCA_FAST,
   GET_RUSSIAN_SAINT_LIVES,
+  GET_RUSSIAN_INFO,
 } from "./types";
 
 export const setJurisdiction = (jurisdiction) => (dispatch) => {
@@ -156,6 +157,13 @@ export const getRussianSaintLives = () => (dispatch, getState) => {
     .then((res) =>
       dispatch({ type: GET_RUSSIAN_SAINT_LIVES, payload: res.data })
     )
+    .catch((err) => console.error(err));
+};
+
+export const getRussianInfo = (url) => (dispatch) => {
+  axios
+    .get(url)
+    .then((res) => dispatch({ type: GET_RUSSIAN_INFO, payload: res.data }))
     .catch((err) => console.error(err));
 };
 

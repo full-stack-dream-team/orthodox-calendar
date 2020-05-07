@@ -1,8 +1,55 @@
 import React, { Component } from "react";
 
 class FeastDayCard extends Component {
+  componentDidMount() {
+    if (!window.getRussianInfo && this.props.getRussianInfo) {
+      window.getRussianInfo = this.props.getRussianInfo;
+    }
+  }
+
+  removeHTMLFromRussianInfo = () => {
+    let { russianInfo } = { ...this.props };
+
+    if (!russianInfo.trim()) return "";
+
+    let removeFromString = "";
+
+    for (let i = 0; i < russianInfo.length; i++) {
+      removeFromString += russianInfo[i];
+      if (russianInfo.slice(i + 1, i + 7) === "<body>") {
+        removeFromString += russianInfo.slice(i + 1, i + 7);
+
+        i = russianInfo.length;
+      }
+    }
+    russianInfo = russianInfo.replace(removeFromString, "");
+
+    removeFromString = "";
+
+    for (let i = russianInfo.length - 1; i > -1; i--) {
+      removeFromString += russianInfo[i];
+      if (russianInfo.slice(i - 7, i) === "</body>") {
+        removeFromString += russianInfo
+          .slice(i - 7, i)
+          .split("")
+          .reverse()
+          .join("");
+
+        i = -1;
+      }
+    }
+    russianInfo = russianInfo.replace(
+      removeFromString.split("").reverse().join(""),
+      ""
+    );
+
+    return russianInfo || "";
+  };
+
   render() {
     const { day } = this.props;
+
+    const russianInfo = this.removeHTMLFromRussianInfo();
 
     return (
       <div className="col s12 m6">
@@ -44,6 +91,10 @@ class FeastDayCard extends Component {
               </ul>
             </div>
           </div>
+          <div
+            dangerouslySetInnerHTML={{ __html: this.props.russianSaintLives }}
+          ></div>
+          <div dangerouslySetInnerHTML={{ __html: russianInfo }}></div>
         </div>
       </div>
     );

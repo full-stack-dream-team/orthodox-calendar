@@ -10,6 +10,7 @@ import {
   setJurisdiction,
   getRussianFast,
   getRussianSaintLives,
+  getRussianInfo,
 } from "../redux/actions/calendarActions";
 
 import DayNav from "../components/DayNav";
@@ -118,9 +119,6 @@ class App extends React.Component {
 
     return (
       <div className="App">
-        <div
-          dangerouslySetInnerHTML={{ __html: this.props.russianSaintLives }}
-        ></div>
         <div className="container">
           <div className="row">
             <div className="col s12 mt-2">
@@ -175,7 +173,12 @@ class App extends React.Component {
               jurisdiction={jurisdiction}
               russianFast={russianFast}
             />
-            <FeastDayCard day={day} />
+            <FeastDayCard
+              day={day}
+              russianSaintLives={this.props.russianSaintLives}
+              getRussianInfo={this.props.getRussianInfo}
+              russianInfo={this.props.russianInfo}
+            />
           </div>
 
           <div className="row">
@@ -192,6 +195,7 @@ const mapStateToProps = ({ calendar }) => ({
   jurisdiction: calendar.jurisdiction,
   russianFast: calendar.russianFast,
   russianSaintLives: calendar.russianSaintLives,
+  russianInfo: calendar.russianInfo,
 });
 
 export default connect(mapStateToProps, {
@@ -200,4 +204,5 @@ export default connect(mapStateToProps, {
   setJurisdiction,
   getRussianFast,
   getRussianSaintLives,
+  getRussianInfo,
 })(App);
