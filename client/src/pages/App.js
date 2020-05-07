@@ -9,6 +9,7 @@ import {
   setDateQuery,
   setJurisdiction,
   getRussianFast,
+  getRussianSaintLives,
 } from "../redux/actions/calendarActions";
 
 import DayNav from "../components/DayNav";
@@ -86,9 +87,7 @@ class App extends React.Component {
       this.datepickerInitialized = true;
     } else {
       const calPickerInst = M.Datepicker.getInstance(this.CalPicker);
-      console.log(calPickerInst.date);
       calPickerInst.setDate(currentDate);
-      console.log(calPickerInst.date);
     }
   };
 
@@ -96,6 +95,7 @@ class App extends React.Component {
     this.setDateToQuery();
     this.setUrlParamsState();
     this.props.getRussianFast();
+    this.props.getRussianSaintLives();
 
     this.unlisten = this.props.history.listen(() => {
       this.setDateToQuery();
@@ -118,6 +118,9 @@ class App extends React.Component {
 
     return (
       <div className="App">
+        <div
+          dangerouslySetInnerHTML={{ __html: this.props.russianSaintLives }}
+        ></div>
         <div className="container">
           <div className="row">
             <div className="col s12 mt-2">
@@ -188,6 +191,7 @@ const mapStateToProps = ({ calendar }) => ({
   day: calendar.date || {},
   jurisdiction: calendar.jurisdiction,
   russianFast: calendar.russianFast,
+  russianSaintLives: calendar.russianSaintLives,
 });
 
 export default connect(mapStateToProps, {
@@ -195,4 +199,5 @@ export default connect(mapStateToProps, {
   setDateQuery,
   setJurisdiction,
   getRussianFast,
+  getRussianSaintLives,
 })(App);
