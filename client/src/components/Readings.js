@@ -44,7 +44,7 @@ class Readings extends Component {
             {day.readings
               ? day.readings.map((reading, i) => (
                   <li key={i} className={i === 0 ? " active" : ""}>
-                    <div className="collapsible-header hoverable cyan lighten-3">
+                    <div className="collapsible-header hoverable grey darken-4 white-text">
                       <h5 className="center-align">
                         {i + 1}. {reading.display.replace(".", ":")}
                       </h5>

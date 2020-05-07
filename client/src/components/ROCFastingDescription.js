@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-class ROCORFastingDescription extends Component {
+class ROCFastingDescription extends Component {
   render() {
     const {
       russianFast: { allowed, disallowed },
@@ -21,4 +21,4 @@ class ROCORFastingDescription extends Component {
   }
 }
 
-export default ROCORFastingDescription;
+export default ROCFastingDescription;

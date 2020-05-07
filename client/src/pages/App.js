@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 import M from "materialize-css";
 import "../sass/index.scss";
 // import { logoutUser } from "../redux/actions/authActions";
@@ -121,24 +120,21 @@ class App extends React.Component {
       <div className="App">
         <div className="container">
           <div className="row">
-            <div className="col s12 mt-2">
-              <input
-                type="text"
+            <div className="col s12 right-align mt-2">
+              <button
                 id="calendar-picker"
                 ref={(CalPicker) => {
                   this.CalPicker = CalPicker;
                 }}
-                // onClick={this.unlisten}
-                className="btn waves-effect waves-cyan red lighten-5 black-text "
-              />
-              <label htmlFor="calendar-picker">
+                className="btn waves-effect waves-cyan grey lighten-5 black-text"
+              >
                 <i
                   className="iconify"
                   data-icon="dashicons:calendar-alt"
                   data-inline="false"
                 ></i>{" "}
                 Calendar
-              </label>
+              </button>
             </div>
           </div>
           <h2 className="center-align mt-0">
