@@ -1,8 +1,14 @@
 @import "./variables";
 
 html {
-  background: url("../../images/christ-background.jpg") no-repeat center center
-    fixed;
+  // background: url("../../images/christ-background.jpg") no-repeat center center
+  //   fixed;
+  background-image: linear-gradient(
+      rgba(255, 255, 255, 0.5),
+      rgba(255, 255, 255, 0.9)
+    ),
+    url("../../images/christ-background.jpg");
+
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -14,10 +20,6 @@ body {
   font-family: $font-stack;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-.total-container {
-  background-color: rgba(100%, 100%, 100%, 0.7);
 }
 
 code {
