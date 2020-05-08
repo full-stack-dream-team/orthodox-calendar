@@ -1,4 +1,5 @@
 import axios from "axios";
+import cheerio from "cheerio";
 import {
   SET_JURISDICTION,
   GET_DATE,
@@ -91,13 +92,16 @@ export const getRussianFast = () => (dispatch, getState) => {
         symbol: "",
       };
 
-      console.log(res.data);
+      const $ = cheerio.load(result.fastDesc);
 
-      result.fastDesc = result.fastDesc
-        ? result.fastDesc.split('<span class="headerfast">')[1]
-          ? result.fastDesc.split('<span class="headerfast">')[1]
-          : result.fastDesc.split('<span class="headernofast">')[1] || ""
-        : "";
+      if ($(".headerfast").text().trim()) {
+        result.fastDesc = $(".headerfast").text();
+      } else if ($(".headernofast").text().trim()) {
+        result.fastDesc = $(".headernofast").text();
+      } else {
+        result.fastDesc = "Fast Free";
+      }
+
       if (result.fastDesc) {
         result.fastDesc = result.fastDesc.replace(/<[^>]+>/g, "");
 
@@ -167,7 +171,15 @@ export const getRussianSaintLives = () => (dispatch, getState) => {
 export const getRussianInfo = (url) => (dispatch) => {
   axios
     .get(url)
-    .then((res) => dispatch({ type: GET_RUSSIAN_INFO, payload: res.data }))
+    .then((res) => {
+      const $ = cheerio.load(res.data);
+
+      const result = $("td").removeClass().html();
+
+      console.log(result);
+
+      dispatch({ type: GET_RUSSIAN_INFO, payload: result });
+    })
     .catch((err) => console.error(err));
 };
 

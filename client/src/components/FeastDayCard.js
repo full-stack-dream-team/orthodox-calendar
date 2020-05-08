@@ -47,9 +47,9 @@ class FeastDayCard extends Component {
   };
 
   render() {
-    const { day, jurisdiction } = this.props;
+    const { day, jurisdiction, russianInfo } = this.props;
 
-    const russianInfo = this.removeHTMLFromRussianInfo();
+    // const russianInfo = this.removeHTMLFromRussianInfo();
 
     return (
       <div className="col s12 m6">
