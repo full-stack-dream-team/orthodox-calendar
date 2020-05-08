@@ -15,7 +15,7 @@ class JurisdictionsSelector extends Component {
         <div className="row">
           <div className="col s12">
             <ul
-              className="tabs"
+              className="tabs z-depth-1"
               ref={(Tabs) => {
                 this.Tabs = Tabs;
               }}

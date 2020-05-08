@@ -1,0 +1,11 @@
+.datepicker-date-display,
+.datepicker-table td.is-selected {
+  background-color: #0097a7 !important;
+}
+
+button {
+  &.datepicker-cancel,
+  &.datepicker-done {
+    color: #0097a7 !important;
+  }
+}

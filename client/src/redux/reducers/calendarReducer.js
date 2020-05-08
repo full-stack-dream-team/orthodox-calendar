@@ -3,7 +3,6 @@ import {
   GET_DATE,
   SET_DATE_QUERY,
   GET_RUSSIAN_FAST,
-  SET_OCA_FAST,
   GET_RUSSIAN_SAINT_LIVES,
   GET_RUSSIAN_INFO,
 } from "../actions/types";

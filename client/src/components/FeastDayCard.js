@@ -47,7 +47,7 @@ class FeastDayCard extends Component {
   };
 
   render() {
-    const { day } = this.props;
+    const { day, jurisdiction } = this.props;
 
     const russianInfo = this.removeHTMLFromRussianInfo();
 
@@ -64,36 +64,37 @@ class FeastDayCard extends Component {
           </h5>
           <div className="row">
             <div className="col s12">
-              {day.feasts ? (
-                <p>
-                  <strong>FEASTS</strong>
-                </p>
-              ) : (
-                ""
-              )}
-              <ul>
-                {day.feasts
-                  ? day.feasts.map((feast) => <li key={feast}>{feast}</li>)
-                  : null}
-              </ul>
+              <>
+                <ul>
+                  {jurisdiction === "oca" && day.feasts
+                    ? day.feasts.map((feast) => <li key={feast}>{feast}</li>)
+                    : null}
+                </ul>
 
-              {day.saints ? (
-                <p>
-                  <strong>SAINTS</strong>
-                </p>
-              ) : (
-                ""
-              )}
-              <ul>
-                {day.saints
-                  ? day.saints.map((saint) => <li key={saint}>{saint}</li>)
-                  : null}
-              </ul>
+                <div style={{ marginLeft: "1.4rem" }}>
+                  <ul>
+                    {jurisdiction === "oca" && day.saints
+                      ? day.saints.map((saint) => (
+                          <li style={{ listStyleType: "disc" }} key={saint}>
+                            {saint}
+                          </li>
+                        ))
+                      : null}
+                  </ul>
+                </div>
+              </>
             </div>
           </div>
-          <div
-            dangerouslySetInnerHTML={{ __html: this.props.russianSaintLives }}
-          ></div>
+          {jurisdiction === "rocor" && (
+            <div className="row">
+              <div
+                className="col s12"
+                dangerouslySetInnerHTML={{
+                  __html: this.props.russianSaintLives,
+                }}
+              ></div>
+            </div>
+          )}
           <div dangerouslySetInnerHTML={{ __html: russianInfo }}></div>
         </div>
       </div>

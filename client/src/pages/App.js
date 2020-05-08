@@ -81,6 +81,12 @@ class App extends React.Component {
         autoClose: true,
         setDefaultDate: true,
         defaultDate: currentDate,
+        format: "yyyy,m,d",
+        onClose: () => {
+          const [year, month, day] = this.CalPicker.value.split(",");
+
+          this.props.history.push(`/?year=${year}&month=${month}&day=${day}`);
+        },
       };
       M.Datepicker.init(this.CalPicker, options);
 
@@ -101,6 +107,7 @@ class App extends React.Component {
       this.setDateToQuery();
       this.setUrlParamsState();
       this.props.getRussianFast();
+      this.props.getRussianSaintLives();
     });
   }
 
@@ -171,6 +178,7 @@ class App extends React.Component {
             />
             <FeastDayCard
               day={day}
+              jurisdiction={jurisdiction}
               russianSaintLives={this.props.russianSaintLives}
               getRussianInfo={this.props.getRussianInfo}
               russianInfo={this.props.russianInfo}

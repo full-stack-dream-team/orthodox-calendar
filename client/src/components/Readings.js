@@ -52,7 +52,7 @@ class Readings extends Component {
                     <div className="collapsible-body grey lighten-5">
                       {reading.passage.map((verse, i) => (
                         <p style={{ margin: "0" }} key={i}>
-                          <span className="blue-text text-lighten-2">
+                          <span className="cyan-text text-darken-2">
                             {verse.verse}{" "}
                           </span>
                           {verse.content}

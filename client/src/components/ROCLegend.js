@@ -5,7 +5,7 @@ function ROCLegend() {
     <>
       <div>
         <h5>
-          <i className="iconify" data-icon="octicon:x" data-inline="false"></i>{" "}
+          <i className="iconify" data-icon="emojione-monotone:fork-and-knife" data-inline="false"></i>{" "}
           ABSTENTION FROM FOOD
         </h5>
         <p className="mt-0">

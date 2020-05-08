@@ -1,12 +1,19 @@
-.tabs .indicator {
-  background-color: #00838f;
-}
+.tabs {
+  .indicator {
+    background-color: #0097a7 !important;
+  }
 
-.tabs .tab a {
-  color: #80deeab3;
+  .tab a {
+    color: #0097a7 !important;
 
-  &:hover,
-  &.active {
-    color: #00838f;
+    &:hover,
+    .active {
+      color: #0097a7 !important;
+    }
+
+    &:focus,
+    &:focus.active {
+      background-color: rgba(0, 151, 167, 0.1) !important;
+    }
   }
 }
