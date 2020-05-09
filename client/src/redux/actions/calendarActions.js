@@ -174,7 +174,10 @@ export const getRussianInfo = (url) => (dispatch) => {
     .then((res) => {
       const $ = cheerio.load(res.data);
 
-      const result = $("td").removeClass().html();
+      const result = $("td")
+        .removeClass()
+        .html()
+        .replace(/&[^;]*;/g, "");
 
       console.log(result);
 
