@@ -8,8 +8,6 @@ class DateCard extends Component {
     return (
       <div className="col s12">
         <div className="card-panel cyan lighten-5">
-          {/*<button onClick={this.props.logoutUser}>Log Out</button>*/}
-
           <div className="row">
             <div className="col s12 center-align">
               <h5>{titles}</h5>

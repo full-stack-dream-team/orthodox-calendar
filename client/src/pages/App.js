@@ -54,6 +54,14 @@ class App extends React.Component {
 
     const { year, month, day } = queries;
 
+    if (!year || !month || !day) {
+      this.props.history.push(
+        `/?year=${this.today.getFullYear()}&month=${
+          this.today.getMonth() + 1
+        }&day=${this.today.getDate()}`
+      );
+    }
+
     if (!this.unmounted) {
       this.props.setDateQuery(
         (year || year === 0) && (month || month === 0) && (day || day === 0)
