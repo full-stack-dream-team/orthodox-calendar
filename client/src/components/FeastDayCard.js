@@ -86,12 +86,17 @@ class FeastDayCard extends Component {
                 <ul>
                   {jurisdiction === "oca" && ocaSaintLives
                     ? ocaSaintLives.map((saint) => (
-                        <div key={saint.title}>
-                          <h6>{saint.title}</h6>
+                        <a
+                          key={saint.title}
+                          href={saint.link}
+                          rel="noopener noreferrer"
+                          target="_blank"
+                        >
+                          <h5>{saint.title}</h5>
                           {saint.image ? (
                             <img src={saint.image} alt="Saint pic" />
                           ) : null}
-                        </div>
+                        </a>
                       ))
                     : null}
                 </ul>

@@ -25,6 +25,7 @@ exports.fetchOCASaintLives = async (req, res) => {
         saints.push({
           title: $(this).find("h2").text(),
           image: $(this).find("img").attr("src") || "",
+          link: "https://oca.org" + $(this).find("a").attr("href"),
         });
       });
 
