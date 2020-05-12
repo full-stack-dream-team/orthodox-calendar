@@ -8,6 +8,7 @@ import {
   SET_OCA_FAST,
   GET_RUSSIAN_SAINT_LIVES,
   GET_RUSSIAN_INFO,
+  GET_OCA_SAINT_LIVES,
 } from "./types";
 
 export const setJurisdiction = (jurisdiction) => (dispatch) => {
@@ -184,6 +185,36 @@ export const getRussianInfo = (url) => (dispatch) => {
       dispatch({ type: GET_RUSSIAN_INFO, payload: result });
     })
     .catch((err) => console.error(err));
+};
+
+export const getOCASaintLives = () => (dispatch, getState) => {
+  const {
+    calendar: {
+      dateQuery: { year, month, day },
+    },
+  } = getState();
+
+  axios
+    .post("/api/calendar/ocasaintlives", { year, month, day })
+    .then((res) => {
+      dispatch({ type: GET_OCA_SAINT_LIVES, payload: res.data.saints });
+    })
+    .catch((err) => console.error(err));
+
+  // const url = `https://www.oca.org/saints/lives/${
+  //   year && month && day ? `${year}/${month}/${day}/` : ""
+  // }`;
+  //
+  // axios
+  //   .get(url)
+  //   .then((res) => {
+  //     const $ = cheerio.load(res.data);
+  //
+  //     const result = $("section .saints").html();
+  //
+  //     console.log(result);
+  //   })
+  //   .catch((err) => console.error(err));
 };
 
 export const setOCAFast = (ocaFast) => (dispatch) => {
