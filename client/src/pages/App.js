@@ -10,6 +10,7 @@ import {
   getRussianFast,
   getRussianSaintLives,
   getRussianInfo,
+  getOCASaintLives,
 } from "../redux/actions/calendarActions";
 
 import DayNav from "../components/DayNav";
@@ -102,12 +103,14 @@ class App extends React.Component {
     this.setUrlParamsState();
     this.props.getRussianFast();
     this.props.getRussianSaintLives();
+    this.props.getOCASaintLives();
 
     this.unlisten = this.props.history.listen(() => {
       this.setDateToQuery();
       this.setUrlParamsState();
       this.props.getRussianFast();
       this.props.getRussianSaintLives();
+      this.props.getOCASaintLives();
     });
   }
 
@@ -182,6 +185,7 @@ class App extends React.Component {
               russianSaintLives={this.props.russianSaintLives}
               getRussianInfo={this.props.getRussianInfo}
               russianInfo={this.props.russianInfo}
+              ocaSaintLives={this.props.ocaSaintLives}
             />
           </div>
 
@@ -200,6 +204,7 @@ const mapStateToProps = ({ calendar }) => ({
   russianFast: calendar.russianFast,
   russianSaintLives: calendar.russianSaintLives,
   russianInfo: calendar.russianInfo,
+  ocaSaintLives: calendar.ocaSaintLives,
 });
 
 export default connect(mapStateToProps, {
@@ -209,4 +214,5 @@ export default connect(mapStateToProps, {
   getRussianFast,
   getRussianSaintLives,
   getRussianInfo,
+  getOCASaintLives,
 })(App);

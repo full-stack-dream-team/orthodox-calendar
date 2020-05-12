@@ -5,6 +5,7 @@ import {
   GET_RUSSIAN_FAST,
   GET_RUSSIAN_SAINT_LIVES,
   GET_RUSSIAN_INFO,
+  GET_OCA_SAINT_LIVES,
 } from "../actions/types";
 
 export const initialState = {
@@ -19,6 +20,7 @@ export const initialState = {
   },
   russianSaintLives: "",
   russianInfo: "",
+  ocaSaintLives: [],
 };
 
 const calendarReducer = (state = initialState, action) => {
@@ -58,6 +60,11 @@ const calendarReducer = (state = initialState, action) => {
       return {
         ...state,
         russianInfo: action.payload,
+      };
+    case GET_OCA_SAINT_LIVES:
+      return {
+        ...state,
+        ocaSaintLives: action.payload,
       };
     default:
       return state;

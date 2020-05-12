@@ -47,7 +47,7 @@ class FeastDayCard extends Component {
   };
 
   render() {
-    const { day, jurisdiction, russianInfo } = this.props;
+    const { day, jurisdiction, russianInfo, ocaSaintLives } = this.props;
 
     // const russianInfo = this.removeHTMLFromRussianInfo();
 
@@ -64,25 +64,43 @@ class FeastDayCard extends Component {
           </h5>
           <div className="row">
             <div className="col s12">
-              <>
+              <ul>
+                {jurisdiction === "oca" && day.feasts
+                  ? day.feasts.map((feast) => <li key={feast}>{feast}</li>)
+                  : null}
+              </ul>
+
+              <div style={{ marginLeft: "1.4rem" }}>
                 <ul>
-                  {jurisdiction === "oca" && day.feasts
-                    ? day.feasts.map((feast) => <li key={feast}>{feast}</li>)
+                  {jurisdiction === "oca" && day.saints
+                    ? day.saints.map((saint) => (
+                        <li style={{ listStyleType: "disc" }} key={saint}>
+                          {saint}
+                        </li>
+                      ))
                     : null}
                 </ul>
+              </div>
 
-                <div style={{ marginLeft: "1.4rem" }}>
-                  <ul>
-                    {jurisdiction === "oca" && day.saints
-                      ? day.saints.map((saint) => (
-                          <li style={{ listStyleType: "disc" }} key={saint}>
-                            {saint}
-                          </li>
-                        ))
-                      : null}
-                  </ul>
-                </div>
-              </>
+              <div>
+                <ul>
+                  {jurisdiction === "oca" && ocaSaintLives
+                    ? ocaSaintLives.map((saint) => (
+                        <a
+                          key={saint.title}
+                          href={saint.link}
+                          rel="noopener noreferrer"
+                          target="_blank"
+                        >
+                          <h5>{saint.title}</h5>
+                          {saint.image ? (
+                            <img src={saint.image} alt="Saint pic" />
+                          ) : null}
+                        </a>
+                      ))
+                    : null}
+                </ul>
+              </div>
             </div>
           </div>
           {jurisdiction === "rocor" && (
