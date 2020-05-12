@@ -94,7 +94,7 @@ class FastingCard extends Component {
                     fastDesc.trim() ? (
                       i === russianFast.fastDesc.split(". ").length - 2 ? (
                         <span key={fastDesc}>
-                          {fastDesc.trim()}.
+                          {fastDesc.trim()}
                           <br />
                         </span>
                       ) : (
