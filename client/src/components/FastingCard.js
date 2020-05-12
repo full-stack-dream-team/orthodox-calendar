@@ -98,7 +98,7 @@ class FastingCard extends Component {
                           <br />
                         </span>
                       ) : (
-                        <span key={fastDesc}>{fastDesc.trim()}. </span>
+                        <span key={fastDesc}>{fastDesc.trim()} </span>
                       )
                     ) : (
                       "Fast free"

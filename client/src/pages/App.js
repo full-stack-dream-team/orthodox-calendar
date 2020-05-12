@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import M from "materialize-css";
 import "../sass/index.scss";
-// import { logoutUser } from "../redux/actions/authActions";
+import Footer from "../components/Footer";
 import {
   getDate,
   setDateQuery,
@@ -134,6 +134,8 @@ class App extends React.Component {
   render() {
     const { day, jurisdiction, russianFast } = this.props;
 
+    console.log(day);
+
     return (
       <div className="App">
         <div className="container">
@@ -201,6 +203,7 @@ class App extends React.Component {
             <Readings day={day} />
           </div>
         </div>
+        <Footer />
       </div>
     );
   }

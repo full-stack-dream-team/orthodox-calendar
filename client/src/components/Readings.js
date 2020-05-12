@@ -46,7 +46,8 @@ class Readings extends Component {
                   <li key={i} className={i === 0 ? " active" : ""}>
                     <div className="collapsible-header hoverable grey darken-4 white-text">
                       <h5 className="center-align">
-                        {i + 1}. {reading.display.replace(".", ":")}
+                        {i + 1}. {reading.display.replace(".", ":")}{" "}
+                        <span>({reading.source})</span>
                       </h5>
                     </div>
                     <div className="collapsible-body grey lighten-5">
