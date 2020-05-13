@@ -6,8 +6,8 @@ import {
   SET_DATE_QUERY,
   GET_RUSSIAN_FAST,
   SET_OCA_FAST,
-  GET_RUSSIAN_SAINT_LIVES,
-  GET_RUSSIAN_INFO,
+  GET_ROC_SAINTS,
+  // GET_RUSSIAN_INFO,
   GET_OCA_SAINT_LIVES,
 } from "./types";
 
@@ -150,41 +150,34 @@ export const getRussianFast = () => (dispatch, getState) => {
     .catch((err) => console.error(err));
 };
 
-export const getRussianSaintLives = () => (dispatch, getState) => {
+export const getROCSaints = () => (dispatch, getState) => {
   const {
     calendar: {
       dateQuery: { year, month, day },
     },
   } = getState();
 
-  const url = `https://www.holytrinityorthodox.com/calendar/calendar.php?header=0&dt=0&scripture=0&lives=3${
-    year && month && day ? `&year=${year}&month=${month}&today=${day}` : ""
-  }`;
-
   axios
-    .get(url)
-    .then((res) =>
-      dispatch({ type: GET_RUSSIAN_SAINT_LIVES, payload: res.data })
-    )
-    .catch((err) => console.error(err));
-};
-
-export const getRussianInfo = (url) => (dispatch) => {
-  axios
-    .get(url)
+    .post("/api/calendar/rocsaints", { year, month, day })
     .then((res) => {
-      const $ = cheerio.load(res.data);
-
-      const result = $("td")
-        .removeClass()
-        .html()
-        .replace(/&[^;]*;/g, "");
-
-      console.log(result);
-
-      dispatch({ type: GET_RUSSIAN_INFO, payload: result });
+      dispatch({ type: GET_ROC_SAINTS, payload: res.data.saints });
     })
     .catch((err) => console.error(err));
+
+  // export const getRussianInfo = (url) => (dispatch) => {
+  //   axios
+  //     .get(url)
+  //     .then((res) => {
+  //       const $ = cheerio.load(res.data);
+  //
+  //       const result = $("td")
+  //         .removeClass()
+  //         .html()
+  //         .replace(/&[^;]*;/g, "");
+  //
+  //       dispatch({ type: GET_RUSSIAN_INFO, payload: result });
+  //     })
+  //     .catch((err) => console.error(err));
 };
 
 export const getOCASaintLives = () => (dispatch, getState) => {

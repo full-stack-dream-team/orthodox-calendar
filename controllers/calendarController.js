@@ -33,3 +33,39 @@ exports.fetchOCASaintLives = async (req, res) => {
     })
     .catch((err) => console.error(err));
 };
+
+exports.fetchROCSaints = (req, res) => {
+  const { year, month, day } = req.body;
+  const url = `https://www.holytrinityorthodox.com/calendar/calendar.php?header=0&dt=0&scripture=0&lives=3${
+    year && month && day ? `&year=${year}&month=${month}&today=${day}` : ""
+  }`;
+
+  console.log(url);
+
+  puppeteer
+    .launch()
+    .then((browser) => browser.newPage())
+    .then((page) =>
+      page
+        .goto(url)
+        .then(() => page.waitForSelector("body"))
+        .then(() => {
+          console.log("span.normaltext");
+          return page.content();
+        })
+        .catch((err) => console.error(err))
+    )
+    .then((html) => {
+      const saints = [];
+      const $ = cheerio.load(html);
+
+      // $(this).find("img").remove();
+
+      saints.push({
+        saintList: $(this).find("span.normaltext"),
+      });
+
+      res.json({ saints });
+    })
+    .catch((err) => console.error(err));
+};

@@ -8,8 +8,8 @@ import {
   setDateQuery,
   setJurisdiction,
   getRussianFast,
-  getRussianSaintLives,
-  getRussianInfo,
+  getROCSaints,
+  // getRussianInfo,
   getOCASaintLives,
 } from "../redux/actions/calendarActions";
 
@@ -110,14 +110,14 @@ class App extends React.Component {
     this.setDateToQuery();
     this.setUrlParamsState();
     this.props.getRussianFast();
-    this.props.getRussianSaintLives();
+    this.props.getROCSaints();
     this.props.getOCASaintLives();
 
     this.unlisten = this.props.history.listen(() => {
       this.setDateToQuery();
       this.setUrlParamsState();
       this.props.getRussianFast();
-      this.props.getRussianSaintLives();
+      this.props.getROCSaints();
       this.props.getOCASaintLives();
     });
   }
@@ -134,7 +134,7 @@ class App extends React.Component {
   render() {
     const { day, jurisdiction, russianFast } = this.props;
 
-    console.log(day);
+    // console.log(day);
 
     return (
       <div className="App">
@@ -192,9 +192,9 @@ class App extends React.Component {
             <FeastDayCard
               day={day}
               jurisdiction={jurisdiction}
-              russianSaintLives={this.props.russianSaintLives}
-              getRussianInfo={this.props.getRussianInfo}
-              russianInfo={this.props.russianInfo}
+              rocSaints={this.props.rocSaints}
+              // getRussianInfo={this.props.getRussianInfo}
+              // russianInfo={this.props.russianInfo}
               ocaSaintLives={this.props.ocaSaintLives}
             />
           </div>
@@ -213,8 +213,8 @@ const mapStateToProps = ({ calendar }) => ({
   day: calendar.date || {},
   jurisdiction: calendar.jurisdiction,
   russianFast: calendar.russianFast,
-  russianSaintLives: calendar.russianSaintLives,
-  russianInfo: calendar.russianInfo,
+  rocSaints: calendar.rocSaints,
+  // russianInfo: calendar.russianInfo,
   ocaSaintLives: calendar.ocaSaintLives,
 });
 
@@ -223,7 +223,7 @@ export default connect(mapStateToProps, {
   setDateQuery,
   setJurisdiction,
   getRussianFast,
-  getRussianSaintLives,
-  getRussianInfo,
+  getROCSaints,
+  // getRussianInfo,
   getOCASaintLives,
 })(App);
