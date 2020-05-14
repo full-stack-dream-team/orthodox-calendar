@@ -32,6 +32,7 @@ var corsOptionsDelegate = function (req, callback) {
 };
 
 // Import Routes
+app.options("/", cors());
 app.use("/", cors(corsOptionsDelegate), routes);
 
 // Passport middleware
