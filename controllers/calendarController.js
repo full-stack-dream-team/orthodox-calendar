@@ -36,36 +36,93 @@ exports.fetchOCASaintLives = async (req, res) => {
 
 exports.fetchROCSaints = (req, res) => {
   const { year, month, day } = req.body;
-  const url = `https://www.holytrinityorthodox.com/calendar/calendar.php?header=0&dt=0&scripture=0&lives=3${
-    year && month && day ? `&year=${year}&month=${month}&today=${day}` : ""
+  const url = `https://www.holytrinityorthodox.com/calendar/calendar.php?dt=0&header=0&lives=5&trp=0&scripture=0${
+    year && month && day
+      ? `&year=${parseInt(year)}&month=${parseInt(month)}&today=${parseInt(
+          day
+        )}`
+      : ""
   }`;
-
-  console.log(url);
 
   puppeteer
     .launch()
-    .then((browser) => browser.newPage())
-    .then((page) =>
-      page
-        .goto(url)
-        .then(() => page.waitForSelector("body"))
-        .then(() => {
-          console.log("span.normaltext");
-          return page.content();
-        })
+    .then((browser) =>
+      browser
+        .newPage()
+        .then((page) =>
+          page
+            .goto(url)
+            .then(() => page.waitForSelector("span.normaltext"))
+            .then(() => page.content())
+            .then((html) => {
+              const $ = cheerio.load(html);
+              const links = [];
+
+              $(".normaltext a").each(function () {
+                if (links.includes($(this).attr("href")) === false) {
+                  links.push($(this).attr("href"));
+                }
+              });
+
+              return links;
+            })
+            .then((links) =>
+              Promise.all(
+                links.map((link) =>
+                  browser
+                    .newPage()
+                    .then((newPage) =>
+                      newPage
+                        .goto(link)
+                        .then(() => newPage.waitForSelector("tbody"))
+                        .then(() => newPage.content())
+                    )
+                    .then((html) => {
+                      const $ = cheerio.load(html);
+
+                      let saint;
+                      $("tbody").each(function () {
+                        let image = link;
+                        if ($(this).find("img").attr("src")) {
+                          let remove = "";
+                          for (let i = link.length - 1; i > -1; i--) {
+                            if (link[i] !== "/") {
+                              remove += link[i];
+                            } else {
+                              remove = remove.split("").reverse().join("");
+
+                              i = -1;
+                            }
+                          }
+
+                          image = image.replace(
+                            remove,
+                            $(this).find("img").attr("src")
+                          );
+                        } else {
+                          image = "";
+                        }
+
+                        saint = {
+                          title: $(this).find("p.header12").text(),
+                          image,
+                          link,
+                        };
+                      });
+
+                      return saint;
+                    })
+                    .catch((err) => console.error(err))
+                )
+              )
+            )
+            .then((saints) => {
+              console.log(saints);
+              return res.json({ saints: saints });
+            })
+            .catch((err) => console.error(err))
+        )
         .catch((err) => console.error(err))
     )
-    .then((html) => {
-      const saints = [];
-      const $ = cheerio.load(html);
-
-      // $(this).find("img").remove();
-
-      saints.push({
-        saintList: $(this).find("span.normaltext"),
-      });
-
-      res.json({ saints });
-    })
     .catch((err) => console.error(err));
 };

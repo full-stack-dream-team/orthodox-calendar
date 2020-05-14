@@ -3,8 +3,7 @@ import {
   GET_DATE,
   SET_DATE_QUERY,
   GET_RUSSIAN_FAST,
-  GET_ROC_SAINTS,
-  GET_RUSSIAN_INFO,
+  GET_ROC_SAINT_LIVES,
   GET_OCA_SAINT_LIVES,
 } from "../actions/types";
 
@@ -18,8 +17,7 @@ export const initialState = {
     allowed: "",
     disallowed: "",
   },
-  rocSaints: [],
-  russianInfo: "",
+  rocSaintLives: [],
   ocaSaintLives: [],
 };
 
@@ -51,15 +49,10 @@ const calendarReducer = (state = initialState, action) => {
         ...state,
         russianFast: action.payload,
       };
-    case GET_ROC_SAINTS:
+    case GET_ROC_SAINT_LIVES:
       return {
         ...state,
-        rocSaints: action.payload,
-      };
-    case GET_RUSSIAN_INFO:
-      return {
-        ...state,
-        russianInfo: action.payload,
+        rocSaintLives: action.payload,
       };
     case GET_OCA_SAINT_LIVES:
       return {

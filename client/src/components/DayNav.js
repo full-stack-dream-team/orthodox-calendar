@@ -32,7 +32,12 @@ class DayNav extends Component {
               }&day=${prevDate.getDate()}`}
               className="waves-effect waves-cyan btn grey darken-4"
             >
-              Previous Day
+              <i
+                className="iconify"
+                data-icon="fa-solid:chevron-left"
+                data-inline="false"
+              ></i>{" "}
+              Previous
             </Link>
             <Link
               to={`/?year=${this.today.getFullYear()}&month=${
@@ -48,7 +53,12 @@ class DayNav extends Component {
               }&day=${nextDate.getDate()}`}
               className="waves-effect waves-cyan btn grey darken-4"
             >
-              Next Day
+              Next{" "}
+              <i
+                className="iconify"
+                data-icon="fa-solid:chevron-right"
+                data-inline="false"
+              ></i>
             </Link>
           </div>
         </div>

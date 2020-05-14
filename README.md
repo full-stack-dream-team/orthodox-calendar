@@ -1,14 +1,14 @@
-# MERN Authentication Boilerplate
+# Orthodox Calendar (OCA and ROC)
 
-## A basic authentication boilerplate created with the **MERN** (MongoDB, Express, React, Node) stack and Redux.
+## Basic calendar displaying daily fasts, feasts, saints and readings.
 
-### Based on the MVC pattern utilizing Models, Routes, Controllers and Views.
+### Pulling info from an API and two different websites.
 
-![MVC](./MVC-Example.png)
+![MVC](./orthodox-church.jpg)
 
 ### Getting Started
 
-1. Clone the repo and use your CLI to `cd auth-boilerplate` into it.
+1. Clone the repo and use your CLI to `cd orthodox-calendar` into it.
 2. Type `yarn install` or `npm install` inside the root folder to install the dependencies in your `package.json` file.
 3. Type `cd client` to move into the client folder and install your client-side dependencies with `yarn install` or `npm install`.
 4. Get a MongoDB test DataBase set up: <https://www.mongodb.com/cloud/atlas>, create a collection called `products` and import the `/data/products.json` file into your db for some test data. Copy your MongoDB connection string. You will need it in step 5.

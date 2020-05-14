@@ -9,7 +9,6 @@ import {
   setJurisdiction,
   getRussianFast,
   getROCSaints,
-  // getRussianInfo,
   getOCASaintLives,
 } from "../redux/actions/calendarActions";
 
@@ -134,8 +133,6 @@ class App extends React.Component {
   render() {
     const { day, jurisdiction, russianFast } = this.props;
 
-    // console.log(day);
-
     return (
       <div className="App">
         <div className="container">
@@ -192,9 +189,7 @@ class App extends React.Component {
             <FeastDayCard
               day={day}
               jurisdiction={jurisdiction}
-              rocSaints={this.props.rocSaints}
-              // getRussianInfo={this.props.getRussianInfo}
-              // russianInfo={this.props.russianInfo}
+              rocSaintLives={this.props.rocSaintLives}
               ocaSaintLives={this.props.ocaSaintLives}
             />
           </div>
@@ -213,8 +208,7 @@ const mapStateToProps = ({ calendar }) => ({
   day: calendar.date || {},
   jurisdiction: calendar.jurisdiction,
   russianFast: calendar.russianFast,
-  rocSaints: calendar.rocSaints,
-  // russianInfo: calendar.russianInfo,
+  rocSaintLives: calendar.rocSaintLives,
   ocaSaintLives: calendar.ocaSaintLives,
 });
 
@@ -224,6 +218,5 @@ export default connect(mapStateToProps, {
   setJurisdiction,
   getRussianFast,
   getROCSaints,
-  // getRussianInfo,
   getOCASaintLives,
 })(App);

@@ -6,8 +6,7 @@ import {
   SET_DATE_QUERY,
   GET_RUSSIAN_FAST,
   SET_OCA_FAST,
-  GET_ROC_SAINTS,
-  // GET_RUSSIAN_INFO,
+  GET_ROC_SAINT_LIVES,
   GET_OCA_SAINT_LIVES,
 } from "./types";
 
@@ -160,24 +159,9 @@ export const getROCSaints = () => (dispatch, getState) => {
   axios
     .post("/api/calendar/rocsaints", { year, month, day })
     .then((res) => {
-      dispatch({ type: GET_ROC_SAINTS, payload: res.data.saints });
+      dispatch({ type: GET_ROC_SAINT_LIVES, payload: res.data.saints });
     })
     .catch((err) => console.error(err));
-
-  // export const getRussianInfo = (url) => (dispatch) => {
-  //   axios
-  //     .get(url)
-  //     .then((res) => {
-  //       const $ = cheerio.load(res.data);
-  //
-  //       const result = $("td")
-  //         .removeClass()
-  //         .html()
-  //         .replace(/&[^;]*;/g, "");
-  //
-  //       dispatch({ type: GET_RUSSIAN_INFO, payload: result });
-  //     })
-  //     .catch((err) => console.error(err));
 };
 
 export const getOCASaintLives = () => (dispatch, getState) => {
@@ -193,21 +177,6 @@ export const getOCASaintLives = () => (dispatch, getState) => {
       dispatch({ type: GET_OCA_SAINT_LIVES, payload: res.data.saints });
     })
     .catch((err) => console.error(err));
-
-  // const url = `https://www.oca.org/saints/lives/${
-  //   year && month && day ? `${year}/${month}/${day}/` : ""
-  // }`;
-  //
-  // axios
-  //   .get(url)
-  //   .then((res) => {
-  //     const $ = cheerio.load(res.data);
-  //
-  //     const result = $("section .saints").html();
-  //
-  //     console.log(result);
-  //   })
-  //   .catch((err) => console.error(err));
 };
 
 export const setOCAFast = (ocaFast) => (dispatch) => {
