@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const routes = require("./routes");
 const passport = require("passport");
+const cors = require("cors");
 // const errorHandlers = require("./handlers/errorHandlers");
 
 // create the Express app
@@ -13,8 +14,25 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+// CORS
+let whitelist = [
+  "https://oca.org",
+  "https://orthocal.info/api",
+  "https://www.holytrinityorthodox.com/calendar",
+];
+
+var corsOptionsDelegate = function (req, callback) {
+  var corsOptions;
+  if (whitelist.indexOf(req.header("Origin")) !== -1) {
+    corsOptions = { origin: true }; // reflect (enable) the requested origin in the CORS response
+  } else {
+    corsOptions = { origin: false }; // disable CORS for this request
+  }
+  callback(null, corsOptions); // callback expects two parameters: error and options
+};
+
 // Import Routes
-app.use("/", routes);
+app.use("/", cors(corsOptionsDelegate), routes);
 
 // Passport middleware
 app.use(passport.initialize());
