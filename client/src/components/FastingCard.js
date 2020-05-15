@@ -68,7 +68,7 @@ class FastingCard extends Component {
           <h5>
             <strong>
               {symbol && !switched ? (
-                <span style={{ marginRight: "0.5em" }}>
+                <span className="mr-1">
                   <i
                     className="iconify"
                     data-icon={symbol}
@@ -77,7 +77,7 @@ class FastingCard extends Component {
                 </span>
               ) : null}
               {symbol && switched ? (
-                <span style={{ marginRight: "0.5em" }}>
+                <span className="mr-1">
                   <i
                     className="iconify"
                     data-icon={symbol}

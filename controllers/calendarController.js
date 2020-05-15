@@ -38,7 +38,7 @@ exports.fetchcalendarAPI = (req, res) => {
     .catch((err) => console.error(err));
 };
 
-exports.fetchOCASaintLives = async (req, res) => {
+exports.fetchOCASaints = async (req, res) => {
   const { year, month, day } = req.body;
 
   const url = `https://www.oca.org/saints/lives/${

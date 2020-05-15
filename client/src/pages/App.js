@@ -160,8 +160,11 @@ class App extends React.Component {
               data-icon="emojione-monotone:orthodox-cross"
               data-inline="false"
             ></i>{" "}
-            Daily Readings
+            Orthodox Calendar
           </h2>
+          <h5 className="mb-2 center-align">
+            Daily Fast, Feasts, Saints and Readings
+          </h5>
           <DayNav {...this.state.currentUrlParams} />
 
           <JurisdictionsSelector
