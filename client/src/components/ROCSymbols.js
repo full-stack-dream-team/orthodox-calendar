@@ -2,22 +2,22 @@ import React, { Component } from "react";
 
 class ROCSymbols extends Component {
   render() {
-    const { russianFast } = this.props;
+    const { rocFast } = this.props;
     let symbol;
 
-    if (russianFast.includes("Full abstention from food")) {
+    if (rocFast.includes("Full abstention from food")) {
       symbol = "emojione-v1:cross-mark";
-    } else if (russianFast.includes("Strict Fast")) {
+    } else if (rocFast.includes("Strict Fast")) {
       symbol = "mdi:bolnisi-cross";
-    } else if (russianFast.includes("Food without Oil")) {
+    } else if (rocFast.includes("Food without Oil")) {
       symbol = "emojione:pot-of-food";
-    } else if (russianFast.includes("Food with Oil")) {
+    } else if (rocFast.includes("Food with Oil")) {
       symbol = "noto:grapes";
-    } else if (russianFast.includes("Caviar Allowed")) {
+    } else if (rocFast.includes("Caviar Allowed")) {
       symbol = "emojione:letter-c";
-    } else if (russianFast.includes("Fish Allowed")) {
+    } else if (rocFast.includes("Fish Allowed")) {
       symbol = "noto:fish";
-    } else if (russianFast.includes("Meat is excluded")) {
+    } else if (rocFast.includes("Meat is excluded")) {
       symbol = "noto:cheese-wedge";
     } else {
       symbol = "";

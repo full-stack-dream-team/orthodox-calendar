@@ -7,6 +7,6 @@ export const SET_CURRENT_USER = "SET_CURRENT_USER";
 export const SET_JURISDICTION = "SET_JURISDICTION";
 export const SET_DATE_QUERY = "SET_DATE_QUERY";
 export const GET_DATE = "GET_DATE";
-export const GET_RUSSIAN_FAST = "GET_RUSSIAN_FAST";
+export const GET_ROC_FAST = "GET_ROC_FAST";
 export const GET_ROC_SAINTS = "GET_ROC_SAINTS";
 export const GET_OCA_SAINTS = "GET_OCA_SAINTS";

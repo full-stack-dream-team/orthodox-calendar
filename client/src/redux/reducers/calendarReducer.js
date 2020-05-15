@@ -2,7 +2,7 @@ import {
   SET_JURISDICTION,
   GET_DATE,
   SET_DATE_QUERY,
-  GET_RUSSIAN_FAST,
+  GET_ROC_FAST,
   GET_ROC_SAINTS,
   GET_OCA_SAINTS,
 } from "../actions/types";
@@ -12,7 +12,7 @@ export const initialState = {
   jurisdiction: "oca",
   dateQuery: {},
   date: null,
-  russianFast: {
+  rocFast: {
     fastDesc: "",
     allowed: "",
     disallowed: "",
@@ -44,10 +44,10 @@ const calendarReducer = (state = initialState, action) => {
         ...state,
         date: action.payload,
       };
-    case GET_RUSSIAN_FAST:
+    case GET_ROC_FAST:
       return {
         ...state,
-        russianFast: action.payload,
+        rocFast: action.payload,
       };
     case GET_ROC_SAINTS:
       return {

@@ -163,3 +163,80 @@ exports.fetchROCSaints = (req, res) => {
     )
     .catch((err) => console.error(err));
 };
+
+exports.fetchROCFast = (req, res) => {
+  const { year, month, day } = req.body;
+
+  const url = `https://www.holytrinityorthodox.com/calendar/calendar.php?dt=0&lives=0&trp=0&scripture=0${
+    year && month && day
+      ? `&year=${parseInt(year)}&month=${parseInt(month)}&today=${parseInt(
+          day
+        )}`
+      : ""
+  }`;
+
+  axios
+    .get(url)
+    .then((info) => {
+      const fast = {
+        fastDesc: info.data,
+        allowed: "",
+        disallowed: "",
+        symbol: "",
+      };
+
+      const $ = cheerio.load(fast.fastDesc);
+
+      if ($(".headerfast").text().trim()) {
+        fast.fastDesc = $(".headerfast").text();
+      } else if ($(".headernofast").text().trim()) {
+        fast.fastDesc = $(".headernofast").text();
+      } else {
+        fast.fastDesc = "Fast Free";
+      }
+
+      if (fast.fastDesc) {
+        fast.fastDesc = fast.fastDesc.replace(/<[^>]+>/g, "");
+
+        if (fast.fastDesc.includes("Full abstention from food")) {
+          fast.disallowed = "All food";
+
+          fast.symbol = "emojione-monotone:fork-and-knife";
+        } else if (fast.fastDesc.includes("Strict Fast")) {
+          fast.allowed = "Raw vegetables, fruit and bread";
+          fast.disallowed =
+            "Cooked food, meat, fish, oil, wine, dairy and eggs";
+
+          fast.symbol = "mdi:bolnisi-cross";
+        } else if (fast.fastDesc.includes("Food without Oil")) {
+          fast.allowed = "Cooked vegetables, fruit, legumes and bread";
+          fast.disallowed =
+            "Fried foods, meat, fish, oil, wine, dairy and eggs";
+
+          fast.symbol = "emojione:pot-of-food";
+        } else if (fast.fastDesc.includes("Food with Oil")) {
+          fast.allowed = "All of DRY FAST, wine and oil";
+          fast.disallowed = "Meat, fish, dairy and eggs";
+
+          fast.symbol = "noto:grapes";
+        } else if (fast.fastDesc.includes("Caviar Allowed")) {
+          fast.allowed = "All of DRY FAST, wine, oil and caviar";
+          fast.disallowed = "Meat, fish, dairy and eggs";
+
+          fast.symbol = "emojione:letter-c";
+        } else if (fast.fastDesc.includes("Fish Allowed")) {
+          fast.allowed = "All of DRY FAST, wine, oil, caviar and fish";
+          fast.disallowed = "Meat, dairy and eggs";
+
+          fast.symbol = "noto:fish";
+        } else if (fast.fastDesc.includes("Meat is excluded")) {
+          fast.allowed = "All of DRY FAST, wine, oil, fish, eggs and dairy";
+          fast.disallowed = "Meat";
+
+          fast.symbol = "noto:cheese-wedge";
+        }
+      }
+      res.json({ fast });
+    })
+    .catch((err) => console.error(err));
+};

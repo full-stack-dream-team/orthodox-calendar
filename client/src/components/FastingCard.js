@@ -37,9 +37,9 @@ class FastingCard extends Component {
       }
     } else if (
       this.props.jurisdiction === "rocor" &&
-      this.props.russianFast.symbol
+      this.props.rocFast.symbol
     ) {
-      symbol = this.props.russianFast.symbol;
+      symbol = this.props.rocFast.symbol;
     }
 
     if (symbol !== this.state.symbol) {
@@ -48,7 +48,7 @@ class FastingCard extends Component {
   }
 
   render() {
-    const { day, jurisdiction, russianFast } = this.props;
+    const { day, jurisdiction, rocFast } = this.props;
     const { symbol, switched } = this.state;
 
     return (
@@ -87,12 +87,12 @@ class FastingCard extends Component {
               ) : null}
               {day.fast_exception_desc && jurisdiction === "oca"
                 ? day.fast_exception_desc
-                : russianFast.fastDesc &&
-                  russianFast.fastDesc.replace(" ", "") &&
+                : rocFast.fastDesc &&
+                  rocFast.fastDesc.replace(" ", "") &&
                   jurisdiction === "rocor"
-                ? russianFast.fastDesc.split(". ").map((fastDesc, i) =>
+                ? rocFast.fastDesc.split(". ").map((fastDesc, i) =>
                     fastDesc.trim() ? (
-                      i === russianFast.fastDesc.split(". ").length - 2 ? (
+                      i === rocFast.fastDesc.split(". ").length - 2 ? (
                         <span key={fastDesc}>
                           {fastDesc.trim()}
                           <br />
@@ -110,7 +110,7 @@ class FastingCard extends Component {
           {jurisdiction === "oca" ? (
             <OCAFastingDescription day={day} />
           ) : (
-            <ROCFastingDescription russianFast={russianFast} />
+            <ROCFastingDescription rocFast={rocFast} />
           )}
         </div>
       </div>

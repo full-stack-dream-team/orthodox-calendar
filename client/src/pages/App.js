@@ -7,7 +7,7 @@ import {
   getDate,
   setDateQuery,
   setJurisdiction,
-  getRussianFast,
+  getROCFast,
   getROCSaints,
   getOCASaints,
 } from "../redux/actions/calendarActions";
@@ -108,14 +108,14 @@ class App extends React.Component {
   componentDidMount() {
     this.setDateToQuery();
     this.setUrlParamsState();
-    this.props.getRussianFast();
+    this.props.getROCFast();
     this.props.getROCSaints();
     this.props.getOCASaints();
 
     this.unlisten = this.props.history.listen(() => {
       this.setDateToQuery();
       this.setUrlParamsState();
-      this.props.getRussianFast();
+      this.props.getROCFast();
       this.props.getROCSaints();
       this.props.getOCASaints();
     });
@@ -131,7 +131,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { day, jurisdiction, russianFast } = this.props;
+    const { day, jurisdiction, rocFast } = this.props;
 
     return (
       <div className="App">
@@ -184,7 +184,7 @@ class App extends React.Component {
             <FastingCard
               day={day}
               jurisdiction={jurisdiction}
-              russianFast={russianFast}
+              rocFast={rocFast}
             />
             <FeastDayCard
               day={day}
@@ -207,7 +207,7 @@ class App extends React.Component {
 const mapStateToProps = ({ calendar }) => ({
   day: calendar.date || {},
   jurisdiction: calendar.jurisdiction,
-  russianFast: calendar.russianFast,
+  rocFast: calendar.rocFast,
   rocSaintLives: calendar.rocSaintLives,
   ocaSaints: calendar.ocaSaints,
 });
@@ -216,7 +216,7 @@ export default connect(mapStateToProps, {
   getDate,
   setDateQuery,
   setJurisdiction,
-  getRussianFast,
+  getROCFast,
   getROCSaints,
   getOCASaints,
 })(App);

@@ -3,7 +3,7 @@ import React, { Component } from "react";
 class ROCFastingDescription extends Component {
   render() {
     const {
-      russianFast: { allowed, disallowed },
+      rocFast: { allowed, disallowed },
     } = this.props;
 
     return (
