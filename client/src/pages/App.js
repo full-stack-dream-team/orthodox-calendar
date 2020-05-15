@@ -9,7 +9,7 @@ import {
   setJurisdiction,
   getRussianFast,
   getROCSaints,
-  getOCASaintLives,
+  getOCASaints,
 } from "../redux/actions/calendarActions";
 
 import DayNav from "../components/DayNav";
@@ -110,14 +110,14 @@ class App extends React.Component {
     this.setUrlParamsState();
     this.props.getRussianFast();
     this.props.getROCSaints();
-    this.props.getOCASaintLives();
+    this.props.getOCASaints();
 
     this.unlisten = this.props.history.listen(() => {
       this.setDateToQuery();
       this.setUrlParamsState();
       this.props.getRussianFast();
       this.props.getROCSaints();
-      this.props.getOCASaintLives();
+      this.props.getOCASaints();
     });
   }
 
@@ -190,7 +190,7 @@ class App extends React.Component {
               day={day}
               jurisdiction={jurisdiction}
               rocSaintLives={this.props.rocSaintLives}
-              ocaSaintLives={this.props.ocaSaintLives}
+              ocaSaints={this.props.ocaSaints}
             />
           </div>
 
@@ -209,7 +209,7 @@ const mapStateToProps = ({ calendar }) => ({
   jurisdiction: calendar.jurisdiction,
   russianFast: calendar.russianFast,
   rocSaintLives: calendar.rocSaintLives,
-  ocaSaintLives: calendar.ocaSaintLives,
+  ocaSaints: calendar.ocaSaints,
 });
 
 export default connect(mapStateToProps, {
@@ -218,5 +218,5 @@ export default connect(mapStateToProps, {
   setJurisdiction,
   getRussianFast,
   getROCSaints,
-  getOCASaintLives,
+  getOCASaints,
 })(App);

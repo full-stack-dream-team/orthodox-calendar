@@ -5,9 +5,8 @@ import {
   GET_DATE,
   SET_DATE_QUERY,
   GET_RUSSIAN_FAST,
-  SET_OCA_FAST,
-  GET_ROC_SAINT_LIVES,
-  GET_OCA_SAINT_LIVES,
+  GET_ROC_SAINTS,
+  GET_OCA_SAINTS,
 } from "./types";
 
 export const setJurisdiction = (jurisdiction) => (dispatch) => {
@@ -28,41 +27,14 @@ export const getDate = () => (dispatch, getState) => {
   const {
     calendar: {
       dateQuery: { year, month, day },
+      jurisdiction,
     },
-    calendar: state,
   } = getState();
 
-  // Fetch the day data
-  const apiURL = "https://orthocal.info";
-  const url = `${apiURL}/api/${state.jurisdiction}/${
-    year ? `${year}/${month ? `${month}/${day ? `${day}/` : ""}` : ""}` : ""
-  }`;
   axios
-    .get(url)
+    .post("/api/calendar/ocafast", { year, month, day, jurisdiction })
     .then((res) => {
-      const result =
-        typeof res.data === "object" && typeof res.data.length !== "number"
-          ? { ...res.data }
-          : [...res.data];
-
-      if (
-        typeof result.length !== "number" &&
-        typeof result.fast_level === "number"
-      ) {
-        if (result.fast_level === 0) {
-          result.fast_exception_desc = "Fast Free";
-        } else if (result.fast_level > 0) {
-          if (!result.fast_exception_desc.replace(" ", "")) {
-            result.fast_exception_desc = "Strict Fast";
-          } else if (
-            result.fast_exception_desc.toLowerCase() === "no overrides"
-          ) {
-            result.fast_exception_desc = "Strict Fast";
-          }
-        }
-      }
-
-      dispatch({ type: GET_DATE, payload: result });
+      dispatch({ type: GET_DATE, payload: res.data.fast });
     })
     .catch((err) => console.error(err));
 };
@@ -159,12 +131,12 @@ export const getROCSaints = () => (dispatch, getState) => {
   axios
     .post("/api/calendar/rocsaints", { year, month, day })
     .then((res) => {
-      dispatch({ type: GET_ROC_SAINT_LIVES, payload: res.data.saints });
+      dispatch({ type: GET_ROC_SAINTS, payload: res.data.saints });
     })
     .catch((err) => console.error(err));
 };
 
-export const getOCASaintLives = () => (dispatch, getState) => {
+export const getOCASaints = () => (dispatch, getState) => {
   const {
     calendar: {
       dateQuery: { year, month, day },
@@ -172,18 +144,11 @@ export const getOCASaintLives = () => (dispatch, getState) => {
   } = getState();
 
   axios
-    .post("/api/calendar/ocasaintlives", { year, month, day })
+    .post("/api/calendar/ocasaints", { year, month, day })
     .then((res) => {
-      dispatch({ type: GET_OCA_SAINT_LIVES, payload: res.data.saints });
+      dispatch({ type: GET_OCA_SAINTS, payload: res.data.saints });
     })
     .catch((err) => console.error(err));
-};
-
-export const setOCAFast = (ocaFast) => (dispatch) => {
-  dispatch({
-    type: SET_OCA_FAST,
-    payload: ocaFast,
-  });
 };
 
 window.axios = axios;

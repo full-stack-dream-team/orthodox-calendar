@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 class FeastDayCard extends Component {
   render() {
-    const { jurisdiction, ocaSaintLives, rocSaintLives } = this.props;
+    const { jurisdiction, ocaSaints, rocSaintLives } = this.props;
 
     return (
       <div className="col s12 m6">
@@ -18,8 +18,8 @@ class FeastDayCard extends Component {
           <div className="row">
             <div className="col s12">
               <ul>
-                {jurisdiction === "oca" && ocaSaintLives
-                  ? ocaSaintLives.map((saint) => (
+                {jurisdiction === "oca" && ocaSaints
+                  ? ocaSaints.map((saint) => (
                       <a
                         key={saint.title}
                         href={saint.link}

@@ -3,8 +3,8 @@ import {
   GET_DATE,
   SET_DATE_QUERY,
   GET_RUSSIAN_FAST,
-  GET_ROC_SAINT_LIVES,
-  GET_OCA_SAINT_LIVES,
+  GET_ROC_SAINTS,
+  GET_OCA_SAINTS,
 } from "../actions/types";
 
 export const initialState = {
@@ -18,7 +18,7 @@ export const initialState = {
     disallowed: "",
   },
   rocSaintLives: [],
-  ocaSaintLives: [],
+  ocaSaints: [],
 };
 
 const calendarReducer = (state = initialState, action) => {
@@ -49,15 +49,15 @@ const calendarReducer = (state = initialState, action) => {
         ...state,
         russianFast: action.payload,
       };
-    case GET_ROC_SAINT_LIVES:
+    case GET_ROC_SAINTS:
       return {
         ...state,
         rocSaintLives: action.payload,
       };
-    case GET_OCA_SAINT_LIVES:
+    case GET_OCA_SAINTS:
       return {
         ...state,
-        ocaSaintLives: action.payload,
+        ocaSaints: action.payload,
       };
     default:
       return state;

@@ -1,8 +1,46 @@
 const puppeteer = require("puppeteer");
 const cheerio = require("cheerio");
+const axios = require("axios");
+
+exports.fetchOCAFast = (req, res) => {
+  const { year, month, day, jurisdiction } = req.body;
+  const apiURL = "https://orthocal.info";
+  const url = `${apiURL}/api/${jurisdiction}/${
+    year ? `${year}/${month ? `${month}/${day ? `${day}/` : ""}` : ""}` : ""
+  }`;
+
+  axios
+    .get(url)
+    .then((info) => {
+      const fast =
+        typeof info.data === "object" && typeof info.data.length !== "number"
+          ? { ...info.data }
+          : [...info.data];
+
+      if (
+        typeof fast.length !== "number" &&
+        typeof fast.fast_level === "number"
+      ) {
+        if (fast.fast_level === 0) {
+          fast.fast_exception_desc = "Fast Free";
+        } else if (fast.fast_level > 0) {
+          if (!fast.fast_exception_desc.replace(" ", "")) {
+            fast.fast_exception_desc = "Strict Fast";
+          } else if (
+            fast.fast_exception_desc.toLowerCase() === "no overrides"
+          ) {
+            fast.fast_exception_desc = "Strict Fast";
+          }
+        }
+      }
+      res.json({ fast });
+    })
+    .catch((err) => console.error(err));
+};
 
 exports.fetchOCASaintLives = async (req, res) => {
   const { year, month, day } = req.body;
+
   const url = `https://www.oca.org/saints/lives/${
     year && month && day ? `${year}/${month}/${day}/` : ""
   }`;
@@ -117,8 +155,7 @@ exports.fetchROCSaints = (req, res) => {
               )
             )
             .then((saints) => {
-              console.log(saints);
-              return res.json({ saints: saints });
+              return res.json({ saints });
             })
             .catch((err) => console.error(err))
         )

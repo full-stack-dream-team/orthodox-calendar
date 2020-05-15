@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const path = require("path");
 const routes = require("./routes");
+
 const passport = require("passport");
 const cors = require("cors");
 // const errorHandlers = require("./handlers/errorHandlers");
@@ -15,16 +16,23 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // CORS
+app.use(cors());
+
 let whitelist = [
   "https://oca.org",
-  "https://orthocal.info/api",
-  "https://www.holytrinityorthodox.com/calendar",
+  "https://orthocal.info",
+  "https://www.holytrinityorthodox.com",
 ];
 
-var corsOptionsDelegate = function (req, callback) {
-  var corsOptions;
+let corsOptionsDelegate = function (req, callback) {
+  let corsOptions;
+
   if (whitelist.indexOf(req.header("Origin")) !== -1) {
-    corsOptions = { origin: true }; // reflect (enable) the requested origin in the CORS response
+    corsOptions = {
+      origin: true,
+      optionsSuccessStatus: 200,
+      preflightContinue: true,
+    }; // reflect (enable) the requested origin in the CORS response
   } else {
     corsOptions = { origin: false }; // disable CORS for this request
   }
@@ -32,7 +40,7 @@ var corsOptionsDelegate = function (req, callback) {
 };
 
 // Import Routes
-app.options("/", cors());
+app.options("*", cors()); // enable pre-flight request for all requests
 app.use("/", cors(corsOptionsDelegate), routes);
 
 // Passport middleware
