@@ -2,7 +2,7 @@ const puppeteer = require("puppeteer");
 const cheerio = require("cheerio");
 const axios = require("axios");
 
-exports.fetchOCAFast = (req, res) => {
+exports.fetchcalendarAPI = (req, res) => {
   const { year, month, day, jurisdiction } = req.body;
   const apiURL = "https://orthocal.info";
   const url = `${apiURL}/api/${jurisdiction}/${
@@ -12,28 +12,28 @@ exports.fetchOCAFast = (req, res) => {
   axios
     .get(url)
     .then((info) => {
-      const fast =
+      const calendarAPI =
         typeof info.data === "object" && typeof info.data.length !== "number"
           ? { ...info.data }
           : [...info.data];
 
       if (
-        typeof fast.length !== "number" &&
-        typeof fast.fast_level === "number"
+        typeof calendarAPI.length !== "number" &&
+        typeof calendarAPI.fast_level === "number"
       ) {
-        if (fast.fast_level === 0) {
-          fast.fast_exception_desc = "Fast Free";
-        } else if (fast.fast_level > 0) {
-          if (!fast.fast_exception_desc.replace(" ", "")) {
-            fast.fast_exception_desc = "Strict Fast";
+        if (calendarAPI.fast_level === 0) {
+          calendarAPI.fast_exception_desc = "Fast Free";
+        } else if (calendarAPI.fast_level > 0) {
+          if (!calendarAPI.fast_exception_desc.replace(" ", "")) {
+            calendarAPI.fast_exception_desc = "Strict Fast";
           } else if (
-            fast.fast_exception_desc.toLowerCase() === "no overrides"
+            calendarAPI.fast_exception_desc.toLowerCase() === "no overrides"
           ) {
-            fast.fast_exception_desc = "Strict Fast";
+            calendarAPI.fast_exception_desc = "Strict Fast";
           }
         }
       }
-      res.json({ fast });
+      res.json({ calendarAPI });
     })
     .catch((err) => console.error(err));
 };

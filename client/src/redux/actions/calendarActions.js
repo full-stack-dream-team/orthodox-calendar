@@ -32,9 +32,9 @@ export const getDate = () => (dispatch, getState) => {
   } = getState();
 
   axios
-    .post("/api/calendar/ocafast", { year, month, day, jurisdiction })
+    .post("/api/calendar/calendarapi", { year, month, day, jurisdiction })
     .then((res) => {
-      dispatch({ type: GET_DATE, payload: res.data.fast });
+      dispatch({ type: GET_DATE, payload: res.data.calendarAPI });
     })
     .catch((err) => console.error(err));
 };
