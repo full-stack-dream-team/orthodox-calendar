@@ -4,7 +4,7 @@ import {
   GET_DATE,
   SET_DATE_QUERY,
   GET_ROC_FAST,
-  GET_ROC_SAINTS,
+  GET_ROC_INFO,
   GET_OCA_SAINTS,
 } from "./types";
 
@@ -61,9 +61,9 @@ export const getROCSaints = () => (dispatch, getState) => {
   } = getState();
 
   axios
-    .post("/api/calendar/rocsaints", { year, month, day })
+    .post("/api/calendar/rocinfo", { year, month, day })
     .then((res) => {
-      dispatch({ type: GET_ROC_SAINTS, payload: res.data.saints });
+      dispatch({ type: GET_ROC_INFO, payload: res.data });
     })
     .catch((err) => console.error(err));
 };

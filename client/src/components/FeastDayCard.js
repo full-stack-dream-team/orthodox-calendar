@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 class FeastDayCard extends Component {
   render() {
-    const { jurisdiction, ocaSaints, rocSaintLives } = this.props;
+    const { jurisdiction, ocaSaints, rocInfo } = this.props;
 
     return (
       <div className="col s12 m6">
@@ -41,8 +41,14 @@ class FeastDayCard extends Component {
                     ))
                   : null}
 
-                {jurisdiction === "rocor" && rocSaintLives
-                  ? rocSaintLives.map((saint) => (
+                {jurisdiction === "rocor" && rocInfo.feastDay ? (
+                  <h6>{rocInfo.feastDay}</h6>
+                ) : (
+                  ""
+                )}
+
+                {jurisdiction === "rocor" && rocInfo.saints
+                  ? rocInfo.saints.map((saint) => (
                       <a
                         key={saint.title}
                         href={saint.link}

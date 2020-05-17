@@ -3,7 +3,7 @@ import {
   GET_DATE,
   SET_DATE_QUERY,
   GET_ROC_FAST,
-  GET_ROC_SAINTS,
+  GET_ROC_INFO,
   GET_OCA_SAINTS,
 } from "../actions/types";
 
@@ -17,7 +17,7 @@ export const initialState = {
     allowed: "",
     disallowed: "",
   },
-  rocSaintLives: [],
+  rocInfo: {},
   ocaSaints: [],
 };
 
@@ -49,10 +49,15 @@ const calendarReducer = (state = initialState, action) => {
         ...state,
         rocFast: action.payload,
       };
-    case GET_ROC_SAINTS:
+    case GET_ROC_INFO:
       return {
         ...state,
-        rocSaintLives: action.payload,
+        rocInfo: action.payload
+          ? {
+              feastDay: action.payload.feastDay,
+              saints: action.payload.saints,
+            }
+          : {},
       };
     case GET_OCA_SAINTS:
       return {

@@ -2,6 +2,7 @@ const puppeteer = require("puppeteer");
 const cheerio = require("cheerio");
 const axios = require("axios");
 
+// OrthoCal API
 exports.fetchcalendarAPI = (req, res) => {
   const { year, month, day, jurisdiction } = req.body;
   const apiURL = "https://orthocal.info";
@@ -38,6 +39,7 @@ exports.fetchcalendarAPI = (req, res) => {
     .catch((err) => console.error(err));
 };
 
+// OCA Saint Lives
 exports.fetchOCASaints = async (req, res) => {
   const { year, month, day } = req.body;
 
@@ -77,9 +79,10 @@ exports.fetchOCASaints = async (req, res) => {
     .catch((err) => console.error(err));
 };
 
-exports.fetchROCSaints = (req, res) => {
+// ROC Info
+exports.fetchROCInfo = async (req, res) => {
   const { year, month, day } = req.body;
-  const url = `https://www.holytrinityorthodox.com/calendar/calendar.php?dt=0&header=0&lives=5&trp=0&scripture=0${
+  const url = `https://www.holytrinityorthodox.com/calendar/calendar.php?dt=0&header=1&lives=5&trp=0&scripture=0${
     year && month && day
       ? `&year=${parseInt(year)}&month=${parseInt(month)}&today=${parseInt(
           day
@@ -87,95 +90,86 @@ exports.fetchROCSaints = (req, res) => {
       : ""
   }`;
 
-  puppeteer
-    .launch()
-    .then((browser) =>
-      browser
-        .newPage()
-        .then((page) =>
-          page
-            .goto(url)
-            .then(() => page.waitForSelector("span.normaltext"))
-            .then(() => page.content())
-            .then((html) => {
-              const $ = cheerio.load(html);
-              const links = [];
+  try {
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
 
-              $(".normaltext a").each(function () {
-                if (links.includes($(this).attr("href")) === false) {
-                  links.push($(this).attr("href"));
-                }
-              });
+    const navigate = await page.goto(url);
+    const selector = await page.waitForSelector("body");
+    const html = await selector.content();
 
-              return links;
-            })
-            .then((links) =>
-              Promise.all(
-                links.map((link) =>
-                  browser
-                    .newPage()
-                    .then((newPage) =>
-                      newPage
-                        .goto(link)
-                        .then(() => newPage.waitForSelector("tbody"))
-                        .then(() => newPage.content())
-                    )
-                    .then((html) => {
-                      const $ = cheerio.load(html);
+    let $ = cheerio.load(html);
+    const feastDay = [];
+    const links = [];
 
-                      let saint;
-                      $("tbody").each(function () {
-                        let image = link;
-                        if ($(this).find("img").attr("src")) {
-                          let remove = "";
-                          for (let i = link.length - 1; i > -1; i--) {
-                            if (link[i] !== "/") {
-                              remove += link[i];
-                            } else {
-                              remove = remove.split("").reverse().join("");
+    $("span.headerheader").each(function () {
+      $(this).find("span.headerfast").remove();
+      if ($(this).text().includes(":")) {
+        feastDay.push(
+          $("span.headerheader").text().split(":")[1].split(".")[0].trim()
+        );
+      }
+    });
 
-                              i = -1;
-                            }
-                          }
+    $(".normaltext a").each(function () {
+      if (links.includes($(this).attr("href")) === false) {
+        links.push($(this).attr("href"));
+      }
+    });
 
-                          image = image.replace(
-                            remove,
-                            $(this).find("img").attr("src")
-                          );
-                        } else {
-                          image = "";
-                        }
+    const promise = await Promise.all(
+      links.map(async (link) => {
+        const newPage = await page.goto(link);
+        const selectBody = await newPage.waitForSelector("tbody");
+        const saintsHTML = newPage.content();
 
-                        saint = {
-                          title: $(this).find("p.header12").text(),
-                          image,
-                          link,
-                        };
-                      });
+        return saintsHTML;
+        console.log(saintsHTML);
+      })
+    );
 
-                      return saint;
-                    })
-                    .catch((err) => console.error(err))
-                )
-              )
-            )
-            .then((saints) => {
-              return res.json({ saints });
-              browser.close();
-            })
-            .catch((err) => console.error(err))
-        )
-        .catch((err) => {
-          console.error(err);
-        })
-    )
-    .catch((err) => console.error(err));
+    $ = cheerio.load(saintsHTML);
+    let saints;
+
+    $("tbody").each(function () {
+      let image = link;
+      if ($(this).find("img").attr("src")) {
+        let remove = "";
+        for (let i = link.length - 1; i > -1; i--) {
+          if (link[i] !== "/") {
+            remove += link[i];
+          } else {
+            remove = remove.split("").reverse().join("");
+
+            i = -1;
+          }
+        }
+
+        image = image.replace(remove, $(this).find("img").attr("src"));
+      } else {
+        image = "";
+      }
+
+      saints = {
+        title: $(this).find("p.header12").text(),
+        image,
+        link,
+      };
+    });
+
+    // console.log(saints);
+    res.json({ saints, feastDay });
+    browser.close();
+  } catch {
+    (err) => console.error(err);
+  }
 };
 
+// ROC Fast (Merge with other ROC controller)
 exports.fetchROCFast = (req, res) => {
   const { year, month, day } = req.body;
 
-  const url = `https://www.holytrinityorthodox.com/calendar/calendar.php?dt=0&lives=0&trp=0&scripture=0${
+  const url = `https://www.holytrinityorthodox.com/calendar/calendar.php?dt=0&header=1&lives=0&trp=0&scripture=0${
     year && month && day
       ? `&year=${parseInt(year)}&month=${parseInt(month)}&today=${parseInt(
           day

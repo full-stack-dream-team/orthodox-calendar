@@ -5,7 +5,7 @@ const calendarController = require("../controllers/calendarController");
 
 router.post("/calendarapi", calendarController.fetchcalendarAPI);
 router.post("/ocasaints", calendarController.fetchOCASaints);
-router.post("/rocsaints", calendarController.fetchROCSaints);
+router.post("/rocinfo", calendarController.fetchROCInfo);
 router.post("/rocfast", calendarController.fetchROCFast);
 
 module.exports = router;

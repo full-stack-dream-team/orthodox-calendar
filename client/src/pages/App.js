@@ -192,7 +192,7 @@ class App extends React.Component {
             <FeastDayCard
               day={day}
               jurisdiction={jurisdiction}
-              rocSaintLives={this.props.rocSaintLives}
+              rocInfo={this.props.rocInfo}
               ocaSaints={this.props.ocaSaints}
             />
           </div>
@@ -211,7 +211,7 @@ const mapStateToProps = ({ calendar }) => ({
   day: calendar.date || {},
   jurisdiction: calendar.jurisdiction,
   rocFast: calendar.rocFast,
-  rocSaintLives: calendar.rocSaintLives,
+  rocInfo: calendar.rocInfo,
   ocaSaints: calendar.ocaSaints,
 });
 
