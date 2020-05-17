@@ -94,9 +94,10 @@ exports.fetchROCInfo = async (req, res) => {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
 
-    const navigate = await page.goto(url);
-    const selector = await page.waitForSelector("body");
-    const html = await selector.content();
+    await page.goto(url);
+    await page.waitForSelector("body");
+
+    const html = await page.content();
 
     let $ = cheerio.load(html);
     const feastDay = [];
@@ -117,45 +118,45 @@ exports.fetchROCInfo = async (req, res) => {
       }
     });
 
-    const promise = await Promise.all(
+    const saints = await Promise.all(
       links.map(async (link) => {
-        const newPage = await page.goto(link);
-        const selectBody = await newPage.waitForSelector("tbody");
-        const saintsHTML = newPage.content();
+        const newPage = await browser.newPage();
+        await newPage.goto(link);
+        await newPage.waitForSelector("tbody");
+        const saintsHTML = await newPage.content();
 
-        return saintsHTML;
-        console.log(saintsHTML);
+        $ = cheerio.load(saintsHTML);
+        let saint;
+
+        $("tbody").each(function () {
+          let image = link;
+          if ($(this).find("img").attr("src")) {
+            let remove = "";
+            for (let i = link.length - 1; i > -1; i--) {
+              if (link[i] !== "/") {
+                remove += link[i];
+              } else {
+                remove = remove.split("").reverse().join("");
+
+                i = -1;
+              }
+            }
+
+            image = image.replace(remove, $(this).find("img").attr("src"));
+          } else {
+            image = "";
+          }
+
+          saint = {
+            title: $(this).find("p.header12").text(),
+            image,
+            link,
+          };
+        });
+
+        return saint;
       })
     );
-
-    $ = cheerio.load(saintsHTML);
-    let saints;
-
-    $("tbody").each(function () {
-      let image = link;
-      if ($(this).find("img").attr("src")) {
-        let remove = "";
-        for (let i = link.length - 1; i > -1; i--) {
-          if (link[i] !== "/") {
-            remove += link[i];
-          } else {
-            remove = remove.split("").reverse().join("");
-
-            i = -1;
-          }
-        }
-
-        image = image.replace(remove, $(this).find("img").attr("src"));
-      } else {
-        image = "";
-      }
-
-      saints = {
-        title: $(this).find("p.header12").text(),
-        image,
-        link,
-      };
-    });
 
     // console.log(saints);
     res.json({ saints, feastDay });
