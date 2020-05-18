@@ -3,7 +3,6 @@ import {
   SET_JURISDICTION,
   GET_DATE,
   SET_DATE_QUERY,
-  GET_ROC_FAST,
   GET_ROC_INFO,
   GET_OCA_SAINTS,
 } from "./types";
@@ -38,22 +37,7 @@ export const getDate = () => (dispatch, getState) => {
     .catch((err) => console.error(err));
 };
 
-export const getROCFast = () => (dispatch, getState) => {
-  const {
-    calendar: {
-      dateQuery: { year, month, day },
-    },
-  } = getState();
-
-  axios
-    .post("/api/calendar/rocfast", { year, month, day })
-    .then((res) => {
-      dispatch({ type: GET_ROC_FAST, payload: res.data.fast });
-    })
-    .catch((err) => console.error(err));
-};
-
-export const getROCSaints = () => (dispatch, getState) => {
+export const getROCInfo = () => (dispatch, getState) => {
   const {
     calendar: {
       dateQuery: { year, month, day },

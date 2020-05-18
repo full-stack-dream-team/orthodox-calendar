@@ -37,9 +37,9 @@ class FastingCard extends Component {
       }
     } else if (
       this.props.jurisdiction === "rocor" &&
-      this.props.rocFast.symbol
+      this.props.rocInfo.fast.symbol
     ) {
-      symbol = this.props.rocFast.symbol;
+      symbol = this.props.rocInfo.fast.symbol;
     }
 
     if (symbol !== this.state.symbol) {
@@ -48,7 +48,14 @@ class FastingCard extends Component {
   }
 
   render() {
-    const { day, jurisdiction, rocFast } = this.props;
+    const {
+      day,
+      jurisdiction,
+      rocInfo: {
+        fast: { fastDesc },
+      },
+      rocInfo,
+    } = this.props;
     const { symbol, switched } = this.state;
 
     return (
@@ -87,18 +94,18 @@ class FastingCard extends Component {
               ) : null}
               {day.fast_exception_desc && jurisdiction === "oca"
                 ? day.fast_exception_desc
-                : rocFast.fastDesc &&
-                  rocFast.fastDesc.replace(" ", "") &&
+                : fastDesc &&
+                  fastDesc.replace(" ", "") &&
                   jurisdiction === "rocor"
-                ? rocFast.fastDesc.split(". ").map((fastDesc, i) =>
+                ? fastDesc.split(". ").map((fastDesc, i) =>
                     fastDesc.trim() ? (
-                      i === rocFast.fastDesc.split(". ").length - 2 ? (
-                        <span key={fastDesc}>
+                      i === fastDesc.split(". ").length - 2 ? (
+                        <span key={i}>
                           {fastDesc.trim()}
                           <br />
                         </span>
                       ) : (
-                        <span key={fastDesc}>{fastDesc.trim()} </span>
+                        <span key={i}>{fastDesc.trim()} </span>
                       )
                     ) : (
                       "Fast free"
@@ -110,7 +117,7 @@ class FastingCard extends Component {
           {jurisdiction === "oca" ? (
             <OCAFastingDescription day={day} />
           ) : (
-            <ROCFastingDescription rocFast={rocFast} />
+            <ROCFastingDescription rocInfo={rocInfo} />
           )}
         </div>
       </div>

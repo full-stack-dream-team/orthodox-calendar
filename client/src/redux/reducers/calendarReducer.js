@@ -2,7 +2,6 @@ import {
   SET_JURISDICTION,
   GET_DATE,
   SET_DATE_QUERY,
-  GET_ROC_FAST,
   GET_ROC_INFO,
   GET_OCA_SAINTS,
 } from "../actions/types";
@@ -12,12 +11,15 @@ export const initialState = {
   jurisdiction: "oca",
   dateQuery: {},
   date: null,
-  rocFast: {
-    fastDesc: "",
-    allowed: "",
-    disallowed: "",
+  rocInfo: {
+    fast: {
+      fastDesc: "",
+      allowed: "",
+      disallowed: "",
+    },
+    saints: {},
+    feastDay: {},
   },
-  rocInfo: {},
   ocaSaints: [],
 };
 
@@ -28,6 +30,7 @@ const calendarReducer = (state = initialState, action) => {
         ...state,
         jurisdiction: action.payload,
       };
+
     case SET_DATE_QUERY:
       return {
         ...state,
@@ -39,16 +42,13 @@ const calendarReducer = (state = initialState, action) => {
             }
           : {},
       };
+
     case GET_DATE:
       return {
         ...state,
         date: action.payload,
       };
-    case GET_ROC_FAST:
-      return {
-        ...state,
-        rocFast: action.payload,
-      };
+
     case GET_ROC_INFO:
       return {
         ...state,
@@ -56,9 +56,11 @@ const calendarReducer = (state = initialState, action) => {
           ? {
               feastDay: action.payload.feastDay,
               saints: action.payload.saints,
+              fast: action.payload.fast,
             }
           : {},
       };
+
     case GET_OCA_SAINTS:
       return {
         ...state,
