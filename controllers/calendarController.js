@@ -1,4 +1,5 @@
 const puppeteer = require("puppeteer");
+const { Cluster } = require("puppeteer-cluster");
 const cheerio = require("cheerio");
 const axios = require("axios");
 
@@ -175,6 +176,12 @@ exports.fetchROCInfo = async (req, res) => {
       if (links.includes($(this).attr("href")) === false) {
         links.push($(this).attr("href"));
       }
+    });
+
+    // Launch puppeteer-cluster
+    const cluster = await Cluster.launch({
+      concurrency: Cluster.CONCURRENCY_BROWSER,
+      maxConcurrency: 10,
     });
 
     const saints = await Promise.all(
