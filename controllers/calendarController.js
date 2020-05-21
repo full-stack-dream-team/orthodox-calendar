@@ -92,7 +92,7 @@ exports.fetchROCInfo = async (req, res) => {
   }`;
 
   try {
-    const browser = await puppeteer.launch({ args: ["--no-sandbox"] });
+    const browser = await puppeteer.launch();
     const page = await browser.newPage();
 
     await page.goto(url);
@@ -184,6 +184,10 @@ exports.fetchROCInfo = async (req, res) => {
     const cluster = await Cluster.launch({
       concurrency: Cluster.CONCURRENCY_BROWSER,
       maxConcurrency: 5,
+      puppeteerOptions: {
+        headless: true,
+        args: ["--no-sandbox"],
+      },
     });
 
     await (async () => {
