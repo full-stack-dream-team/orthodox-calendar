@@ -178,15 +178,16 @@ exports.fetchROCInfo = async (req, res) => {
       }
     });
 
+    const saints = [];
+
     // Launch puppeteer-cluster
     const cluster = await Cluster.launch({
       concurrency: Cluster.CONCURRENCY_BROWSER,
-      maxConcurrency: 10,
+      maxConcurrency: 5,
     });
 
-    const saints = await Promise.all(
-      links.map(async (link) => {
-        const newPage = await browser.newPage();
+    await (async () => {
+      await cluster.task(async ({ page: newPage, data: link }) => {
         await newPage.goto(link);
         await newPage.waitForSelector("tbody");
         const saintsHTML = await newPage.content();
@@ -220,9 +221,18 @@ exports.fetchROCInfo = async (req, res) => {
           };
         });
 
-        return saint;
-      })
-    );
+        saints.push(saint);
+      });
+
+      links.forEach((link) => {
+        cluster.queue(link);
+      });
+
+      await cluster.idle();
+      await cluster.close();
+
+      return;
+    })();
 
     res.json({ saints, feastDay, fast });
     browser.close();
