@@ -5,7 +5,7 @@ class DayNav extends Component {
   today = new Date();
 
   render() {
-    const { year: pYear, month: pMonth, day: pDay } = this.props;
+    const { year: pYear, month: pMonth, day: pDay, resetSaints } = this.props;
     const { year, month, day } = {
       year: pYear || pYear === 0 ? pYear : this.today.getFullYear(),
       month: pMonth || pMonth === 0 ? pMonth : this.today.getMonth() + 1,
@@ -31,6 +31,7 @@ class DayNav extends Component {
                 prevDate.getMonth() + 1
               }&day=${prevDate.getDate()}`}
               className="waves-effect waves-cyan btn grey darken-4"
+              onClick={resetSaints}
             >
               <i
                 className="iconify"
@@ -44,6 +45,7 @@ class DayNav extends Component {
                 this.today.getMonth() + 1
               }&day=${this.today.getDate()}`}
               className="today btn waves-effect waves-cyan grey lighten-5 black-text mx-1"
+              onClick={resetSaints}
             >
               TODAY
             </Link>{" "}
@@ -52,6 +54,7 @@ class DayNav extends Component {
                 nextDate.getMonth() + 1
               }&day=${nextDate.getDate()}`}
               className="waves-effect waves-cyan btn grey darken-4"
+              onClick={resetSaints}
             >
               Next{" "}
               <i

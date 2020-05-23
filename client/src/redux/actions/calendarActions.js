@@ -5,6 +5,7 @@ import {
   SET_DATE_QUERY,
   GET_ROC_INFO,
   GET_OCA_SAINTS,
+  RESET_SAINTS,
 } from "./types";
 
 export const setJurisdiction = (jurisdiction) => (dispatch) => {
@@ -65,6 +66,10 @@ export const getOCASaints = () => (dispatch, getState) => {
       dispatch({ type: GET_OCA_SAINTS, payload: res.data.saints });
     })
     .catch((err) => console.error(err));
+};
+
+export const resetSaints = () => (dispatch) => {
+  dispatch({ type: RESET_SAINTS });
 };
 
 window.axios = axios;

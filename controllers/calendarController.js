@@ -3,6 +3,9 @@ const { Cluster } = require("puppeteer-cluster");
 const cheerio = require("cheerio");
 const axios = require("axios");
 
+const mongoose = require("mongoose");
+const Fastlegend = mongoose.model("Fastlegend");
+
 // OrthoCal API
 exports.fetchcalendarAPI = (req, res) => {
   const { year, month, day, jurisdiction } = req.body;
@@ -122,43 +125,55 @@ exports.fetchROCInfo = async (req, res) => {
     }
 
     if (fast.fastDesc) {
+      const fastLegend = await Fastlegend.findOne({ jurisdiction: "roc" });
+
       fast.fastDesc = fast.fastDesc.replace(/<[^>]+>/g, "");
 
-      if (fast.fastDesc.includes("Full abstention from food")) {
-        fast.disallowed = "All food";
-
-        fast.symbol = "emojione-monotone:fork-and-knife";
-      } else if (fast.fastDesc.includes("Strict Fast")) {
-        fast.allowed = "Raw vegetables, fruit and bread";
-        fast.disallowed = "Cooked food, meat, fish, oil, wine, dairy and eggs";
-
-        fast.symbol = "mdi:bolnisi-cross";
-      } else if (fast.fastDesc.includes("Food without Oil")) {
-        fast.allowed = "Cooked vegetables, fruit, legumes and bread";
-        fast.disallowed = "Fried foods, meat, fish, oil, wine, dairy and eggs";
-
-        fast.symbol = "emojione:pot-of-food";
-      } else if (fast.fastDesc.includes("Food with Oil")) {
-        fast.allowed = "All of DRY FAST, wine and oil";
-        fast.disallowed = "Meat, fish, dairy and eggs";
-
-        fast.symbol = "noto:grapes";
-      } else if (fast.fastDesc.includes("Caviar Allowed")) {
-        fast.allowed = "All of DRY FAST, wine, oil and caviar";
-        fast.disallowed = "Meat, fish, dairy and eggs";
-
-        fast.symbol = "emojione:letter-c";
-      } else if (fast.fastDesc.includes("Fish Allowed")) {
-        fast.allowed = "All of DRY FAST, wine, oil, caviar and fish";
-        fast.disallowed = "Meat, dairy and eggs";
-
-        fast.symbol = "noto:fish";
-      } else if (fast.fastDesc.includes("Meat is excluded")) {
-        fast.allowed = "All of DRY FAST, wine, oil, fish, eggs and dairy";
-        fast.disallowed = "Meat";
-
-        fast.symbol = "noto:cheese-wedge";
+      if (fastLegend) {
+        fastLegend.fasts.forEach((legendFast, i) => {
+          if (legendFast.desc === fast.fastDesc) {
+            fast.allowed = legendFast.allowed;
+            fast.disallowed = legendFast.disallowed;
+            fast.symbol = legendFast.symbol;
+          }
+        });
       }
+
+      // if (fast.fastDesc.includes("Full abstention from food")) {
+      //   fast.disallowed = "All food";
+      //
+      //   fast.symbol = "emojione-monotone:fork-and-knife";
+      // } else if (fast.fastDesc.includes("Strict Fast")) {
+      //   fast.allowed = "Raw vegetables, fruit and bread";
+      //   fast.disallowed = "Cooked food, meat, fish, oil, wine, dairy and eggs";
+      //
+      //   fast.symbol = "mdi:bolnisi-cross";
+      // } else if (fast.fastDesc.includes("Food without Oil")) {
+      //   fast.allowed = "Cooked vegetables, fruit, legumes and bread";
+      //   fast.disallowed = "Fried foods, meat, fish, oil, wine, dairy and eggs";
+      //
+      //   fast.symbol = "emojione:pot-of-food";
+      // } else if (fast.fastDesc.includes("Food with Oil")) {
+      //   fast.allowed = "All of DRY FAST, wine and oil";
+      //   fast.disallowed = "Meat, fish, dairy and eggs";
+      //
+      //   fast.symbol = "noto:grapes";
+      // } else if (fast.fastDesc.includes("Caviar Allowed")) {
+      //   fast.allowed = "All of DRY FAST, wine, oil and caviar";
+      //   fast.disallowed = "Meat, fish, dairy and eggs";
+      //
+      //   fast.symbol = "emojione:letter-c";
+      // } else if (fast.fastDesc.includes("Fish Allowed")) {
+      //   fast.allowed = "All of DRY FAST, wine, oil, caviar and fish";
+      //   fast.disallowed = "Meat, dairy and eggs";
+      //
+      //   fast.symbol = "noto:fish";
+      // } else if (fast.fastDesc.includes("Meat is excluded")) {
+      //   fast.allowed = "All of DRY FAST, wine, oil, fish, eggs and dairy";
+      //   fast.disallowed = "Meat";
+      //
+      //   fast.symbol = "noto:cheese-wedge";
+      // }
     }
 
     // Feast Day

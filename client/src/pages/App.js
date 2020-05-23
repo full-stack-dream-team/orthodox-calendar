@@ -9,6 +9,7 @@ import {
   setJurisdiction,
   getROCInfo,
   getOCASaints,
+  resetSaints,
 } from "../redux/actions/calendarActions";
 
 import DayNav from "../components/DayNav";
@@ -162,7 +163,10 @@ class App extends React.Component {
           <h5 className="mb-2 center-align">
             Daily Fast, Feasts, Saints and Readings
           </h5>
-          <DayNav {...this.state.currentUrlParams} />
+          <DayNav
+            {...this.state.currentUrlParams}
+            resetSaints={this.props.resetSaints}
+          />
 
           <JurisdictionsSelector
             setJurisdiction={(nextJurisdiction) => {
@@ -218,4 +222,5 @@ export default connect(mapStateToProps, {
   setJurisdiction,
   getROCInfo,
   getOCASaints,
+  resetSaints,
 })(App);

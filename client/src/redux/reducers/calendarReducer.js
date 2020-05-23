@@ -4,6 +4,7 @@ import {
   SET_DATE_QUERY,
   GET_ROC_INFO,
   GET_OCA_SAINTS,
+  RESET_SAINTS,
 } from "../actions/types";
 
 export const initialState = {
@@ -17,8 +18,8 @@ export const initialState = {
       allowed: "",
       disallowed: "",
     },
-    saints: {},
-    feastDay: {},
+    saints: [],
+    feastDay: [],
   },
   ocaSaints: [],
 };
@@ -65,6 +66,12 @@ const calendarReducer = (state = initialState, action) => {
       return {
         ...state,
         ocaSaints: action.payload,
+      };
+    case RESET_SAINTS:
+      return {
+        ...state,
+        ocaSaints: initialState.ocaSaints,
+        rocInfo: initialState.rocInfo,
       };
     default:
       return state;

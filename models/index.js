@@ -4,8 +4,8 @@ const mongoose = require("mongoose");
 // Models are served in /start.js
 const User = require("./User");
 const Jurisdiction = require("./Jurisdiction");
-const Fast = require("./Fast");
+const Fastlegend = require("./Fastlegend");
 
-const models = { User, Jurisdiction, Fast };
+const models = { User, Jurisdiction, Fastlegend };
 
 module.exports = models;

@@ -15,13 +15,21 @@ class FeastDayCard extends Component {
             ></i>{" "}
             SAINTS AND FEASTS
           </h5>
+
+          {(jurisdiction === "oca" && !ocaSaints.length) ||
+          (jurisdiction === "rocor" && !rocInfo.saints.length) ? (
+            <div className="progress">
+              <div className="indeterminate"></div>
+            </div>
+          ) : null}
+
           <div className="row">
             <div className="col s12">
               <ul>
                 {jurisdiction === "oca" && ocaSaints
-                  ? ocaSaints.map((saint) => (
+                  ? ocaSaints.map((saint, i) => (
                       <a
-                        key={saint.title}
+                        key={i}
                         href={saint.link}
                         rel="noopener noreferrer"
                         target="_blank"
@@ -41,11 +49,9 @@ class FeastDayCard extends Component {
                     ))
                   : null}
 
-                {jurisdiction === "rocor" && rocInfo.feastDay ? (
-                  <h6>{rocInfo.feastDay}</h6>
-                ) : (
-                  ""
-                )}
+                {jurisdiction === "rocor" && rocInfo.feastDay
+                  ? rocInfo.feastDay.map((feast, i) => <h6 key={i}>{feast}</h6>)
+                  : null}
 
                 {jurisdiction === "rocor" && rocInfo.saints
                   ? rocInfo.saints.map((saint) => (
