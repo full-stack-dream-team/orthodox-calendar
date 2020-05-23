@@ -18,9 +18,11 @@ class FeastDayCard extends Component {
 
           {(jurisdiction === "oca" && !ocaSaints.length) ||
           (jurisdiction === "rocor" && !rocInfo.saints.length) ? (
-            <div className="progress">
-              <div className="indeterminate"></div>
-            </div>
+            <>
+              <div className="progress cyan lighten-2">
+                <div className="indeterminate cyan darken-2"></div>
+              </div>
+            </>
           ) : null}
 
           <div className="row">
