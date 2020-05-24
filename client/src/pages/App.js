@@ -186,14 +186,14 @@ class App extends React.Component {
               jurisdiction={jurisdiction}
               currentUrlParams={this.state.currentUrlParams}
             />
-          </div>
-
-          <div className="row">
             <FastingCard
               day={day}
               jurisdiction={jurisdiction}
               rocInfo={this.props.rocInfo}
             />
+          </div>
+
+          <div className="row">
             <FeastDayCard
               day={day}
               jurisdiction={jurisdiction}

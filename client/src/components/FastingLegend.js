@@ -21,7 +21,7 @@ class FastingLegend extends Component {
 
     return (
       <>
-        <div className="right-align">
+        <span className="right-align">
           <h5
             style={{ marginTop: "0", marginBottom: "0", cursor: "pointer" }}
             className="modal-trigger"
@@ -33,7 +33,7 @@ class FastingLegend extends Component {
               data-inline="false"
             ></i>{" "}
           </h5>
-        </div>
+        </span>
 
         <div
           id="fasting-legend"

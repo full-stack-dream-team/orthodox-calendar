@@ -63,8 +63,20 @@ class FastingCard extends Component {
     return (
       <div className="col s12 m6">
         <div className="card-panel cyan lighten-4">
-          <span></span>
-          <FastingLegend day={day} jurisdiction={jurisdiction} />
+          <div className="row">
+            <div className="col s9">
+              <h5>
+                {day.fast_level_desc && jurisdiction === "oca"
+                  ? day.fast_level_desc === "No Fast"
+                    ? ""
+                    : day.fast_level_desc
+                  : null}
+              </h5>
+            </div>
+            <div className="col s1 offset-s1">
+              <FastingLegend day={day} jurisdiction={jurisdiction} />
+            </div>
+          </div>
           <h5>
             <strong>
               {day.fast_level_desc && jurisdiction === "oca"
