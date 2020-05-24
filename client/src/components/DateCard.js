@@ -6,7 +6,7 @@ class DateCard extends Component {
     const { titles, currentUrlParams: day } = this.props;
 
     return (
-      <div className="col s12">
+      <div className="col s12 m6">
         <div className="card-panel cyan lighten-5">
           <div className="row">
             <div className="col s12 center-align">
@@ -16,7 +16,7 @@ class DateCard extends Component {
           <div className="row">
             <div className="col m12 center-align">
               <h6>
-                Gregorian Calendar Date:{" "}
+                Gregorian:{" "}
                 <strong>
                   <Moment
                     date={{
@@ -29,7 +29,7 @@ class DateCard extends Component {
                 </strong>
               </h6>
               <h6>
-                Julian Calendar Date:{" "}
+                Julian:{" "}
                 <strong>
                   <Moment
                     date={{
