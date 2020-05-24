@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import CardLoading from "./CardLoading";
 
 class FeastDayCard extends Component {
   render() {
@@ -18,11 +19,7 @@ class FeastDayCard extends Component {
 
           {(jurisdiction === "oca" && !ocaSaints.length) ||
           (jurisdiction === "rocor" && !rocInfo.saints.length) ? (
-            <>
-              <div className="progress cyan lighten-2">
-                <div className="indeterminate cyan darken-2"></div>
-              </div>
-            </>
+            <CardLoading />
           ) : null}
 
           <div className="row">

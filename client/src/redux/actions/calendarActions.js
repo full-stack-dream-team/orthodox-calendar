@@ -6,6 +6,7 @@ import {
   GET_ROC_INFO,
   GET_OCA_SAINTS,
   RESET_SAINTS,
+  RESET_FASTS,
 } from "./types";
 
 export const setJurisdiction = (jurisdiction) => (dispatch) => {
@@ -70,6 +71,10 @@ export const getOCASaints = () => (dispatch, getState) => {
 
 export const resetSaints = () => (dispatch) => {
   dispatch({ type: RESET_SAINTS });
+};
+
+export const resetFasts = () => (dispatch) => {
+  dispatch({ type: RESET_FASTS });
 };
 
 window.axios = axios;

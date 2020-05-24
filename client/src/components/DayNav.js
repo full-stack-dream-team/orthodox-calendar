@@ -4,6 +4,11 @@ import { Link } from "react-router-dom";
 class DayNav extends Component {
   today = new Date();
 
+  resetEverything = () => {
+    this.props.resetSaints();
+    this.props.resetFasts();
+  };
+
   render() {
     const { year: pYear, month: pMonth, day: pDay, resetSaints } = this.props;
     const { year, month, day } = {
@@ -31,7 +36,7 @@ class DayNav extends Component {
                 prevDate.getMonth() + 1
               }&day=${prevDate.getDate()}`}
               className="waves-effect waves-cyan btn grey darken-4"
-              onClick={resetSaints}
+              onClick={this.resetEverything}
             >
               <i
                 className="iconify"
@@ -45,7 +50,7 @@ class DayNav extends Component {
                 this.today.getMonth() + 1
               }&day=${this.today.getDate()}`}
               className="today btn waves-effect waves-cyan grey lighten-5 black-text mx-1"
-              onClick={resetSaints}
+              onClick={this.resetEverything}
             >
               TODAY
             </Link>{" "}
@@ -54,7 +59,7 @@ class DayNav extends Component {
                 nextDate.getMonth() + 1
               }&day=${nextDate.getDate()}`}
               className="waves-effect waves-cyan btn grey darken-4"
-              onClick={resetSaints}
+              onClick={this.resetEverything}
             >
               Next{" "}
               <i

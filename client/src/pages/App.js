@@ -10,6 +10,7 @@ import {
   getROCInfo,
   getOCASaints,
   resetSaints,
+  resetFasts,
 } from "../redux/actions/calendarActions";
 
 import DayNav from "../components/DayNav";
@@ -94,6 +95,8 @@ class App extends React.Component {
           const [year, month, day] = this.CalPicker.value.split(",");
 
           this.props.history.push(`/?year=${year}&month=${month}&day=${day}`);
+          this.props.resetSaints();
+          this.props.resetFasts();
         },
       };
       M.Datepicker.init(this.CalPicker, options);
@@ -166,6 +169,7 @@ class App extends React.Component {
           <DayNav
             {...this.state.currentUrlParams}
             resetSaints={this.props.resetSaints}
+            resetFasts={this.props.resetFasts}
           />
 
           <JurisdictionsSelector
@@ -223,4 +227,5 @@ export default connect(mapStateToProps, {
   getROCInfo,
   getOCASaints,
   resetSaints,
+  resetFasts,
 })(App);

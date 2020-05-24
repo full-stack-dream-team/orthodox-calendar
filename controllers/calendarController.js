@@ -14,31 +14,42 @@ exports.fetchcalendarAPI = (req, res) => {
     year ? `${year}/${month ? `${month}/${day ? `${day}/` : ""}` : ""}` : ""
   }`;
 
-  axios
-    .get(url)
-    .then((info) => {
-      const calendarAPI =
-        typeof info.data === "object" && typeof info.data.length !== "number"
-          ? { ...info.data }
-          : [...info.data];
+  Fastlegend.findOne({ jurisdiction: "oca" })
+    .then((legend) => {
+      axios.get(url).then((info) => {
+        const calendarAPI =
+          typeof info.data === "object" && typeof info.data.length !== "number"
+            ? { ...info.data }
+            : [...info.data];
 
-      if (
-        typeof calendarAPI.length !== "number" &&
-        typeof calendarAPI.fast_level === "number"
-      ) {
-        if (calendarAPI.fast_level === 0) {
-          calendarAPI.fast_exception_desc = "Fast Free";
-        } else if (calendarAPI.fast_level > 0) {
-          if (!calendarAPI.fast_exception_desc.replace(" ", "")) {
-            calendarAPI.fast_exception_desc = "Strict Fast";
-          } else if (
-            calendarAPI.fast_exception_desc.toLowerCase() === "no overrides"
-          ) {
-            calendarAPI.fast_exception_desc = "Strict Fast";
+        if (
+          typeof calendarAPI.length !== "number" &&
+          typeof calendarAPI.fast_level === "number"
+        ) {
+          if (calendarAPI.fast_level === 0) {
+            calendarAPI.fast_exception_desc = "Fast Free";
+          } else if (calendarAPI.fast_level > 0) {
+            if (!calendarAPI.fast_exception_desc.replace(" ", "")) {
+              calendarAPI.fast_exception_desc = "Strict Fast";
+            } else if (
+              calendarAPI.fast_exception_desc.toLowerCase() === "no overrides"
+            ) {
+              calendarAPI.fast_exception_desc = "Strict Fast";
+            }
           }
         }
-      }
-      res.json({ calendarAPI });
+
+        legend.fasts.forEach((fast, i) => {
+          if (fast.desc === calendarAPI.fast_exception_desc) {
+            calendarAPI.symbol = fast.symbol;
+          }
+        });
+        if (!calendarAPI.symbol) {
+          calendarAPI.symbol = "";
+        }
+
+        res.json({ calendarAPI });
+      });
     })
     .catch((err) => console.error(err));
 };
@@ -131,49 +142,13 @@ exports.fetchROCInfo = async (req, res) => {
 
       if (fastLegend) {
         fastLegend.fasts.forEach((legendFast, i) => {
-          if (legendFast.desc === fast.fastDesc) {
+          if (fast.fastDesc.includes(legendFast.desc)) {
             fast.allowed = legendFast.allowed;
             fast.disallowed = legendFast.disallowed;
             fast.symbol = legendFast.symbol;
           }
         });
       }
-
-      // if (fast.fastDesc.includes("Full abstention from food")) {
-      //   fast.disallowed = "All food";
-      //
-      //   fast.symbol = "emojione-monotone:fork-and-knife";
-      // } else if (fast.fastDesc.includes("Strict Fast")) {
-      //   fast.allowed = "Raw vegetables, fruit and bread";
-      //   fast.disallowed = "Cooked food, meat, fish, oil, wine, dairy and eggs";
-      //
-      //   fast.symbol = "mdi:bolnisi-cross";
-      // } else if (fast.fastDesc.includes("Food without Oil")) {
-      //   fast.allowed = "Cooked vegetables, fruit, legumes and bread";
-      //   fast.disallowed = "Fried foods, meat, fish, oil, wine, dairy and eggs";
-      //
-      //   fast.symbol = "emojione:pot-of-food";
-      // } else if (fast.fastDesc.includes("Food with Oil")) {
-      //   fast.allowed = "All of DRY FAST, wine and oil";
-      //   fast.disallowed = "Meat, fish, dairy and eggs";
-      //
-      //   fast.symbol = "noto:grapes";
-      // } else if (fast.fastDesc.includes("Caviar Allowed")) {
-      //   fast.allowed = "All of DRY FAST, wine, oil and caviar";
-      //   fast.disallowed = "Meat, fish, dairy and eggs";
-      //
-      //   fast.symbol = "emojione:letter-c";
-      // } else if (fast.fastDesc.includes("Fish Allowed")) {
-      //   fast.allowed = "All of DRY FAST, wine, oil, caviar and fish";
-      //   fast.disallowed = "Meat, dairy and eggs";
-      //
-      //   fast.symbol = "noto:fish";
-      // } else if (fast.fastDesc.includes("Meat is excluded")) {
-      //   fast.allowed = "All of DRY FAST, wine, oil, fish, eggs and dairy";
-      //   fast.disallowed = "Meat";
-      //
-      //   fast.symbol = "noto:cheese-wedge";
-      // }
     }
 
     // Feast Day
