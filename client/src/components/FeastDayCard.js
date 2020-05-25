@@ -28,7 +28,6 @@ class FeastDayCard extends Component {
                 <div key={i} className="col s12 m4">
                   <div className="card small hoverable">
                     <a
-                      title={saint.title.length > 60 ? saint.title : ""}
                       href={saint.link}
                       rel="noopener noreferrer"
                       target="_blank"
@@ -63,7 +62,6 @@ class FeastDayCard extends Component {
                 <div key={i} className="col s12 m4">
                   <div className="card small hoverable">
                     <a
-                      title={saint.title.length > 60 ? saint.title : ""}
                       key={saint.title}
                       href={saint.link}
                       rel="noopener noreferrer"
@@ -77,11 +75,7 @@ class FeastDayCard extends Component {
                             alt={saint.title}
                             width="125px"
                           />
-                          <h6>
-                            {saint.title.length > 60
-                              ? saint.title.slice(0, 60) + "..."
-                              : saint.title}
-                          </h6>
+                          <h6>{saint.title}</h6>
                         </div>
                       ) : (
                         <div className="card-content waves-effect waves-block waves-light center-align">
