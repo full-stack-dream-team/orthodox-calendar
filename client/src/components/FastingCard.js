@@ -35,6 +35,8 @@ class FastingCard extends Component {
         fast: { fastDesc },
       },
       rocInfo,
+      ocaFasts,
+      rocFasts,
     } = this.props;
     const { symbol, switched } = this.state;
 
@@ -52,7 +54,12 @@ class FastingCard extends Component {
               </h5>
             </div>
             <div className="col s1 offset-s1">
-              <FastingLegend day={day} jurisdiction={jurisdiction} />
+              <FastingLegend
+                day={day}
+                jurisdiction={jurisdiction}
+                ocaFasts={ocaFasts}
+                rocFasts={rocFasts}
+              />
             </div>
           </div>
           <h5>
