@@ -7,6 +7,7 @@ import {
   GET_OCA_SAINTS,
   RESET_SAINTS,
   RESET_FASTS,
+  GET_OCA_FASTS,
 } from "./types";
 
 export const setJurisdiction = (jurisdiction) => (dispatch) => {
@@ -75,6 +76,15 @@ export const resetSaints = () => (dispatch) => {
 
 export const resetFasts = () => (dispatch) => {
   dispatch({ type: RESET_FASTS });
+};
+
+export const getOCAFasts = () => (dispatch) => {
+  axios
+    .post("/api/calendar/ocafasts")
+    .then((res) => {
+      dispatch({ type: GET_OCA_FASTS, payload: res.data.ocaFast });
+    })
+    .catch((err) => console.error(err));
 };
 
 window.axios = axios;

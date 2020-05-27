@@ -9,6 +9,7 @@ import {
   setJurisdiction,
   getROCInfo,
   getOCASaints,
+  getOCAFasts,
   resetSaints,
   resetFasts,
 } from "../redux/actions/calendarActions";
@@ -113,12 +114,14 @@ class App extends React.Component {
     this.setUrlParamsState();
     this.props.getROCInfo();
     this.props.getOCASaints();
+    this.props.getOCAFasts();
 
     this.unlisten = this.props.history.listen(() => {
       this.setDateToQuery();
       this.setUrlParamsState();
       this.props.getROCInfo();
       this.props.getOCASaints();
+      this.props.getOCAFasts();
     });
   }
 
@@ -190,6 +193,7 @@ class App extends React.Component {
               day={day}
               jurisdiction={jurisdiction}
               rocInfo={this.props.rocInfo}
+              ocaFasts={this.props.ocaFasts}
             />
           </div>
 
@@ -218,6 +222,7 @@ const mapStateToProps = ({ calendar }) => ({
   rocFast: calendar.rocFast,
   rocInfo: calendar.rocInfo,
   ocaSaints: calendar.ocaSaints,
+  ocaFasts: calendar.ocaFasts,
 });
 
 export default connect(mapStateToProps, {
@@ -226,6 +231,7 @@ export default connect(mapStateToProps, {
   setJurisdiction,
   getROCInfo,
   getOCASaints,
+  getOCAFasts,
   resetSaints,
   resetFasts,
 })(App);

@@ -234,3 +234,9 @@ exports.fetchROCInfo = async (req, res) => {
     (err) => console.error(err);
   }
 };
+
+// OCA All Fasts
+exports.fetchOCAFast = async (req, res) => {
+  const ocaFast = await Fastlegend.findOne({ jurisdiction: "oca" });
+  return res.json({ ocaFast });
+};

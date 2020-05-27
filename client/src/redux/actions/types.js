@@ -11,3 +11,4 @@ export const GET_ROC_INFO = "GET_ROC_INFO";
 export const GET_OCA_SAINTS = "GET_OCA_SAINTS";
 export const RESET_SAINTS = "RESET_SAINTS";
 export const RESET_FASTS = "RESET_FASTS";
+export const GET_OCA_FASTS = "GET_OCA_FASTS";

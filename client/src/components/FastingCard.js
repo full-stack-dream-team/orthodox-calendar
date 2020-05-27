@@ -15,28 +15,6 @@ class FastingCard extends Component {
 
     if (this.props.jurisdiction === "oca" && this.props.day.symbol) {
       symbol = this.props.day.symbol;
-      // switch (this.props.day.fast_exception_desc) {
-      //   case "Wine is Allowed":
-      //     symbol = "noto:grapes";
-      //     break;
-      //   case "Wine and Oil are Allowed":
-      //     symbol = "noto:grapes";
-      //     break;
-      //   case "Fish, Wine and Oil are Allowed":
-      //     symbol = "noto:fish";
-      //     break;
-      //   case "Meat Fast":
-      //     symbol = "noto:cheese-wedge";
-      //     break;
-      //   case "Wine, Oil and Caviar are Allowed":
-      //     symbol = "emojione:letter-c";
-      //     break;
-      //   case "Strict Fast":
-      //     symbol = "mdi:bolnisi-cross";
-      //     break;
-      //   default:
-      //     symbol = "";
-      // }
     } else if (
       this.props.jurisdiction === "rocor" &&
       this.props.rocInfo.fast.symbol
@@ -57,6 +35,7 @@ class FastingCard extends Component {
         fast: { fastDesc },
       },
       rocInfo,
+      ocaFasts,
     } = this.props;
     const { symbol, switched } = this.state;
 
@@ -74,7 +53,11 @@ class FastingCard extends Component {
               </h5>
             </div>
             <div className="col s1 offset-s1">
-              <FastingLegend day={day} jurisdiction={jurisdiction} />
+              <FastingLegend
+                day={day}
+                jurisdiction={jurisdiction}
+                ocaFasts={ocaFasts}
+              />
             </div>
           </div>
           <h5>

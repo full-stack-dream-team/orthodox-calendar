@@ -9,11 +9,11 @@ class FastingLegend extends Component {
   }
 
   render() {
-    const { jurisdiction } = this.props;
+    const { jurisdiction, ocaFasts } = this.props;
 
-    const renderLegend = (jurisdiction) => {
+    const renderLegend = (jurisdiction, ocaFasts) => {
       if (jurisdiction === "oca") {
-        return <OCALegend />;
+        return <OCALegend ocaFasts={ocaFasts} />;
       } else {
         return <ROCLegend />;
       }
@@ -47,7 +47,9 @@ class FastingLegend extends Component {
               {jurisdiction.toUpperCase()} Fasting Legend
             </h5>
             <div className="row">
-              <div className="col s12">{renderLegend(jurisdiction)}</div>
+              <div className="col s12">
+                {renderLegend(jurisdiction, ocaFasts)}
+              </div>
             </div>
           </div>
         </div>
