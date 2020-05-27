@@ -240,3 +240,9 @@ exports.fetchOCAFast = async (req, res) => {
   const ocaFast = await Fastlegend.findOne({ jurisdiction: "oca" });
   return res.json({ ocaFast });
 };
+
+// ROC All Fasts
+exports.fetchROCFast = async (req, res) => {
+  const rocFast = await Fastlegend.findOne({ jurisdiction: "roc" });
+  return res.json({ rocFast });
+};

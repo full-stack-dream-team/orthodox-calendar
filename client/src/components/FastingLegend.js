@@ -9,13 +9,13 @@ class FastingLegend extends Component {
   }
 
   render() {
-    const { jurisdiction, ocaFasts } = this.props;
+    const { jurisdiction, ocaFasts, rocFasts } = this.props;
 
-    const renderLegend = (jurisdiction, ocaFasts) => {
+    const renderLegend = (jurisdiction, ocaFasts, rocFasts) => {
       if (jurisdiction === "oca") {
         return <OCALegend ocaFasts={ocaFasts} />;
       } else {
-        return <ROCLegend />;
+        return <ROCLegend rocFasts={rocFasts} />;
       }
     };
 
@@ -44,11 +44,12 @@ class FastingLegend extends Component {
         >
           <div className="modal-content">
             <h5 className="center-align">
-              {jurisdiction.toUpperCase()} Fasting Legend
+              {jurisdiction === "rocor" ? "ROC" : jurisdiction.toUpperCase()}{" "}
+              Fasting Legend
             </h5>
             <div className="row">
               <div className="col s12">
-                {renderLegend(jurisdiction, ocaFasts)}
+                {renderLegend(jurisdiction, ocaFasts, rocFasts)}
               </div>
             </div>
           </div>

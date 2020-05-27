@@ -36,6 +36,7 @@ class FastingCard extends Component {
       },
       rocInfo,
       ocaFasts,
+      rocFasts,
     } = this.props;
     const { symbol, switched } = this.state;
 
@@ -57,18 +58,11 @@ class FastingCard extends Component {
                 day={day}
                 jurisdiction={jurisdiction}
                 ocaFasts={ocaFasts}
+                rocFasts={rocFasts}
               />
             </div>
           </div>
-          <h5>
-            <strong>
-              {day.fast_level_desc && jurisdiction === "oca"
-                ? day.fast_level_desc === "No Fast"
-                  ? ""
-                  : day.fast_level_desc
-                : null}
-            </strong>
-          </h5>
+
           <h5>
             <strong>
               {symbol && !switched ? (

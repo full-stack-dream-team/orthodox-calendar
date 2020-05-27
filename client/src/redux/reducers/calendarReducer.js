@@ -7,6 +7,7 @@ import {
   RESET_SAINTS,
   RESET_FASTS,
   GET_OCA_FASTS,
+  GET_ROC_FASTS,
 } from "../actions/types";
 
 export const initialState = {
@@ -26,6 +27,9 @@ export const initialState = {
   },
   ocaSaints: [],
   ocaFasts: {
+    fasts: [],
+  },
+  rocFasts: {
     fasts: [],
   },
 };
@@ -77,6 +81,11 @@ const calendarReducer = (state = initialState, action) => {
       return {
         ...state,
         ocaFasts: action.payload,
+      };
+    case GET_ROC_FASTS:
+      return {
+        ...state,
+        rocFasts: action.payload,
       };
     case RESET_SAINTS:
       return {

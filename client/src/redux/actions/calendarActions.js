@@ -8,6 +8,7 @@ import {
   RESET_SAINTS,
   RESET_FASTS,
   GET_OCA_FASTS,
+  GET_ROC_FASTS,
 } from "./types";
 
 export const setJurisdiction = (jurisdiction) => (dispatch) => {
@@ -83,6 +84,15 @@ export const getOCAFasts = () => (dispatch) => {
     .post("/api/calendar/ocafasts")
     .then((res) => {
       dispatch({ type: GET_OCA_FASTS, payload: res.data.ocaFast });
+    })
+    .catch((err) => console.error(err));
+};
+
+export const getROCFasts = () => (dispatch) => {
+  axios
+    .post("/api/calendar/rocfasts")
+    .then((res) => {
+      dispatch({ type: GET_ROC_FASTS, payload: res.data.rocFast });
     })
     .catch((err) => console.error(err));
 };

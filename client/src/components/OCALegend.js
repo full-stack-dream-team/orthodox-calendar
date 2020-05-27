@@ -8,7 +8,7 @@ class OCALegend extends React.Component {
 
     return fasts.map((fast, i) => (
       <div key={i}>
-        <h5>
+        <h5 className="mt-1 mb-0">
           <i
             className="iconify"
             data-icon={fast.symbol}
@@ -16,11 +16,14 @@ class OCALegend extends React.Component {
           ></i>{" "}
           {fast.desc}
         </h5>
-        <p className="mt-0">
-          <strong>Allowed: </strong> {fast.allowed}
-          <br />
-          <strong>Refrain from: </strong> {fast.disallowed}
-        </p>
+        <div>
+          <p className="my-0">
+            <strong>Allowed: </strong> {fast.allowed}
+          </p>
+          <p className="my-0">
+            <strong>Refrain from: </strong> {fast.disallowed}
+          </p>
+        </div>
       </div>
     ));
   }
