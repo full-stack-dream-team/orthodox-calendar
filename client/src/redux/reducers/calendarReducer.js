@@ -12,7 +12,7 @@ import {
 
 export const initialState = {
   isFetching: false,
-  jurisdiction: "oca",
+  jurisdiction: "rocor",
   dateQuery: {},
   date: null,
   rocInfo: {

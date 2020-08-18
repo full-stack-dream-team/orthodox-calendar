@@ -11,6 +11,12 @@ class Footer extends Component {
               ❤️
             </span>{" "}
             ©2020 Family I Love
+            <span className="ml-5">
+              <a href="mailto:info@familyilove.com" className="white-text">
+                <i className="iconify" data-icon="mdi:email-outline"></i>{" "}
+                Contact Us
+              </a>
+            </span>
           </div>
         </div>
       </footer>

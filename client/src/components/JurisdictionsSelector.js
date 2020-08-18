@@ -22,20 +22,20 @@ class JurisdictionsSelector extends Component {
             >
               <li className="tab col s2">
                 <a
-                  onClick={() => this.props.setJurisdiction("oca")}
-                  className={jurisdiction === "oca" ? "active" : ""}
-                  href="#oca"
-                >
-                  OCA
-                </a>
-              </li>
-              <li className="tab col s2">
-                <a
                   onClick={() => this.props.setJurisdiction("rocor")}
                   className={jurisdiction === "rocor" ? "active" : ""}
                   href="#rocor"
                 >
                   ROC
+                </a>
+              </li>
+              <li className="tab col s2">
+                <a
+                  onClick={() => this.props.setJurisdiction("oca")}
+                  className={jurisdiction === "oca" ? "active" : ""}
+                  href="#oca"
+                >
+                  OCA
                 </a>
               </li>
             </ul>
