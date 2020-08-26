@@ -47,7 +47,7 @@ app.use("/", cors(corsOptionsDelegate), routes);
 app.use((req, res, next) => {
   if (process.env.NODE_ENV === "production") {
     if (req.headers["x-forwarded-proto"] !== "https")
-      return res.redirect(301, "https://www.orthodox-times.com");
+      return res.redirect("https://" + req.headers.host + req.url);
     else return next();
   } else return next();
 });
