@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const secure = require("ssl-express-www");
 const path = require("path");
 const routes = require("./routes");
 
@@ -14,6 +15,9 @@ const app = express();
 // Take the raw requests and turn them into usable properties on req.body
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+// Redirect to https (ssl)
+app.use(secure);
 
 // CORS
 app.use(cors());

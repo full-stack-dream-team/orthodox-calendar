@@ -1,5 +1,5 @@
 {
-  "name": "simple-app",
+  "name": "orthodox-calendar",
   "version": "1.0.0",
   "main": "start.js",
   "description": "Simple node react boilerplate",
@@ -27,6 +27,7 @@
     "passport-jwt": "^4.0.0",
     "puppeteer": "^3.0.4",
     "puppeteer-cluster": "^0.20.0",
+    "ssl-express-www": "^3.0.7",
     "validator": "^13.0.0"
   },
   "devDependencies": {
