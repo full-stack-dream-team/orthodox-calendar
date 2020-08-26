@@ -1,7 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-const secure = require("ssl-express-www");
 const path = require("path");
 const routes = require("./routes");
 
@@ -15,9 +14,6 @@ const app = express();
 // Take the raw requests and turn them into usable properties on req.body
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
-// Redirect to https (ssl)
-app.use(secure);
 
 // CORS
 app.use(cors());
@@ -46,6 +42,15 @@ let corsOptionsDelegate = function (req, callback) {
 // Import Routes
 app.options("*", cors()); // enable pre-flight request for all requests
 app.use("/", cors(corsOptionsDelegate), routes);
+
+// Redirect to https
+app.use((req, res, next) => {
+  if (process.env.NODE_ENV === "production") {
+    if (req.headers["x-forwarded-proto"] !== "https")
+      return res.redirect(301, "https://www.orthodox-times.com");
+    else return next();
+  } else return next();
+});
 
 // Passport middleware
 app.use(passport.initialize());
