@@ -46,9 +46,13 @@ app.use("/", cors(corsOptionsDelegate), routes);
 // Redirect to https
 app.use((req, res, next) => {
   if (process.env.NODE_ENV === "production") {
-    if (req.headers["x-forwarded-proto"] !== "https")
+    let host = req.headers.host;
+
+    if (!host.match(/^www\..*/i)) {
+      return res.redirect(301, "https://www." + host + req.url);
+    } else if (req.headers["x-forwarded-proto"] !== "https") {
       return res.redirect("https://" + req.headers.host + req.url);
-    else return next();
+    } else return next();
   } else return next();
 });
 

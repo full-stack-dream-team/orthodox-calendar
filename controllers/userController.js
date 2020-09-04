@@ -135,7 +135,7 @@ exports.forgotPassword = (req, res) => {
     user
       .save()
       .then(() => {
-        const resetUrl = `http://${
+        const resetUrl = `https://${
           req.hostname + (req.hostname === "localhost" ? ":3000" : "")
         }/resetpassword/${user.passwordResetToken.token}`;
         sendEmail({
