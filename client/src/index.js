@@ -10,6 +10,10 @@ import store from "./redux/store/index";
 import * as serviceWorker from "./serviceWorker";
 import "materialize-css/dist/css/materialize.min.css";
 
+if (!window.location.href.includes("://www.")) {
+  window.location.href.replace("://", "://www.");
+}
+
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
   // Set auth token header auth
