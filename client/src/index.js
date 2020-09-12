@@ -11,7 +11,7 @@ import * as serviceWorker from "./serviceWorker";
 import "materialize-css/dist/css/materialize.min.css";
 
 if (!window.location.href.includes("www.")) {
-  window.location.href.replace("://", "://www.");
+  window.location.href = window.location.href.replace("://", "://www.");
 }
 
 // Check for token to keep user logged in
