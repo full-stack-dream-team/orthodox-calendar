@@ -164,7 +164,7 @@ exports.fetchROCInfo = async (req, res) => {
     // Saints
     $(".normaltext a").each(function () {
       if (links.includes($(this).attr("href")) === false) {
-        links.push($(this).attr("href"));
+        links.push($(this).attr("href").replace("http://", "https://"));
       }
     });
 
