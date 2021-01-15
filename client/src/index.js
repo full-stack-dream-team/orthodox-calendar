@@ -10,6 +10,7 @@ import store from "./redux/store/index";
 import * as serviceWorker from "./serviceWorker";
 import "materialize-css/dist/css/materialize.min.css";
 
+// Test
 // if (!window.location.href.includes("www.")) {
 //   window.location.href = window.location.href.replace("://", "://www.");
 // }
