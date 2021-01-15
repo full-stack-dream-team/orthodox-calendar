@@ -1,0 +1,5 @@
+# Ignored files when pushing to heroku
+README.md
+mailer.js
+data
+orthodox-church.jpg
