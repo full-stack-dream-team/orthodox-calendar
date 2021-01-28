@@ -72,6 +72,15 @@ require("./config/passport")(passport);
 // Production Error Handler
 // app.use(errorHandlers.productionErrors);
 
+// Redirect http to https
+app.use((req, res, next) => {
+  if (process.env.NODE_ENV === "production") {
+    if (req.headers["x-forwarded-proto"] !== "https")
+      return res.redirect("https://" + req.headers.host + req.url);
+    else return next();
+  } else return next();
+});
+
 // PRODUCTION: serve up static files from the build folder
 if (process.env.NODE_ENV == "production") {
   app.use(express.static("client/build"));
