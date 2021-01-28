@@ -63,7 +63,7 @@ exports.fetchOCASaints = async (req, res) => {
   }`;
 
   puppeteer
-    .launch({ args: ["--no-sandbox"] })
+    .launch({ args: ["--no-sandbox", "--disable-setuid-sandbox"] })
     .then((browser) =>
       browser
         .newPage()
@@ -106,7 +106,9 @@ exports.fetchROCInfo = async (req, res) => {
   }`;
 
   try {
-    const browser = await puppeteer.launch({ args: ["--no-sandbox"] });
+    const browser = await puppeteer.launch({
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    });
     const page = await browser.newPage();
 
     await page.setRequestInterception(true);
@@ -185,7 +187,7 @@ exports.fetchROCInfo = async (req, res) => {
       maxConcurrency: 5,
       puppeteerOptions: {
         headless: true,
-        args: ["--no-sandbox"],
+        args: ["--no-sandbox", "--disable-setuid-sandbox"],
       },
     });
 
