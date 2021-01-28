@@ -48,8 +48,8 @@ app.use((req, res, next) => {
   if (process.env.NODE_ENV === "production") {
     let host = req.headers.host;
 
-    if (!host.includes("www.") || req.headers["x-forwarded-proto"] !== "https")
-      return res.redirect(301, "https://www." + host + req.url);
+    if (req.headers["x-forwarded-proto"] !== "https")
+      return res.redirect(301, "https://" + host + req.url);
     else return next();
   } else return next();
 });
