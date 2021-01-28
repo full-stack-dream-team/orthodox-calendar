@@ -109,6 +109,15 @@ exports.fetchROCInfo = async (req, res) => {
     const browser = await puppeteer.launch({ args: ["--no-sandbox"] });
     const page = await browser.newPage();
 
+    await page.setRequestInterception(true);
+    page.on("request", (request) => {
+      if (request.resourceType() === "document") {
+        request.continue();
+      } else {
+        request.abort();
+      }
+    });
+
     await page.goto(url);
     await page.waitForSelector("body");
 
@@ -123,8 +132,6 @@ exports.fetchROCInfo = async (req, res) => {
       disallowed: "",
       symbol: "",
     };
-    const feastDay = [];
-    const links = [];
 
     // Fast
     if ($(".headerfast").text().trim()) {
@@ -152,6 +159,8 @@ exports.fetchROCInfo = async (req, res) => {
     }
 
     // Feast Day
+    const feastDay = [];
+
     $("span.headerheader").each(function () {
       $(this).find("span.headerfast").remove();
       if ($(this).text().includes(":")) {
@@ -162,13 +171,13 @@ exports.fetchROCInfo = async (req, res) => {
     });
 
     // Saints
+    const links = [];
+
     $(".normaltext a").each(function () {
       if (links.includes($(this).attr("href")) === false) {
         links.push($(this).attr("href").replace("http://", "https://"));
       }
     });
-
-    const saints = [];
 
     // Launch puppeteer-cluster
     const cluster = await Cluster.launch({
@@ -180,8 +189,19 @@ exports.fetchROCInfo = async (req, res) => {
       },
     });
 
+    const saints = [];
+
     await (async () => {
       await cluster.task(async ({ page: newPage, data: link }) => {
+        await newPage.setRequestInterception(true);
+        newPage.on("request", (request) => {
+          if (request.resourceType() === "document") {
+            request.continue();
+          } else {
+            request.abort();
+          }
+        });
+
         await newPage.goto(link);
         await newPage.waitForSelector("tbody");
         const saintsHTML = await newPage.content();
