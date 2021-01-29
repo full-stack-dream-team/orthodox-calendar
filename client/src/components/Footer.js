@@ -4,19 +4,22 @@ class Footer extends Component {
   render() {
     return (
       <footer className="page-footer cyan darken-1">
-        <div className="footer-copyright">
+        <div
+          className="footer-copyright"
+          style={{ backgroundColor: "transparent" }}
+        >
           <div className="container">
-            Glory Be To God!{" "}
-            <span role="img" aria-label="love">
-              ❤️
-            </span>{" "}
-            ©2020 Family I Love
-            <span className="ml-5">
-              <a href="mailto:info@familyilove.com" className="white-text">
-                <i className="iconify" data-icon="mdi:email-outline"></i>{" "}
-                Contact Us
-              </a>
-            </span>
+            <span style={{ fontWeight: "800" }}>Glory Be To God!</span> --- ☦
+            --- © 2021 Made with ♥ by{" "}
+            <a
+              style={{ textDecoration: "underline" }}
+              className="white-text"
+              href="https://kelly-devs-portfolio.herokuapp.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Kelly Web Devs
+            </a>
           </div>
         </div>
       </footer>
